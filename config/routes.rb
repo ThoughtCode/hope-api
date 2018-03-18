@@ -17,16 +17,16 @@ Rails.application.routes.draw do
       namespace :agents do
         devise_scope :agents do
           post 'signup', to: 'registrations#create'
-          # post 'signin', to: 'sessions#create'
-          # delete 'logout', to: 'sessions#destroy'
+          post 'signin', to: 'sessions#create'
+          delete 'signout', to: 'sessions#destroy'
         end
       end
 
       namespace :customers do
         devise_scope :customer do
           post 'signup', to: 'registrations#create'
-          # post 'signin', to: 'sessions#create'
-          # delete 'logout', to: 'sessions#destroy'
+          post 'signin', to: 'sessions#create'
+          delete 'signout', to: 'sessions#destroy'
         end
       end
 

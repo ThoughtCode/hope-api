@@ -2,6 +2,7 @@ module Api
   module V1
     class ApiController < ActionController::API 
       include ActionController::MimeResponds
+      include ActionController::HttpAuthentication::Token::ControllerMethods
       #include ApiAuthenticable
       respond_to :json
       
@@ -24,8 +25,17 @@ module Api
         head :ok
       end
 
-
       private
+
+      def restrict_access_by_token
+        authenticate_or_request_with_http_token do |token|
+          @current_user = Agent.find_by(access_token: token) || Customer.find_by(access_token: token)
+          render :json => {:error => "HTTP Token: Access denied."}, :status => :unauthorized  unless @current_user
+          @current_user
+        end
+        rescue Exception => e 
+          Rails.logger.error e
+      end
 
       def render_internal_server_error(exception)
         # For some reason on error the headers are not set
@@ -66,6 +76,10 @@ module Api
         # Setting it manually
         cors_set_access_control_headers
         render json: { full_messages: exception.record.errors.full_messages }, status: :bad_request 
+      end
+
+      def render_success_message(message = 'operation successful')
+        render json: { message: message }, status: :ok
       end
 
       def cors_set_access_control_headers
