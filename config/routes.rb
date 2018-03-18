@@ -1,6 +1,8 @@
 Rails.application.routes.draw do
+  devise_for :managers, ActiveAdmin::Devise.config
+  devise_for :customers
   ActiveAdmin.routes(self)
-  devise_for :users, ActiveAdmin::Devise.config
+  devise_for :agents
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 
   root 'pages#home'
@@ -12,11 +14,20 @@ Rails.application.routes.draw do
 
 
       #Devise Mapping
+      namespace :agents do
+        devise_scope :agents do
+          post 'signup', to: 'registrations#create'
+          # post 'signin', to: 'sessions#create'
+          # delete 'logout', to: 'sessions#destroy'
+        end
+      end
 
-      devise_scope :user do
-        post 'signup', to: 'registrations#create'
-        # post 'signin', to: 'sessions#create'
-        # delete 'logout', to: 'sessions#destroy'
+      namespace :customers do
+        devise_scope :customer do
+          post 'signup', to: 'registrations#create'
+          # post 'signin', to: 'sessions#create'
+          # delete 'logout', to: 'sessions#destroy'
+        end
       end
 
     end
