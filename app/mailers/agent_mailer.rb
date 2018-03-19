@@ -1,0 +1,2 @@
+class AgentMailer < ApplicationMailer
+end
