@@ -11,9 +11,10 @@ module Api::V1
     before_action :disable_access_by_tk, except: %i[cors_default_options_check]
 
     def cors_default_options_check
-      options = request.method == 'OPTIONS' ? true : false
+      byebug
+      options = request.method == 'OPTIONS'
       headers['Access-Control-Max-Age'] = '1728000' if options
-      render text: '', content_type: 'text/plain' if options
+      render json: '' if options
     end
 
     private
@@ -90,8 +91,8 @@ module Api::V1
 
     def cors_set_access_control_headers
       headers['Access-Control-Allow-Origin'] = '*'
-      headers['Access-Control-Allow-Methods'] = 'POST, PUT, DELETE,'\
-      'GET, PATCH'
+      headers['Access-Control-Allow-Methods'] = 'post, put, delete, get, patch'\
+      ', options'
       headers['Access-Control-Request-Method'] = '*'
       headers['Access-Control-Allow-Headers'] = 'Origin, X-Requested-With,'\
         'Content-Type, Accept, Authorization, X-App-Version,'\
