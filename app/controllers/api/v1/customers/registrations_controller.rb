@@ -4,11 +4,10 @@ module Api::V1
 
     # Sign Up
     def create
-      byebug
       customer = Customer.new(customer_params)
       if customer.save
         render status: 200, json: {
-          message: 'Signed Up successfully!', customer: customer
+          message: 'Signed Up successfully!'
         }
       else
         render json: { message: customer.errors }, status: :unprocessable_entity
@@ -19,7 +18,8 @@ module Api::V1
 
     def customer_params
       params.require(:customer)
-            .permit(:email, :password, :password_confirmation)
+            .permit(:first_name, :last_name, :email, :password,
+                    :password_confirmation)
     end
   end
 end

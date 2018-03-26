@@ -5,7 +5,8 @@ class Api::V1::Agents::SessionsController < Api::V1::ApiController
   def create
     if @user && @user.valid_password?(params[:agent][:password])
       if @user.acquire_access_token!
-        render json: @user
+        json_agent = Api::V1::AgentSerializer.new(@user).serialized_json
+        render json: json_agent
       else
         render_internal_server_error StandardError.new('Could not get or '\
           'generate an access token after successful login')

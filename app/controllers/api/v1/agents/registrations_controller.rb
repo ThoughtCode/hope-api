@@ -18,7 +18,10 @@ class Api::V1::Agents::RegistrationsController < Devise::RegistrationsController
   private
 
   def agent_params
-    params.require(:agent).permit(:email, :password, :password_confirmation)
+    params.require(:agent)
+          .permit(:first_name, :last_name, :email, :password,
+                  :password_confirmation, :national_id, :cell_phone,
+                  :birthday)
   end
 
   def ensure_params

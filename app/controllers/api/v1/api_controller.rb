@@ -11,7 +11,6 @@ module Api::V1
     before_action :disable_access_by_tk, except: %i[cors_default_options_check]
 
     def cors_default_options_check
-      byebug
       options = request.method == 'OPTIONS'
       headers['Access-Control-Max-Age'] = '1728000' if options
       render json: '' if options
@@ -28,7 +27,7 @@ module Api::V1
             error: 'HTTP Token: Access denied.'
           }, status: :unauthorized
         end
-        @current_user
+        @user
       end
     rescue StandardError => e
       Rails.logger.error e

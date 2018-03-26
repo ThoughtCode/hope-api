@@ -6,7 +6,8 @@ class Api::V1::Customers::SessionsController < Api::V1::ApiController
   def create
     if @user && @user.valid_password?(params[:customer][:password])
       if @user.acquire_access_token!
-        render json: @user
+        json_customer = Api::V1::CustomerSerializer.new(@user).serialized_json
+        render json: json_customer
       else
         render_internal_server_error StandardError.new('Could not get or '\
           'generate  an access token after successful login')

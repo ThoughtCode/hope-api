@@ -15,7 +15,9 @@ class Api::V1::Agents::PasswordsController < Api::V1::ApiController
   def update
     user = Agent.reset_password_by_token(params)
     if user.errors.empty?
-      render json: user
+      render json: {
+        message: 'Reset password successfully'
+      }
     else
       render json: { message: user.errors }, status: 404
     end

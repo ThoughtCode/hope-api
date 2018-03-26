@@ -17,16 +17,16 @@ gem 'responders'
 gem 'dotenv-rails'
 
 #Serializers
-gem 'fast_jsonapi'
+gem 'fast_jsonapi', '~> 1.1', '>= 1.1.1'
 
 #login System
-gem 'devise'
+gem 'devise', '~> 4.4', '>= 4.4.3'
 
 #Admin System
 gem 'activeadmin'
 
 #Mailer
-gem 'sendgrid-ruby'
+gem 'sendgrid-ruby', '~> 5.2'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console

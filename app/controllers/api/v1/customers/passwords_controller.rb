@@ -3,7 +3,7 @@ module Api::V1
     skip_before_action :disable_access_by_tk, only: %i[create update]
 
     def create
-      user = Customer.find_by_email(params[:agent][:email])
+      user = Customer.find_by_email(params[:customer][:email])
       if user
         user.send_reset_password_instructions
         render json: {
@@ -17,7 +17,9 @@ module Api::V1
     def update
       user = Customer.reset_password_by_token(params)
       if user.errors.empty?
-        render json: user
+        render json: {
+          message: 'Reset password successfully'
+        }
       else
         render json: { message: user.errors }, status: 404
       end
