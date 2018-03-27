@@ -40,6 +40,7 @@ group :test do
   gem 'rails-controller-testing'
   gem 'database_cleaner'
   gem 'simplecov', require: false
+  gem 'faker', '~> 1.8', '>= 1.8.7'
 end
 
 group :development do

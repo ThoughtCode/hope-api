@@ -33,8 +33,9 @@ module Api::V1
       Rails.logger.error e
     end
 
-    def find_by_token(tk)
-      Agent.find_by(access_token: tk) || Customer.find_by(access_token: tk)
+    def find_by_token(token)
+      Agent.find_by(access_token: token) ||
+        Customer.find_by(access_token: token)
     end
 
     def render_internal_server_error(exception)

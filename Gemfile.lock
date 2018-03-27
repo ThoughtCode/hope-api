@@ -86,6 +86,8 @@ GEM
     factory_bot_rails (4.8.2)
       factory_bot (~> 4.8.2)
       railties (>= 3.0.0)
+    faker (1.8.7)
+      i18n (>= 0.7)
     fast_jsonapi (1.1.1)
       activesupport (>= 4.2)
     ffi (1.9.23)
@@ -281,6 +283,7 @@ DEPENDENCIES
   devise (~> 4.4, >= 4.4.3)
   dotenv-rails
   factory_bot_rails
+  faker (~> 1.8, >= 1.8.7)
   fast_jsonapi (~> 1.1, >= 1.1.1)
   jbuilder (~> 2.5)
   listen (>= 3.0.5, < 3.2)
