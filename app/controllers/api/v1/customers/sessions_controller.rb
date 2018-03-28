@@ -7,10 +7,12 @@ class Api::V1::Customers::SessionsController < Api::V1::ApiController
   def create
     if @user && @user.valid_password?(params[:customer][:password])
       if @user.acquire_access_token!
-        render json: serialize_user(@user)
+        render json: serialize_customer(@user)
       else
+        # :nocov:
         render_internal_server_error StandardError.new('Could not get or '\
           'generate  an access token after successful login')
+        # :nocov:
       end
     else
       render_unauthorized
@@ -21,9 +23,10 @@ class Api::V1::Customers::SessionsController < Api::V1::ApiController
     if @user.update_attributes(access_token: nil)
       render_success_message('Sign out successful')
     else
-      render_internal_server_error StandardError.new(
-        'Could not release the access token after successful logout'
-      )
+      # :nocov:
+      render_internal_server_error StandardError.new('Could not release the '\
+        'access token after successful logout')
+      # :nocov:
     end
   end
 

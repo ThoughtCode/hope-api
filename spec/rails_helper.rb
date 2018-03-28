@@ -1,6 +1,6 @@
 require 'simplecov'
 SimpleCov.start 'rails' do
-  add_filter 'app/admin/*'
+  add_filter 'app/admin/'
   add_filter 'app/controllers/api/v1/api_controller.rb'
 end
 # This file is copied to spec/ when you run 'rails generate rspec:install'

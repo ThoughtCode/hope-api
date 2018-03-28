@@ -1,0 +1,12 @@
+{
+  "data": {
+      "id": "8",
+      "type": "customer",
+      "attributes": {
+          "first_name": null,
+          "last_name": null,
+          "email": "test2@test.com",
+          "access_token": "d185c68b24e58cb5c8fb10738398ccfe"
+      }
+  }
+}

@@ -5,7 +5,7 @@ class Api::V1::Agents::PasswordsController < Api::V1::ApiController
     user = Agent.find_by_email(params[:agent][:email])
     if user
       user.send_reset_password_instructions
-      render json: { message: 'Reset password instructions have'\
+      render json: { message: 'Reset password instructions have '\
         'been sent to email' }
     else
       render json: { message: 'Email does not exist' }, status: 404
