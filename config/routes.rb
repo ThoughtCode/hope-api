@@ -22,6 +22,8 @@ Rails.application.routes.draw do
           # Passwords
           post 'forgot_password', to: 'passwords#create', as: :forgot_password
           post 'update_password', to: 'passwords#update', as: :update_password
+
+          put 'update', to: 'agents#update'
         end
       end
 
@@ -33,12 +35,11 @@ Rails.application.routes.draw do
           # Passwords
           post 'forgot_password', to: 'passwords#create', as: :forgot_password
           post 'update_password', to: 'passwords#update', as: :update_password
+
           post 'facebook', to: 'providers#facebook'
+          put 'update', to: 'customers#update'
         end
       end
-
     end
   end
-
-
 end
