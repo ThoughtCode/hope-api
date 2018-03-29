@@ -6,9 +6,13 @@ class Api::V1::Customers::ProvidersController < Api::V1::ApiController
   def facebook
     if user_params[:facebook_access_token]
       graph = Koala::Facebook::API.new(user_params[:facebook_access_token])
-      user_data = graph.get_object('me?fields=name,first_name,last_name,email,id,picture.type(large)')
+      byebug
+      user_data = graph.get_object('me?fields=name,first_name,last_name,email,'\
+        'id,picture.type(large)')
+      byebug
       user = User.find_by_email(user_data['email'])
       if user
+        byebug
         if user.confirmed?
           user.generate_token
           @messages[:success] = 'Signed In successfully!'
@@ -21,6 +25,7 @@ class Api::V1::Customers::ProvidersController < Api::V1::ApiController
           render status: :failure
         end
       else
+        byebug
         user = User.new(email: user_data['email'],
                         first_name: user_data['first_name'],
                         last_name: user_data['last_name'],
@@ -29,7 +34,8 @@ class Api::V1::Customers::ProvidersController < Api::V1::ApiController
                         password: Devise.friendly_token.first(20))
         user.authentication_token = User.generate_unique_secure_token
         if user.save
-          image_url = "https://graph.facebook.com/v2.6/#{user_data['id']}/picture?type=large"
+          image_url = "https://graph.facebook.com/v2.6/#{user_data['id']}/"\
+          "picture'?type=large"
           image = URI.parse(image_url)
           Attachment.create!(
             parent: user,
