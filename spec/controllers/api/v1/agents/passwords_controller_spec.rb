@@ -4,6 +4,7 @@ RSpec.describe Api::V1::Agents::PasswordsController, type: :controller do
   before(:each) do
     @request.env['devise.mapping'] = Devise.mappings[:agent]
   end
+
   let(:agent) { FactoryBot.create(:agent) }
   describe 'POST #create' do
     it 'return 200 with message successfully' do

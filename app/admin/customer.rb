@@ -1,5 +1,5 @@
 ActiveAdmin.register Customer do
-  permit_params :email, :password, :first_name, :last_name, :cell_phone, 
+  permit_params :email, :password, :first_name, :last_name, :cell_phone,
                 :birthday, :national_id
 
   index do
@@ -22,7 +22,7 @@ ActiveAdmin.register Customer do
   filter :birthday
 
   form do |f|
-    f.semantic_errors *f.object.errors.keys
+    f.semantic_errors * f.object.errors.keys
     f.inputs 'Customer Details' do
       f.input :email
       f.input :password

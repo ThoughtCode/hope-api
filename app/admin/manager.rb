@@ -11,7 +11,7 @@ ActiveAdmin.register Manager do
   filter :email
 
   form do |f|
-    f.semantic_errors *f.object.errors.keys
+    f.semantic_errors * f.object.errors.keys
     f.inputs 'Manager Details' do
       f.input :email
       f.input :password

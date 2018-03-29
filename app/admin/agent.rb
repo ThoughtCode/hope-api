@@ -1,5 +1,5 @@
 ActiveAdmin.register Agent do
-  permit_params :email, :password, :first_name, :last_name, :cell_phone, 
+  permit_params :email, :password, :first_name, :last_name, :cell_phone,
                 :birthday, :status, :national_id
 
   index do
@@ -24,7 +24,7 @@ ActiveAdmin.register Agent do
   filter :status
 
   form do |f|
-    f.semantic_errors *f.object.errors.keys
+    f.semantic_errors * f.object.errors.keys
     f.inputs 'Agent Details' do
       f.input :email
       f.input :password

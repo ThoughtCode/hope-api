@@ -1,5 +1,6 @@
 AllCops:
   Exclude:
+    - 'app/admin/*'
     - 'db/migrate/*'
     - 'bin/*'
     - 'config/puma.rb'
@@ -16,3 +17,9 @@ Style/ClassAndModuleChildren:
   EnforcedStyle: compact
 Metrics/MethodLength:
   Max: 20
+Metrics/BlockLength:
+  Exclude:
+    - 'app/admin/**/*'
+    - 'Rakefile'
+    - '**/*.rake'
+    - 'spec/**/*.rb'
