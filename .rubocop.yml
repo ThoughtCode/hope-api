@@ -1,0 +1,25 @@
+AllCops:
+  Exclude:
+    - 'app/admin/*'
+    - 'db/migrate/*'
+    - 'bin/*'
+    - 'config/puma.rb'
+    - 'config/spring.rb'
+    - 'db/*'
+    - 'config/routes.rb'
+    - 'config/environments/*'
+    - 'config/initializers/*'
+    - 'config/application.rb'
+    - 'Gemfile'
+Documentation:
+  Enabled: false
+Style/ClassAndModuleChildren:
+  EnforcedStyle: compact
+Metrics/MethodLength:
+  Max: 20
+Metrics/BlockLength:
+  Exclude:
+    - 'app/admin/**/*'
+    - 'Rakefile'
+    - '**/*.rake'
+    - 'spec/**/*.rb'
