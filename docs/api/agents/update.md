@@ -26,7 +26,7 @@ Body:
     "password": "XXXXXX",
     "national_id": "123456",
     "cell_phone": "1234567890",
-    "birthdday": ""xx/xx/xxxx
+    "birthdday": "xx/xx/xxxx"
   }
 }
 ```
