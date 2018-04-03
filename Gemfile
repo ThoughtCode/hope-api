@@ -30,6 +30,7 @@ gem 'sendgrid-ruby', '~> 5.2'
 
 # Login with facebook
 gem 'koala', '~> 3.0'
+gem 'omniauth-facebook', '~> 4.0'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
