@@ -6,22 +6,18 @@ module Api::V1
       user = Customer.find_by_email(params[:customer][:email])
       if user
         user.send_reset_password_instructions
-        render json: {
-          message: 'Reset password instructions have been sent to email'
-        }
+        set_response(:ok, 'Reset password instructions have been sent to email')
       else
-        render json: { message: 'Email does not exist' }, status: 404
+        set_response(:not_found, 'Email does not exist')
       end
     end
 
     def update
       user = Customer.reset_password_by_token(params)
       if user.errors.empty?
-        render json: {
-          message: 'Reset password successfully'
-        }
+        set_response(:ok, 'Reset password successfully')
       else
-        render json: { message: user.errors }, status: 404
+        set_response(:unprocessable_entity, user.errors)
       end
     end
   end

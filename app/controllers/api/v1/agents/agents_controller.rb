@@ -1,21 +1,18 @@
 class Api::V1::Agents::AgentsController < Api::V1::ApiController
+  include Serializable
   before_action :set_agent, only: [:update]
 
   def update
     if @agent
       if @agent.update(agent_params.except(:access_token))
-        render json: {
-          message: 'Agent have been updated successfully.'
-        }
+        set_response(:ok,
+                     'Agent have been updated successfully.',
+                     serialize_agent(@agent))
       else
-        render json: {
-          message: @agent.errors
-        }, status: 422
+        set_response(:unprocessable_entity, @agent.errors)
       end
     else
-      render json: {
-        message: 'Agent not found.'
-      }, status: 404
+      set_response(:not_found, 'Agent not found.')
     end
   end
 
