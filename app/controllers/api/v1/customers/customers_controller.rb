@@ -1,21 +1,18 @@
 class Api::V1::Customers::CustomersController < Api::V1::ApiController
+  include Serializable
   before_action :set_customer, only: [:update]
 
   def update
     if @customer
       if @customer.update(customer_params.except(:access_token))
-        render json: {
-          message: 'Customer have been updated successfully.'
-        }
+        set_response(:ok,
+                     'Customer have been updated successfully.',
+                     serialize_customer(@customer))
       else
-        render json: {
-          message: @customer.errors
-        }, status: 422
+        set_response(:unprocessable_entity, @customer.errors)
       end
     else
-      render json: {
-        message: 'Customer not found.'
-      }, status: 404
+      set_response(:not_found, 'Customer not found.')
     end
   end
 

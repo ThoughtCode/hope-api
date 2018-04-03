@@ -22,10 +22,8 @@ module Api::V1
       authenticate_or_request_with_http_token do |token|
         @user = find_by_token(token)
         unless @user
-          render json:
-          {
-            error: 'HTTP Token: Access denied.'
-          }, status: :unauthorized
+          set_response(:unauthorized,
+                       'HTTP Token: Access denied.')
         end
         @user
       end
@@ -44,49 +42,42 @@ module Api::V1
       cors_set_access_control_headers
       Rails.logger.error("ERROR api call: #{exception.message}")
       Rails.logger.error(exception.backtrace.join("\n"))
-      render json:
-        {
-          message: exception.message
-        }, status: :internal_server_error
+      set_response(:internal_server_error, exception.message)
     end
 
     def render_unauthorized
       # For some reason on error the headers are not set
       # Setting it manually
       cors_set_access_control_headers
-      render json:
-        {
-          message: 'email/password mismatch'
-        }, status: :unauthorized
+      set_response(:unauthorized, 'email/password mismatch')
     end
 
     def render_forbidden
       # For some reason on error the headers are not set
       # Setting it manually
       cors_set_access_control_headers
-      render json: { message: 'forbidden' }, status: :forbidden
+      set_response(:forbidden, 'forbidden')
     end
 
     def record_not_found(_exception)
       # For some reason on error the headers are not set
       # Setting it manually
       cors_set_access_control_headers
-      render json: { message: 'record not found' }, status: :not_found
+      set_response(:not_found, 'record not found')
     end
 
     def active_model_errors(_exception)
       # For some reason on error the headers are not set
       # Setting it manually
       cors_set_access_control_headers
-      render json:
-      {
-        full_messages:
-        exception.record.errors.full_messages
-      }, status: :bad_request
+      set_response(:bad_request, exception.record.errors.full_messages)
     end
 
-    def render_success_message(message = 'operation successful')
-      render json: { message: message }, status: :ok
+    def set_response(status, message, data = nil)
+      render status: status, json: {
+        message: message,
+        data: data
+      }
     end
 
     def cors_set_access_control_headers
