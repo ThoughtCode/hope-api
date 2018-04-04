@@ -1,6 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe Api::V1::Agents::AgentsController, type: :controller do
+  include Serializable
   before(:each) do
     @request.env['devise.mapping'] = Devise.mappings[:agent]
   end
@@ -13,15 +14,15 @@ RSpec.describe Api::V1::Agents::AgentsController, type: :controller do
         access_token: agent.access_token,
         email: agent.email,
         password: '123456',
-        first_name: Faker::Name.first_name,
-        last_name: Faker::Name.last_name,
+        first_name: agent.first_name,
+        last_name: agent.last_name,
         national_id: '123456',
         cell_phone: '123456',
-        birthday: Faker::Date.birthday(18, 65)
+        birthday: agent.birthday
       } }
       expect(response.status).to eq(200)
       expect(JSON.parse(response.body)).to eq('message' => 'Agent have been'\
-        ' updated successfully.')
+        ' updated successfully.', "data" => serialize_agent(agent).as_json)
     end
     it 'return 422 if invalid params' do
       agent.acquire_access_token!
@@ -47,7 +48,7 @@ RSpec.describe Api::V1::Agents::AgentsController, type: :controller do
       } }
       expect(response.status).to eq(404)
       expect(JSON.parse(response.body)).to eq('message' => 'Agent not '\
-        'found.')
+        'found.', "data" => nil)
     end
   end
 end

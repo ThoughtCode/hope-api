@@ -7,10 +7,10 @@ class Api::V1::Customers::SessionsController < Api::V1::ApiController
   def create
     if @user && @user.valid_password?(params[:customer][:password])
       if @user.acquire_access_token!
-        render json: serialize_customer(@user)
+        set_response(:ok, 'Signed In successfully!', serialize_customer(@user))
       else
         # :nocov:
-        render_internal_server_error StandardError.new('Could not get or '\
+        set_response(:unprocessable_entity, 'Could not get or '\
           'generate  an access token after successful login')
         # :nocov:
       end
@@ -21,10 +21,10 @@ class Api::V1::Customers::SessionsController < Api::V1::ApiController
 
   def destroy
     if @user.update_attributes(access_token: nil)
-      render_success_message('Sign out successful')
+      set_response(:ok, 'Sign out successful')
     else
       # :nocov:
-      render_internal_server_error StandardError.new('Could not release the '\
+      set_response(:unprocessable_entity, 'Could not release the '\
         'access token after successful logout')
       # :nocov:
     end

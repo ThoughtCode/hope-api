@@ -5,5 +5,6 @@ FactoryBot.define do
     a.password_confirmation 'test1234'
     a.first_name { Faker::Name.first_name }
     a.last_name { Faker::Name.last_name }
+    a.birthday { Faker::Date.birthday(18, 65) }
   end
 end
