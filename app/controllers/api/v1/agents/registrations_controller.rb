@@ -27,5 +27,12 @@ module Api::V1
       return if params[:agent].present?
       set_response(:unprocessable_entity, 'Missing params!')
     end
+
+    def set_response(status, message, data = nil)
+      render status: status, json: {
+        message: message,
+        data: data
+      }
+    end
   end
 end

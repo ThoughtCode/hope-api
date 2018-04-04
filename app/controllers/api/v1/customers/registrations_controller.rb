@@ -6,8 +6,8 @@ module Api::V1
     # Sign Up
     def create
       customer = Customer.new(customer_params)
-      customer.acquire_access_token!
       if customer.save
+        customer.acquire_access_token!
         set_response(:ok,
                      'Signed Up successfully!',
                      serialize_customer(customer))
@@ -22,6 +22,13 @@ module Api::V1
       params.require(:customer)
             .permit(:first_name, :last_name, :email, :password,
                     :password_confirmation)
+    end
+
+    def set_response(status, message, data = nil)
+      render status: status, json: {
+        message: message,
+        data: data
+      }
     end
   end
 end

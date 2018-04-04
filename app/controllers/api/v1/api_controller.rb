@@ -17,7 +17,7 @@ module Api::V1
     end
 
     private
-    
+
     def current_user
       @user
     end

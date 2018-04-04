@@ -8,4 +8,8 @@ module Serializable
   def serialize_agent(agent)
     Api::V1::AgentSerializer.new(agent)
   end
+
+  def serialize_property(property)
+    Api::V1::PropertySerializer.new(property)
+  end
 end
