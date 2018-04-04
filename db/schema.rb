@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180329221823) do
+ActiveRecord::Schema.define(version: 20180402182344) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -37,6 +37,10 @@ ActiveRecord::Schema.define(version: 20180329221823) do
     t.integer "status"
     t.index ["email"], name: "index_agents_on_email", unique: true
     t.index ["reset_password_token"], name: "index_agents_on_reset_password_token", unique: true
+  end
+
+  create_table "cities", force: :cascade do |t|
+    t.string "name"
   end
 
   create_table "customers", force: :cascade do |t|
@@ -79,16 +83,23 @@ ActiveRecord::Schema.define(version: 20180329221823) do
     t.index ["reset_password_token"], name: "index_managers_on_reset_password_token", unique: true
   end
 
+  create_table "neightborhoods", force: :cascade do |t|
+    t.string "name"
+    t.integer "city_id"
+  end
+
   create_table "properties", force: :cascade do |t|
-    t.string "name", null: false
-    t.string "neighborhood", null: false
-    t.string "p_street", null: false
-    t.string "number", null: false
-    t.string "s_street", null: false
-    t.string "details", null: false
-    t.string "additional_reference", null: false
-    t.string "phone", null: false
-    t.string "cell_phone", null: false
+    t.string "name"
+    t.integer "city_id"
+    t.integer "neightborhood_id"
+    t.string "p_street"
+    t.string "number"
+    t.string "s_street"
+    t.string "details"
+    t.string "additional_reference"
+    t.string "phone"
+    t.string "cell_phone"
+    t.integer "customer_id"
   end
 
 end
