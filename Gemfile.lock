@@ -57,6 +57,7 @@ GEM
     arel (8.0.0)
     bcrypt (3.1.11)
     bindex (0.5.0)
+    bson (4.3.0)
     builder (3.2.3)
     byebug (10.0.2)
     coffee-rails (4.2.2)
@@ -287,6 +288,7 @@ PLATFORMS
 
 DEPENDENCIES
   activeadmin
+  bson (~> 4.3)
   byebug
   coffee-rails (~> 4.2)
   database_cleaner

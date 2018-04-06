@@ -31,6 +31,9 @@ gem 'sendgrid-ruby', '~> 5.2'
 # Login with facebook
 gem 'koala', '~> 3.0'
 
+# Create hashed ids
+gem 'bson', '~> 4.3'
+
 group :development, :test do
   # Call 'byebug' anywhere in the code to
   # stop execution and get a debugger console

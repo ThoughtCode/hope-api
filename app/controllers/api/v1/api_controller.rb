@@ -18,6 +18,10 @@ module Api::V1
 
     private
 
+    def current_user
+      @user
+    end
+
     def disable_access_by_tk
       authenticate_or_request_with_http_token do |token|
         @user = find_by_token(token)

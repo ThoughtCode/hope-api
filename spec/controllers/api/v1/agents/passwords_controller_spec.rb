@@ -12,16 +12,16 @@ RSpec.describe Api::V1::Agents::PasswordsController, type: :controller do
         email: agent.email
       } }
       expect(response.status).to eq(200)
-      expect(JSON.parse(response.body)).to eq('message' => 'Reset password '\
-        'instructions have been sent to email')
+      expect(JSON.parse(response.body)).to include('message' => 'Reset '\
+        'password instructions have been sent to email')
     end
     it 'return 404 with message if no user' do
       post :create, params: { agent: {
         email: Faker::Internet.email
       } }
       expect(response.status).to eq(404)
-      expect(JSON.parse(response.body)).to eq('message' => 'Email does not '\
-        'exist')
+      expect(JSON.parse(response.body)).to include('message' => 'Email does '\
+        'not exist')
     end
   end
 
@@ -34,8 +34,8 @@ RSpec.describe Api::V1::Agents::PasswordsController, type: :controller do
         password_confirmation: '123456'
       }
       expect(response.status).to eq(200)
-      expect(JSON.parse(response.body)).to eq('message' => 'Reset password '\
-        'successfully')
+      expect(JSON.parse(response.body)).to include('message' => 'Reset '\
+        'password successfully')
     end
     it 'return 404 with errors' do
       post :update, params: {

@@ -25,7 +25,9 @@ Rails.application.routes.draw do
         end
       end
 
+      
       namespace :customers do
+        resources :properties, except: [:new, :edit]
         devise_scope :customer do
           post 'signup', to: 'registrations#create'
           post 'facebook', to: 'providers#facebook'

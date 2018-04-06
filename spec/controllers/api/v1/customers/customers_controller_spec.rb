@@ -1,6 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe Api::V1::Customers::CustomersController, type: :controller do
+  include Serializable
   before(:each) do
     @request.env['devise.mapping'] = Devise.mappings[:customer]
   end
@@ -12,16 +13,18 @@ RSpec.describe Api::V1::Customers::CustomersController, type: :controller do
       put :update, params: { customer: {
         access_token: customer.access_token,
         email: customer.email,
-        password: '123456',
-        first_name: Faker::Name.first_name,
-        last_name: Faker::Name.last_name,
-        national_id: '123456',
-        cell_phone: '123456',
-        birthday: Faker::Date.birthday(18, 65)
+        password: customer.password,
+        first_name: customer.first_name,
+        last_name: customer.last_name,
+        national_id: customer.national_id,
+        cell_phone: customer.cell_phone,
+        birthday: customer.birthday
       } }
       expect(response.status).to eq(200)
-      expect(JSON.parse(response.body)).to eq('message' => 'Customer have been'\
-        ' updated successfully.')
+      expect(JSON.parse(response.body)).to eq(
+        'message' => 'Customer have been updated successfully.',
+        'data' => serialize_customer(customer).as_json
+      )
     end
     it 'return 422 if invalid params' do
       customer.acquire_access_token!
@@ -46,7 +49,7 @@ RSpec.describe Api::V1::Customers::CustomersController, type: :controller do
         email: Faker::Internet.email
       } }
       expect(response.status).to eq(404)
-      expect(JSON.parse(response.body)).to eq('message' => 'Customer not '\
+      expect(JSON.parse(response.body)).to include('message' => 'Customer not '\
         'found.')
     end
   end
