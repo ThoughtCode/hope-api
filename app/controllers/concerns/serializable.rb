@@ -12,4 +12,8 @@ module Serializable
   def serialize_property(property)
     Api::V1::PropertySerializer.new(property)
   end
+
+  def serialize_job(job)
+    Api::V1::JobSerializer.new(job)
+  end
 end

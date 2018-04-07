@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180404153502) do
+ActiveRecord::Schema.define(version: 20180406182012) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -66,6 +66,20 @@ ActiveRecord::Schema.define(version: 20180404153502) do
     t.index ["reset_password_token"], name: "index_customers_on_reset_password_token", unique: true
   end
 
+  create_table "job_details", force: :cascade do |t|
+    t.integer "job_id"
+    t.integer "service_id"
+    t.integer "value"
+  end
+
+  create_table "jobs", force: :cascade do |t|
+    t.integer "customer_id"
+    t.integer "property_id"
+    t.integer "agent_id", null: false
+    t.integer "service_id"
+    t.integer "status"
+  end
+
   create_table "managers", force: :cascade do |t|
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
@@ -100,6 +114,19 @@ ActiveRecord::Schema.define(version: 20180404153502) do
     t.string "cell_phone"
     t.integer "customer_id"
     t.string "hashed_id"
+  end
+
+  create_table "service_types", force: :cascade do |t|
+    t.string "name"
+  end
+
+  create_table "services", force: :cascade do |t|
+    t.integer "service_type_id"
+    t.integer "type_service"
+    t.string "name"
+    t.boolean "quantity"
+    t.integer "value"
+    t.float "price"
   end
 
 end
