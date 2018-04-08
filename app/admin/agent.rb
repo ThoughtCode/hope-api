@@ -24,7 +24,7 @@ ActiveAdmin.register Agent do
   filter :status
 
   form do |f|
-    f.semantic_errors * f.object.errors.keys
+    f.semantic_errors *f.object.errors.keys
     f.inputs 'Agent Details' do
       f.input :email
       f.input :password
