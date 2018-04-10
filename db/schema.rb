@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180406182012) do
+ActiveRecord::Schema.define(version: 20180409223605) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -70,14 +70,17 @@ ActiveRecord::Schema.define(version: 20180406182012) do
     t.integer "job_id"
     t.integer "service_id"
     t.integer "value"
+    t.float "time"
+    t.float "price_total"
   end
 
   create_table "jobs", force: :cascade do |t|
-    t.integer "customer_id"
     t.integer "property_id"
-    t.integer "agent_id", null: false
-    t.integer "service_id"
+    t.float "duration"
+    t.date "date"
     t.integer "status"
+    t.integer "agent_id"
+    t.float "total"
   end
 
   create_table "managers", force: :cascade do |t|
@@ -125,7 +128,7 @@ ActiveRecord::Schema.define(version: 20180406182012) do
     t.integer "type_service"
     t.string "name"
     t.boolean "quantity"
-    t.integer "value"
+    t.float "time"
     t.float "price"
   end
 

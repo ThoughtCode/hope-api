@@ -5,7 +5,7 @@ class CreateServices < ActiveRecord::Migration[5.1]
       t.integer :type_service
       t.string :name
       t.boolean :quantity
-      t.integer :value
+      t.float :time
       t.float :price
     end
   end
