@@ -14,10 +14,11 @@ class Api::V1::Customers::ProvidersController < Api::V1::ApiController
       customer.save
     else
       customer = Customer.new(@data)
-      customer.acquire_access_token!
       if customer.save
+        customer.acquire_access_token!
         set_response(:ok, 'User successfully created!',
                      serialize_customer(customer))
+        customer.save
       else
         set_response(:unprocessable_entity,
                      customer.errors)
