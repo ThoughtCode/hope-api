@@ -1,49 +1,50 @@
 require 'rails_helper'
 
-RSpec.describe Api::V1::Customers::PropertiesController, type: :controller do
-  include Serializable
-
+RSpec.describe Api::V1::Customers::JobsController, type: :controller do
+  before(:each) do
+    @request.env['devise.mapping'] = Devise.mappings[:customer]
+  end
   let(:customer) { FactoryBot.create(:customer) }
   let(:neightborhood) { FactoryBot.create(:neightborhood) }
   let(:property) { FactoryBot.create(:property) }
-  let(:customer2) { FactoryBot.create(:customer) }
+  let(:service) { FactoryBot.create(:service) }
   describe 'GET #index' do
-    it 'return 200 with array of properties' do
+    it 'return 200 with array of jobs' do
       customer.acquire_access_token!
       @request.env['HTTP_AUTHORIZATION'] = "Token #{customer.access_token}"
       get :index
-      expect(JSON.parse(response.body)).to include('message' => 'Property '\
+      expect(JSON.parse(response.body)).to include('message' => 'Jobs '\
         'successfully listed.')
     end
   end
+
   describe 'POST #create' do
     it 'return 200 with message successfully' do
       customer.acquire_access_token!
       @request.env['HTTP_AUTHORIZATION'] = "Token #{customer.access_token}"
       expect do
-        post :create, params: { property:
+        post :create, params: { job:
         {
-          name: Faker::Company.name,
-          p_street: Faker::Address.street_name,
-          number: Faker::Address.building_number,
-          s_street: Faker::Address.secondary_address,
-          details: Faker::Address.street_address,
-          cell_phone: '123456789',
-          neightborhood_id: neightborhood.id
+          property_id: property.id,
+          job_details_attributes: [{
+            service_id: service.id,
+            value: 1
+          }]
         } }
-      end .to change(Property, :count).by(1)
+      end .to change(Job, :count).by(1)
       expect(response.status).to eq(200)
-      expect(JSON.parse(response.body)).to include('message' => 'Property'\
+      expect(JSON.parse(response.body)).to include('message' => 'Job'\
         ' created')
     end
     it 'return 422 with invalid params' do
       customer.acquire_access_token!
       @request.env['HTTP_AUTHORIZATION'] = "Token #{customer.access_token}"
-      post :create, params: { property: {
-        name: Faker::Company.name,
-        details: Faker::Address.street_address,
-        cell_phone: '123456789',
-        neightborhood_id: neightborhood.id
+      post :create, params: { job: {
+        property_id: property.id,
+        job_details_attributes: [{
+          service_id: '123123',
+          value: 'asdasd'
+        }]
       } }
       expect(response.status).to eq(422)
     end

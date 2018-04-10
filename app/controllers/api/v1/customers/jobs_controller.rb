@@ -13,7 +13,7 @@ class Api::V1::Customers::JobsController < Api::V1::ApiController
 
   def create
     job = Job.new(job_params)
-    job.customer = current_user
+    job.status = 0
     if job.save
       set_response(200, 'Job created', serialize_job(job))
     else
@@ -55,13 +55,12 @@ class Api::V1::Customers::JobsController < Api::V1::ApiController
     if @job
       if !check_ownership
         set_response(:ok, 'Job finded successfully.',
-                     serialize_property(@job))
+                     serialize_job(@job))
       else
         set_response(404, 'Job does not exists.')
       end
     else
-      set_response(404, 'Job does not exist.',
-                   serialize_property(@job))
+      set_response(404, 'Job does not exist.')
     end
   end
 
@@ -70,7 +69,8 @@ class Api::V1::Customers::JobsController < Api::V1::ApiController
   def job_params
     params
       .require(:job)
-      .permit(:property_id, :service_id, :status)
+      .permit(:property_id, :date,
+              job_details_attributes: %i[id service_id value _destroy])
   end
 
   def set_job
@@ -78,6 +78,6 @@ class Api::V1::Customers::JobsController < Api::V1::ApiController
   end
 
   def check_ownership
-    @job.customer != current_user
+    @job.property.customer != current_user
   end
 end

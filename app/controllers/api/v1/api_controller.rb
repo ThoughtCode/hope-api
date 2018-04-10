@@ -78,9 +78,11 @@ module Api::V1
     end
 
     def set_response(status, message, data = nil)
+      json = data.as_json
+      data_name = !data.nil? && !json['data'].empty? && !json['data'][0] ? json['data']['type'] : 'data'
       render status: status, json: {
         message: message,
-        data: data
+        data_name.to_s => data
       }
     end
 
