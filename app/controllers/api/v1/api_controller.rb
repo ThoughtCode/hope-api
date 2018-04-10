@@ -77,12 +77,15 @@ module Api::V1
       set_response(:bad_request, exception.record.errors.full_messages)
     end
 
-    def set_response(status, message, data = nil)
+    def set_response(status, message, data = [])
       json = data.as_json
-      data_name = !data.nil? && !json['data'].empty? && !json['data'][0] ? json['data']['type'] : 'data'
+      data_name = 'data'
+      data_name = if json["data"].any?
+                    json["data"]["type"]
+                  end if json.any?
       render status: status, json: {
         message: message,
-        data_name.to_s => data
+        data_name => data
       }
     end
 

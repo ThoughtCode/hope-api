@@ -156,7 +156,7 @@ Header: `[HTTP_AUTHORIZATION]` = `Token token=XXXXXXXXXXXXXX`
 
 ```json
 {
-  "message": "Property finded successfully.",
+  "message": "Property found successfully.",
   "data": Property object
 }
 

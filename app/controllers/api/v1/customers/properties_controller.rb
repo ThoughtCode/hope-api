@@ -54,14 +54,13 @@ class Api::V1::Customers::PropertiesController < Api::V1::ApiController
   def show
     if @property
       if !check_ownership
-        set_response(:ok, 'Property finded successfully.',
+        set_response(:ok, 'Property found successfully.',
                      serialize_property(@property))
       else
         set_response(404, 'Property does not exists.')
       end
     else
-      set_response(404, 'Property does not exist.',
-                   serialize_property(@property))
+      set_response(404, 'Property does not exist.')
     end
   end
 

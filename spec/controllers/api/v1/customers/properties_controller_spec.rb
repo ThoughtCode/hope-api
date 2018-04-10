@@ -66,7 +66,7 @@ RSpec.describe Api::V1::Customers::PropertiesController, type: :controller do
         } }
       expect(response.status).to eq(200)
       expect(JSON.parse(response.body)).to eq('message' => 'Updated property'\
-        ' successfully', 'data' => serialize_property(property).as_json)
+        ' successfully', 'property' => serialize_property(property).as_json)
     end
     it 'return 422 if invalid params' do
       customer = property.customer
@@ -157,8 +157,8 @@ RSpec.describe Api::V1::Customers::PropertiesController, type: :controller do
       @request.env['HTTP_AUTHORIZATION'] = "Token #{customer.access_token}"
       get :show, params: { id: property.hashed_id }
       expect(response.status).to eq(200)
-      expect(JSON.parse(response.body)).to eq('message' => 'Property finded '\
-        'successfully.', 'data' => serialize_property(property).as_json)
+      expect(JSON.parse(response.body)).to eq('message' => 'Property found '\
+        'successfully.', 'property' => serialize_property(property).as_json)
     end
     it 'reutrn 404 if not exists' do
       customer = property.customer
