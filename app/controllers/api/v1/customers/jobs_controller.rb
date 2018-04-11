@@ -54,7 +54,7 @@ class Api::V1::Customers::JobsController < Api::V1::ApiController
   def show
     if @job
       if !check_ownership
-        set_response(:ok, 'Job finded successfully.',
+        set_response(:ok, 'Job founded successfully.',
                      serialize_job(@job))
       else
         set_response(404, 'Job does not exists.')
@@ -74,7 +74,7 @@ class Api::V1::Customers::JobsController < Api::V1::ApiController
   end
 
   def set_job
-    @job = Job.find(params[:id])
+    @job = Job.find_by(id: params[:id])
   end
 
   def check_ownership

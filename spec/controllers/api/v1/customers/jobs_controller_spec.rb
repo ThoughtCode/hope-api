@@ -1,13 +1,15 @@
 require 'rails_helper'
 
 RSpec.describe Api::V1::Customers::JobsController, type: :controller do
+  include Serializable
   before(:each) do
     @request.env['devise.mapping'] = Devise.mappings[:customer]
   end
   let(:customer) { FactoryBot.create(:customer) }
-  let(:neightborhood) { FactoryBot.create(:neightborhood) }
   let(:property) { FactoryBot.create(:property) }
   let(:service) { FactoryBot.create(:service) }
+  let(:job) { FactoryBot.create(:job) }
+  let(:customer2) { FactoryBot.create(:customer) }
   describe 'GET #index' do
     it 'return 200 with array of jobs' do
       customer.acquire_access_token!
@@ -52,130 +54,121 @@ RSpec.describe Api::V1::Customers::JobsController, type: :controller do
 
   describe 'PUT #update' do
     it 'return 200 with message successfully' do
-      customer = property.customer
+      customer = job.property.customer
       customer.acquire_access_token!
       @request.env['HTTP_AUTHORIZATION'] = "Token #{customer.access_token}"
-      put :update, params: { id: property.hashed_id, property:
+      put :update, params: { id: job.id, job:
         {
-          name: property.name,
-          p_street: property.p_street,
-          number: property.number,
-          s_street: property.s_street,
-          details: property.details,
-          cell_phone: property.cell_phone,
-          neightborhood_id: property.neightborhood.id
+          property_id: job.property.id,
+          job_details_attributes: [{
+            service_id: service.id,
+            value: 1
+          }]
         } }
       expect(response.status).to eq(200)
-      expect(JSON.parse(response.body)).to eq('message' => 'Updated property'\
-        ' successfully', 'data' => serialize_property(property).as_json)
+      expect(JSON.parse(response.body)).to include('message' => 'Updated job'\
+        ' successfully')
     end
     it 'return 422 if invalid params' do
-      customer = property.customer
+      customer = job.property.customer
       customer.acquire_access_token!
       @request.env['HTTP_AUTHORIZATION'] = "Token #{customer.access_token}"
-      put :update, params: { id: property.hashed_id, property:
+      put :update, params: { id: job.id, job:
         {
-          name: property.name,
-          p_street: property.p_street,
-          number: property.number,
-          s_street: property.s_street,
-          details: property.details,
-          cell_phone: property.cell_phone,
-          neightborhood_id: 'asdasds'
+          property_id: job.property.id,
+          job_details_attributes: [{
+            service_id: 'asd',
+            value: 1
+          }]
         } }
       expect(response.status).to eq(422)
     end
-    it 'return 404 if property not found' do
+    it 'return 404 if job not found' do
       customer.acquire_access_token!
       @request.env['HTTP_AUTHORIZATION'] = "Token #{customer.access_token}"
-      put :update, params: { id: 'aasdasd', property:
+      put :update, params: { id: 'asdasd', job:
         {
-          hashed_id: 'asdasd',
-          name: property.name,
-          p_street: property.p_street,
-          number: property.number,
-          s_street: property.s_street,
-          details: property.details,
-          cell_phone: property.cell_phone,
-          neightborhood_id: property.neightborhood.id
+          property_id: job.property.id,
+          job_details_attributes: [{
+            service_id: service.id,
+            value: 1
+          }]
         } }
       expect(response.status).to eq(404)
-      expect(JSON.parse(response.body)).to include('message' => 'Property does'\
+      expect(JSON.parse(response.body)).to include('message' => 'Job does'\
         ' not exists.')
     end
     it 'return 404 if property not ownership' do
       customer2.acquire_access_token!
       @request.env['HTTP_AUTHORIZATION'] = "Token #{customer2.access_token}"
-      put :update, params: { id: property.hashed_id, property:
+      put :update, params: { id: job.id, job:
         {
-          name: property.name,
-          p_street: property.p_street,
-          number: property.number,
-          s_street: property.s_street,
-          details: property.details,
-          cell_phone: property.cell_phone,
-          neightborhood_id: property.neightborhood.id
+          property_id: job.property.id,
+          job_details_attributes: [{
+            service_id: service.id,
+            value: 1
+          }]
         } }
       expect(response.status).to eq(404)
-      expect(JSON.parse(response.body)).to include('message' => 'Property does'\
+      expect(JSON.parse(response.body)).to include('message' => 'Job does'\
         ' not exists.')
     end
   end
 
   describe 'DELETE #destroy' do
     it 'return 200 if deleted succesfully' do
-      customer = property.customer
+      customer = job.property.customer
       customer.acquire_access_token!
       @request.env['HTTP_AUTHORIZATION'] = "Token #{customer.access_token}"
-      delete :destroy, params: { id: property.hashed_id }
+      delete :destroy, params: { id: job.id }
       expect(response.status).to eq(200)
-      expect(JSON.parse(response.body)).to include('message' => 'Property was '\
+      expect(JSON.parse(response.body)).to include('message' => 'Job was '\
         'deleted successfully.')
     end
     it 'reutrn 404 if not exists' do
-      customer = property.customer
+      customer = job.property.customer
       customer.acquire_access_token!
       @request.env['HTTP_AUTHORIZATION'] = "Token #{customer.access_token}"
       delete :destroy, params: { id: 'asd' }
       expect(response.status).to eq(404)
-      expect(JSON.parse(response.body)).to include('message' => 'Property does'\
+      expect(JSON.parse(response.body)).to include('message' => 'Job does'\
         ' not exists.')
     end
     it 'return 404 if not owner' do
       customer2.acquire_access_token!
       @request.env['HTTP_AUTHORIZATION'] = "Token #{customer2.access_token}"
-      delete :destroy, params: { id: property.hashed_id }
+      delete :destroy, params: { id: job.id }
       expect(response.status).to eq(404)
-      expect(JSON.parse(response.body)).to include('message' => 'Property does'\
+      expect(JSON.parse(response.body)).to include('message' => 'Job does'\
         ' not exists.')
     end
   end
 
   describe 'GET #show' do
     it 'return 200 if deleted succesfully' do
-      customer = property.customer
+      customer = job.property.customer
       customer.acquire_access_token!
       @request.env['HTTP_AUTHORIZATION'] = "Token #{customer.access_token}"
-      get :show, params: { id: property.hashed_id }
+      get :show, params: { id: job.id }
       expect(response.status).to eq(200)
-      expect(JSON.parse(response.body)).to eq('message' => 'Property finded '\
-        'successfully.', 'data' => serialize_property(property).as_json)
+      expect(JSON.parse(response.body)).to eq('message' => 'Job founded '\
+        'successfully.', 'job' => serialize_job(job).as_json)
     end
     it 'reutrn 404 if not exists' do
-      customer = property.customer
+      customer = job.property.customer
       customer.acquire_access_token!
       @request.env['HTTP_AUTHORIZATION'] = "Token #{customer.access_token}"
       get :show, params: { id: 'asd' }
       expect(response.status).to eq(404)
-      expect(JSON.parse(response.body)).to include('message' => 'Property does'\
+      expect(JSON.parse(response.body)).to include('message' => 'Job does'\
         ' not exist.')
     end
     it 'return 404 if not owner' do
       customer2.acquire_access_token!
       @request.env['HTTP_AUTHORIZATION'] = "Token #{customer2.access_token}"
-      get :show, params: { id: property.hashed_id }
+      get :show, params: { id: job.id }
       expect(response.status).to eq(404)
-      expect(JSON.parse(response.body)).to include('message' => 'Property '\
+      expect(JSON.parse(response.body)).to include('message' => 'Job '\
         'does not exists.')
     end
   end
