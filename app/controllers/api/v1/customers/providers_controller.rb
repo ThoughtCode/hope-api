@@ -9,18 +9,18 @@ class Api::V1::Customers::ProvidersController < Api::V1::ApiController
     customer = Customer.find_by_email(@data[:email])
     if customer
       customer.acquire_access_token!
-      set_response(:ok, 'Signed In successfully!',
+      set_response(200, 'Signed In successfully!',
                    serialize_customer(customer))
       customer.save
     else
       customer = Customer.new(@data)
       if customer.save
         customer.acquire_access_token!
-        set_response(:ok, 'User successfully created!',
+        set_response(200, 'User successfully created!',
                      serialize_customer(customer))
         customer.save
       else
-        set_response(:unprocessable_entity,
+        set_response(422,
                      customer.errors)
         return
       end
@@ -37,7 +37,7 @@ class Api::V1::Customers::ProvidersController < Api::V1::ApiController
     if params[:customer].present?
       return if params[:customer][:facebook_access_token].present?
     end
-    set_response(:bad_request, 'Missing facebook Access Token!')
+    set_response(400, 'Missing facebook Access Token!')
   end
 
   def prepare_data

@@ -5,14 +5,14 @@ class Api::V1::Agents::AgentsController < Api::V1::ApiController
   def update
     if @agent
       if @agent.update(agent_params.except(:access_token))
-        set_response(:ok,
+        set_response(200,
                      'Agent have been updated successfully.',
                      serialize_agent(@agent))
       else
-        set_response(:unprocessable_entity, @agent.errors)
+        set_response(422, @agent.errors)
       end
     else
-      set_response(:not_found, 'Agent not found.')
+      set_response(404, 'Agent not found.')
     end
   end
 

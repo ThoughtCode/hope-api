@@ -28,7 +28,7 @@ class Api::V1::Customers::JobsController < Api::V1::ApiController
           set_response(200, 'Updated job successfully',
                        serialize_job(@job))
         else
-          set_response(:unprocessable_entity, @job.errors)
+          set_response(422, @job.errors)
         end
       else
         set_response(404, 'Job does not exists.')
@@ -42,7 +42,7 @@ class Api::V1::Customers::JobsController < Api::V1::ApiController
     if @job
       if !check_ownership
         @job.destroy
-        set_response(:ok, 'Job was deleted successfully.')
+        set_response(200, 'Job was deleted successfully.')
       else
         set_response(404, 'Job does not exists.')
       end
@@ -54,7 +54,7 @@ class Api::V1::Customers::JobsController < Api::V1::ApiController
   def show
     if @job
       if !check_ownership
-        set_response(:ok, 'Job found successfully.',
+        set_response(200, 'Job found successfully.',
                      serialize_job(@job))
       else
         set_response(404, 'Job does not exists.')

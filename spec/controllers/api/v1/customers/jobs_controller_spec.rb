@@ -151,7 +151,7 @@ RSpec.describe Api::V1::Customers::JobsController, type: :controller do
       @request.env['HTTP_AUTHORIZATION'] = "Token #{customer.access_token}"
       get :show, params: { id: job.id }
       expect(response.status).to eq(200)
-      expect(JSON.parse(response.body)).to eq('message' => 'Job founded '\
+      expect(JSON.parse(response.body)).to eq('message' => 'Job found '\
         'successfully.', 'job' => serialize_job(job).as_json)
     end
     it 'reutrn 404 if not exists' do
