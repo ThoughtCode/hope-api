@@ -23,7 +23,7 @@ RSpec.describe Api::V1::Customers::CustomersController, type: :controller do
       expect(response.status).to eq(200)
       expect(JSON.parse(response.body)).to eq(
         'message' => 'Customer have been updated successfully.',
-        'data' => serialize_customer(customer).as_json
+        'customer' => serialize_customer(customer).as_json
       )
     end
     it 'return 422 if invalid params' do
