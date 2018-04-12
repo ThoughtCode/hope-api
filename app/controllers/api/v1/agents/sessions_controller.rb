@@ -6,10 +6,10 @@ class Api::V1::Agents::SessionsController < Api::V1::ApiController
   def create
     if @user && @user.valid_password?(params[:agent][:password])
       if @user.acquire_access_token!
-        set_response(:ok, 'Signed in successfully!', serialize_agent(@user))
+        set_response(200, 'Signed in successfully!', serialize_agent(@user))
       else
         # :nocov:
-        set_response(:unprocessable_entity, 'Could not get or '\
+        set_response(422, 'Could not get or '\
           'generate an access token after successful login')
         # :nocov:
       end
@@ -20,10 +20,10 @@ class Api::V1::Agents::SessionsController < Api::V1::ApiController
 
   def destroy
     if @user.update_attributes(access_token: nil)
-      set_response(:ok, 'Sign out successful')
+      set_response(200, 'Sign out successful')
     else
       # :nocov:
-      set_response(:unprocessable_entity, 'Could not'\
+      set_response(422, 'Could not'\
         'release the access token after successful logout')
       # :nocov:
     end

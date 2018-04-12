@@ -8,9 +8,9 @@ module Api::V1
     def create
       agent = Agent.new(agent_params)
       if agent.save
-        set_response(:ok, 'Signed Up successfully!', serialize_agent(agent))
+        set_response(200, 'Signed Up successfully!', serialize_agent(agent))
       else
-        set_response(:unprocessable_entity, agent.errors)
+        set_response(422, agent.errors)
       end
     end
 
@@ -25,7 +25,7 @@ module Api::V1
 
     def ensure_params
       return if params[:agent].present?
-      set_response(:unprocessable_entity, 'Missing params!')
+      set_response(422, 'Missing params!')
     end
 
     def set_response(status, message, data = nil)

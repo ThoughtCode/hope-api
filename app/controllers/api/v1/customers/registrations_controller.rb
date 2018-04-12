@@ -8,11 +8,11 @@ module Api::V1
       customer = Customer.new(customer_params)
       if customer.save
         customer.acquire_access_token!
-        set_response(:ok,
+        set_response(200,
                      'Signed Up successfully!',
                      serialize_customer(customer))
       else
-        set_response(:unprocessable_entity, customer.errors)
+        set_response(422, customer.errors)
       end
     end
 

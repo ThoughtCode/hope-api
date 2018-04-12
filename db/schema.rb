@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180404153502) do
+ActiveRecord::Schema.define(version: 20180409223605) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -66,6 +66,23 @@ ActiveRecord::Schema.define(version: 20180404153502) do
     t.index ["reset_password_token"], name: "index_customers_on_reset_password_token", unique: true
   end
 
+  create_table "job_details", force: :cascade do |t|
+    t.integer "job_id"
+    t.integer "service_id"
+    t.integer "value"
+    t.float "time"
+    t.float "price_total"
+  end
+
+  create_table "jobs", force: :cascade do |t|
+    t.integer "property_id"
+    t.float "duration"
+    t.date "date"
+    t.integer "status"
+    t.integer "agent_id"
+    t.float "total"
+  end
+
   create_table "managers", force: :cascade do |t|
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
@@ -100,6 +117,19 @@ ActiveRecord::Schema.define(version: 20180404153502) do
     t.string "cell_phone"
     t.integer "customer_id"
     t.string "hashed_id"
+  end
+
+  create_table "service_types", force: :cascade do |t|
+    t.string "name"
+  end
+
+  create_table "services", force: :cascade do |t|
+    t.integer "service_type_id"
+    t.integer "type_service"
+    t.string "name"
+    t.boolean "quantity"
+    t.float "time"
+    t.float "price"
   end
 
 end

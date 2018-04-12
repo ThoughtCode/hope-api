@@ -5,14 +5,14 @@ class Api::V1::Customers::CustomersController < Api::V1::ApiController
   def update
     if @customer
       if @customer.update(customer_params.except(:access_token))
-        set_response(:ok,
+        set_response(200,
                      'Customer have been updated successfully.',
                      serialize_customer(@customer))
       else
-        set_response(:unprocessable_entity, @customer.errors)
+        set_response(422, @customer.errors)
       end
     else
-      set_response(:not_found, 'Customer not found.')
+      set_response(404, 'Customer not found.')
     end
   end
 

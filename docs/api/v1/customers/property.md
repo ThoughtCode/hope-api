@@ -2,37 +2,15 @@
 
 Table of Contents:
 
-- [Index](#index)
 - [Property Object Example](#property-object-example)
+- [Index](#index)
 - [Create](#create)
-
-# Index
-
-Method: `GET`
-
-Header: `[HTTP_AUTHORIZATION]` = `Token token=XXXXXXXXXXXXXX`
-
-URI: `/api/v1/customers/properties`
-
-## Return example on success, 200
-
-```json
-{
-  "message": "Property successfully listed.",
-  "data": [Returns an array of `Property` object.]
-}
-
-```
-
-## Return example on failure, 401
-
-```
-  Unauthorized
-
-```
+- [Update](#update)
+- [Destroy](#destroy)
+- [Show](#show)
 
 
-## Property object example
+# Property object example
 
 ```json
 {
@@ -59,6 +37,30 @@ URI: `/api/v1/customers/properties`
   ]
 }
 ```
+# Index
+
+Method: `GET`
+
+Header: `[HTTP_AUTHORIZATION]` = `Token token=XXXXXXXXXXXXXX`
+
+URI: `/api/v1/customers/properties`
+
+## Return example on success, 200
+
+```json
+{
+  "message": "Property successfully listed.",
+  "data": [Returns an array of `Property` object.]
+}
+
+```
+
+## Return example on failure, 401
+
+```
+  Unauthorized
+
+```
 
 # Create
 
@@ -73,7 +75,7 @@ Header: `[HTTP_AUTHORIZATION]` = `Token token=XXXXXXXXXXXXXX`
 ```json
 {
   "message": "Property created",
-  Property object
+  "property": Property object
 }
 
 ```
@@ -97,7 +99,7 @@ Header: `[HTTP_AUTHORIZATION]` = `Token token=XXXXXXXXXXXXXX`
 ```json
 {
   "message": "Updated property successfully",
-  "data": Property object
+  "property": Property object
 }
 
 ```
@@ -113,7 +115,7 @@ Header: `[HTTP_AUTHORIZATION]` = `Token token=XXXXXXXXXXXXXX`
 ```json
 {
   "message": "Property does not exists.",
-  "data": null
+  "data": []
 }
 ```
 
@@ -130,7 +132,7 @@ Header: `[HTTP_AUTHORIZATION]` = `Token token=XXXXXXXXXXXXXX`
 ```json
 {
   "message": "Property was deleted successfully.",
-  "data": null
+  "data": []
 }
 
 ```
@@ -140,7 +142,7 @@ Header: `[HTTP_AUTHORIZATION]` = `Token token=XXXXXXXXXXXXXX`
 ```json
 {
   "message": "Property does not exists.",
-  "data": null
+  "data": []
 }
 ```
 
@@ -156,8 +158,8 @@ Header: `[HTTP_AUTHORIZATION]` = `Token token=XXXXXXXXXXXXXX`
 
 ```json
 {
-  "message": "Property finded successfully.",
-  "data": Property object
+  "message": "Property found successfully.",
+  "property": Property object
 }
 
 ```
@@ -167,6 +169,6 @@ Header: `[HTTP_AUTHORIZATION]` = `Token token=XXXXXXXXXXXXXX`
 ```json
 {
   "message": "Property does not exists.",
-  "data": null
+  "data": []
 }
 ```

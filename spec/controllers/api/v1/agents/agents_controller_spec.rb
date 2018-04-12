@@ -22,7 +22,7 @@ RSpec.describe Api::V1::Agents::AgentsController, type: :controller do
       } }
       expect(response.status).to eq(200)
       expect(JSON.parse(response.body)).to eq('message' => 'Agent have been'\
-        ' updated successfully.', 'data' => serialize_agent(agent).as_json)
+        ' updated successfully.', 'agent' => serialize_agent(agent).as_json)
     end
     it 'return 422 if invalid params' do
       agent.acquire_access_token!
@@ -48,7 +48,7 @@ RSpec.describe Api::V1::Agents::AgentsController, type: :controller do
       } }
       expect(response.status).to eq(404)
       expect(JSON.parse(response.body)).to eq('message' => 'Agent not '\
-        'found.', 'data' => nil)
+        'found.', 'data' => [])
     end
   end
 end

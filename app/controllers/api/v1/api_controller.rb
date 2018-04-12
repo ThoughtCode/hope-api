@@ -26,7 +26,7 @@ module Api::V1
       authenticate_or_request_with_http_token do |token|
         @user = find_by_token(token)
         unless @user
-          set_response(:unauthorized,
+          set_response(401,
                        'HTTP Token: Access denied.')
         end
         @user
@@ -46,41 +46,44 @@ module Api::V1
       cors_set_access_control_headers
       Rails.logger.error("ERROR api call: #{exception.message}")
       Rails.logger.error(exception.backtrace.join("\n"))
-      set_response(:internal_server_error, exception.message)
+      set_response(500, exception.message)
     end
 
     def render_unauthorized
       # For some reason on error the headers are not set
       # Setting it manually
       cors_set_access_control_headers
-      set_response(:unauthorized, 'email/password mismatch')
+      set_response(401, 'email/password mismatch')
     end
 
     def render_forbidden
       # For some reason on error the headers are not set
       # Setting it manually
       cors_set_access_control_headers
-      set_response(:forbidden, 'forbidden')
+      set_response(403, 'forbidden')
     end
 
     def record_not_found(_exception)
       # For some reason on error the headers are not set
       # Setting it manually
       cors_set_access_control_headers
-      set_response(:not_found, 'record not found')
+      set_response(404, 'record not found')
     end
 
     def active_model_errors(_exception)
       # For some reason on error the headers are not set
       # Setting it manually
       cors_set_access_control_headers
-      set_response(:bad_request, exception.record.errors.full_messages)
+      set_response(400, exception.record.errors.full_messages)
     end
 
-    def set_response(status, message, data = nil)
+    def set_response(status, message, data = [])
+      json = data.as_json
+      data_name = 'data'
+      data_name = (json['data']['type'] if json['data'].any?) if json.any?
       render status: status, json: {
         message: message,
-        data: data
+        data_name => data
       }
     end
 

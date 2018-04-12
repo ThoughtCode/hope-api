@@ -28,7 +28,7 @@ class Api::V1::Customers::PropertiesController < Api::V1::ApiController
           set_response(200, 'Updated property successfully',
                        serialize_property(@property))
         else
-          set_response(:unprocessable_entity, @property.errors)
+          set_response(422, @property.errors)
         end
       else
         set_response(404, 'Property does not exists.')
@@ -42,7 +42,7 @@ class Api::V1::Customers::PropertiesController < Api::V1::ApiController
     if @property
       if !check_ownership
         @property.destroy
-        set_response(:ok, 'Property was deleted successfully.')
+        set_response(200, 'Property was deleted successfully.')
       else
         set_response(404, 'Property does not exists.')
       end
@@ -54,14 +54,13 @@ class Api::V1::Customers::PropertiesController < Api::V1::ApiController
   def show
     if @property
       if !check_ownership
-        set_response(:ok, 'Property finded successfully.',
+        set_response(200, 'Property found successfully.',
                      serialize_property(@property))
       else
         set_response(404, 'Property does not exists.')
       end
     else
-      set_response(404, 'Property does not exist.',
-                   serialize_property(@property))
+      set_response(404, 'Property does not exist.')
     end
   end
 
