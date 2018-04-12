@@ -16,4 +16,12 @@ module Serializable
   def serialize_job(job)
     Api::V1::JobSerializer.new(job)
   end
+
+  def serialize_service_type(service_type)
+    Api::V1::ServiceTypeSerializer.new(service_type)
+  end
+
+  def serialize_service(service)
+    Api::V1::ServiceSerializer.new(service)
+  end
 end
