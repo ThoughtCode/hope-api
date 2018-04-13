@@ -8,7 +8,6 @@ module Api::V1
     rescue_from ActiveRecord::RecordNotFound, with: :record_not_found
     rescue_from ActiveRecord::RecordInvalid, with: :active_model_errors
     before_action :cors_set_access_control_headers
-    before_action :disable_access_by_tk, except: %i[cors_default_options_check]
 
     def cors_default_options_check
       options = request.method == 'OPTIONS'
@@ -88,17 +87,6 @@ module Api::V1
         message: message,
         data_name => data
       }
-    end
-
-    def cors_set_access_control_headers
-      headers['Access-Control-Allow-Origin'] = '*'
-      headers['Access-Control-Allow-Methods'] = 'post, put, delete, get, patch'\
-      ', options'
-      headers['Access-Control-Request-Method'] = '*'
-      headers['Access-Control-Allow-Headers'] = 'Origin, X-Requested-With,'\
-        'Content-Type, Accept, Authorization, X-App-Version,'\
-        'X-Device-Platform, X-Device-Name, X-Device-UUID, X-Total-Pages'
-      headers['Access-Control-Expose-Headers'] = 'X-Total-Pages'
     end
   end
 end
