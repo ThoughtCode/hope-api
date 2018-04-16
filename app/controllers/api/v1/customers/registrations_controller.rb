@@ -1,6 +1,7 @@
 module Api::V1
   class Customers::RegistrationsController < Devise::RegistrationsController
     include Serializable
+    include Responsable
     skip_before_action :verify_authenticity_token
 
     # Sign Up
@@ -22,13 +23,6 @@ module Api::V1
       params.require(:customer)
             .permit(:first_name, :last_name, :email, :password,
                     :password_confirmation)
-    end
-
-    def set_response(status, message, data = nil)
-      render status: status, json: {
-        message: message,
-        data: data
-      }
     end
   end
 end

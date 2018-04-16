@@ -7,7 +7,7 @@ module Api::V1
     rescue_from ActiveRecord, with: :render_internal_server_error
     rescue_from ActiveRecord::RecordNotFound, with: :record_not_found
     rescue_from ActiveRecord::RecordInvalid, with: :active_model_errors
-    before_action :cors_set_access_control_headers
+    before_action :disable_access_by_tk
 
     def cors_default_options_check
       options = request.method == 'OPTIONS'
