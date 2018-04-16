@@ -1,7 +1,6 @@
 class Api::V1::Customers::SessionsController < Api::V1::ApiController
   include Serializable
   skip_before_action :disable_access_by_tk, only: [:create]
-  # skip_before_action :verify_authenticity_token
   before_action :set_customer, only: [:create]
 
   def create

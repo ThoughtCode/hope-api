@@ -5,6 +5,8 @@ git_source(:github) do |repo_name|
   "https://github.com/#{repo_name}.git"
 end
 
+ruby '2.4.1'
+
 gem 'coffee-rails', '~> 4.2'
 gem 'dotenv-rails'
 gem 'jbuilder', '~> 2.5'
