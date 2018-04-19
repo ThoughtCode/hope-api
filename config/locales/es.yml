@@ -5,6 +5,12 @@ es:
       long: "%m/%d/%Y"
       short: "%-d de %b"
   activerecord:
+    errors:
+      models:
+        service:
+          attributes:
+            type_service:
+              inclusion: "Debe seleccionar un tipo de servicio"
     models:
       city:
         one: "Ciudad"
@@ -18,6 +24,15 @@ es:
       neightborhoods:
         one: "Barrio"
         other: "Barrios"
+      manager:
+        one: "Administrador"
+        other: "Administradores"
+      service_type:
+        one: "Tipo de Servicio"
+        other: "Tipos de Servicio"
+      service:
+        one: "Servicio"
+        other: "Servicios"
     attributes:
       city:
         name: "Nombre"
