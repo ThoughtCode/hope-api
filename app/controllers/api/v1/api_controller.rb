@@ -42,7 +42,6 @@ module Api::V1
     def render_internal_server_error(exception)
       # For some reason on error the headers are not set
       # Setting it manually
-      cors_set_access_control_headers
       Rails.logger.error("ERROR api call: #{exception.message}")
       Rails.logger.error(exception.backtrace.join("\n"))
       set_response(500, exception.message)
@@ -51,28 +50,24 @@ module Api::V1
     def render_unauthorized
       # For some reason on error the headers are not set
       # Setting it manually
-      cors_set_access_control_headers
       set_response(401, 'email/password mismatch')
     end
 
     def render_forbidden
       # For some reason on error the headers are not set
       # Setting it manually
-      cors_set_access_control_headers
       set_response(403, 'forbidden')
     end
 
     def record_not_found(_exception)
       # For some reason on error the headers are not set
       # Setting it manually
-      cors_set_access_control_headers
       set_response(404, 'record not found')
     end
 
     def active_model_errors(_exception)
       # For some reason on error the headers are not set
       # Setting it manually
-      cors_set_access_control_headers
       set_response(400, exception.record.errors.full_messages)
     end
 
