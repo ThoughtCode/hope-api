@@ -6,7 +6,30 @@ es:
       short: "%-d de %b"
   activerecord:
     errors:
+      messages:
+        blank: "Los campos no pueden estar vacios"
       models:
+        job_detail:
+          attributes:
+            service:
+              required: "El servicio debe existir"
+        job:
+          attributes:
+            property:
+              required: "La propiedad debe existir"
+        property:
+          attributes:
+            neightborhood:
+              required: "El barrio debe existir"
+        customer:
+          attributes:
+            password:
+              too_short: "La contraseña debe ser mayor a %{count} caracteres"
+            password_confirmation:
+              confirmation: "Las contraseñas no coinciden"
+            email:
+              taken: "El correo ya ha sido tomado"
+              invalid: "El correo es invalido"
         service:
           attributes:
             type_service:
