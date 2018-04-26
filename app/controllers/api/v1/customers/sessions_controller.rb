@@ -4,7 +4,7 @@ class Api::V1::Customers::SessionsController < Api::V1::ApiController
   before_action :set_customer, only: [:create]
 
   def create
-    if @user && @user.valid_password?(params[:customer][:password])
+    if @user&.valid_password?(params[:customer][:password])
       if @user.acquire_access_token!
         set_response(200, 'Signed In successfully!', serialize_customer(@user))
       else
