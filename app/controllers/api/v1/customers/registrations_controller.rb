@@ -9,6 +9,7 @@ module Api::V1
       customer = Customer.new(customer_params)
       if customer.save
         customer.acquire_access_token!
+        CustomerWelcomeMailer.send_welcome_email(customer).deliver
         set_response(200,
                      'Signed Up successfully!',
                      serialize_customer(customer))
