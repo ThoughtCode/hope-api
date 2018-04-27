@@ -19,7 +19,7 @@ RSpec.describe Api::V1::Customers::CustomersController, type: :controller do
         national_id: customer.national_id,
         cell_phone: customer.cell_phone,
         birthday: customer.birthday,
-        file: Rack::Test::UploadedFile.new(
+        avatar: Rack::Test::UploadedFile.new(
           Rails.root.join('spec', 'support', 'image', 'test.jpg'), 'image/jpeg'
         )
       } }
@@ -41,7 +41,7 @@ RSpec.describe Api::V1::Customers::CustomersController, type: :controller do
         national_id: '123456',
         cell_phone: '123456',
         birthday: Faker::Date.birthday(18, 65),
-        file: Rack::Test::UploadedFile.new(
+        avatar: Rack::Test::UploadedFile.new(
           Rails.root.join('spec', 'support', 'image', 'test.jpg'), 'image/jpeg'
         )
       } }

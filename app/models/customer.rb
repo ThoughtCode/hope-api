@@ -7,4 +7,11 @@ class Customer < ApplicationRecord
   has_many :properties
   has_many :jobs, through: :properties
   mount_uploader :avatar, AvatarUploader
+  after_create :send_welcome_email
+
+  private
+
+  def send_welcome_email
+    CustomerWelcomeMailer.send_welcome_email(self).deliver
+  end
 end

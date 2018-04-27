@@ -3,8 +3,7 @@ class Api::V1::Customers::CustomersController < Api::V1::ApiController
   before_action :set_customer, only: [:update]
 
   def update
-    @customer.avatar = customer_params[:file]
-    if @customer.update(customer_params.except(:file))
+    if @customer.update(customer_params)
       set_response(200,
                    'Customer have been updated successfully.',
                    serialize_customer(@customer))
@@ -17,7 +16,7 @@ class Api::V1::Customers::CustomersController < Api::V1::ApiController
 
   def customer_params
     params.require(:customer)
-          .permit(:first_name, :last_name, :email, :password, :file,
+          .permit(:first_name, :last_name, :email, :password, :avatar,
                   :password_confirmation, :national_id, :cell_phone, :birthday)
   end
 
