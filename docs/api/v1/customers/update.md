@@ -26,7 +26,8 @@ Body:
     "password": "XXXXXX",
     "national_id": "123456",
     "cell_phone": "1234567890",
-    "birthdday": "xx/xx/xxxx"
+    "birthdday": "xx/xx/xxxx",
+    "file": File
   }
 }
 ```
@@ -47,10 +48,10 @@ Body:
 }
 ```
 
-## Return example on failure, 404
+## Return example on failure, 401
 
 ```json
 {
-  "message": "Customer not found."
+  "message": "HTTP Token: Access denied."
 }
 ```

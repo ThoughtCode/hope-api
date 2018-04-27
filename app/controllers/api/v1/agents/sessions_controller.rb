@@ -4,7 +4,7 @@ class Api::V1::Agents::SessionsController < Api::V1::ApiController
   before_action :set_agent, only: [:create]
 
   def create
-    if @user && @user.valid_password?(params[:agent][:password])
+    if @user&.valid_password?(params[:agent][:password])
       if @user.acquire_access_token!
         set_response(200, 'Signed in successfully!', serialize_agent(@user))
       else

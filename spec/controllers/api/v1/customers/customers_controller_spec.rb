@@ -18,7 +18,10 @@ RSpec.describe Api::V1::Customers::CustomersController, type: :controller do
         last_name: customer.last_name,
         national_id: customer.national_id,
         cell_phone: customer.cell_phone,
-        birthday: customer.birthday
+        birthday: customer.birthday,
+        avatar: Rack::Test::UploadedFile.new(
+          Rails.root.join('spec', 'support', 'image', 'test.jpg'), 'image/jpeg'
+        )
       } }
       expect(response.status).to eq(200)
       expect(JSON.parse(response.body)).to eq(
@@ -37,20 +40,23 @@ RSpec.describe Api::V1::Customers::CustomersController, type: :controller do
         last_name: Faker::Name.last_name,
         national_id: '123456',
         cell_phone: '123456',
-        birthday: Faker::Date.birthday(18, 65)
+        birthday: Faker::Date.birthday(18, 65),
+        avatar: Rack::Test::UploadedFile.new(
+          Rails.root.join('spec', 'support', 'image', 'test.jpg'), 'image/jpeg'
+        )
       } }
       expect(response.status).to eq(422)
     end
     it 'return 404 with message if no user' do
       customer.acquire_access_token!
-      @request.env['HTTP_AUTHORIZATION'] = "Token #{customer.access_token}"
+      @request.env['HTTP_AUTHORIZATION'] = 'Token asdasd'
       put :update, params: { customer: {
-        access_token: 'asdasd',
         email: Faker::Internet.email
       } }
-      expect(response.status).to eq(404)
-      expect(JSON.parse(response.body)).to include('message' => 'Customer not '\
-        'found.')
+      expect(response.status).to eq(401)
+      expect(JSON.parse(response.body)).to include(
+        'message' => 'HTTP Token: Access denied.'
+      )
     end
   end
 end

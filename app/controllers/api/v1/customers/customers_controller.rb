@@ -3,16 +3,12 @@ class Api::V1::Customers::CustomersController < Api::V1::ApiController
   before_action :set_customer, only: [:update]
 
   def update
-    if @customer
-      if @customer.update(customer_params.except(:access_token))
-        set_response(200,
-                     'Customer have been updated successfully.',
-                     serialize_customer(@customer))
-      else
-        set_response(422, @customer.errors)
-      end
+    if @customer.update(customer_params)
+      set_response(200,
+                   'Customer have been updated successfully.',
+                   serialize_customer(@customer))
     else
-      set_response(404, 'Customer not found.')
+      set_response(422, @customer.errors)
     end
   end
 
@@ -20,11 +16,11 @@ class Api::V1::Customers::CustomersController < Api::V1::ApiController
 
   def customer_params
     params.require(:customer)
-          .permit(:access_token, :first_name, :last_name, :email, :password,
+          .permit(:first_name, :last_name, :email, :password, :avatar,
                   :password_confirmation, :national_id, :cell_phone, :birthday)
   end
 
   def set_customer
-    @customer = Customer.find_by_access_token(params[:customer][:access_token])
+    @customer = current_user
   end
 end
