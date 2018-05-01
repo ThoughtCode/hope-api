@@ -8,7 +8,7 @@ Table of Contents:
 
 Method: `POST`
 
-URI: `/api/v1/agent/signup`
+URI: `/api/v1/agents/signup`
 
 Body:
 
