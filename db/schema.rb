@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180426195248) do
+ActiveRecord::Schema.define(version: 20180502191800) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -35,6 +35,7 @@ ActiveRecord::Schema.define(version: 20180426195248) do
     t.string "cell_phone"
     t.date "birthday"
     t.integer "status"
+    t.integer "mobile_token"
     t.index ["email"], name: "index_agents_on_email", unique: true
     t.index ["reset_password_token"], name: "index_agents_on_reset_password_token", unique: true
   end
@@ -63,6 +64,7 @@ ActiveRecord::Schema.define(version: 20180426195248) do
     t.string "provider"
     t.string "uid"
     t.string "avatar"
+    t.integer "mobile_token"
     t.index ["email"], name: "index_customers_on_email", unique: true
     t.index ["reset_password_token"], name: "index_customers_on_reset_password_token", unique: true
   end
@@ -78,10 +80,12 @@ ActiveRecord::Schema.define(version: 20180426195248) do
   create_table "jobs", force: :cascade do |t|
     t.integer "property_id"
     t.float "duration"
-    t.date "date"
     t.integer "status"
     t.integer "agent_id"
     t.float "total"
+    t.string "hashed_id"
+    t.datetime "started_at"
+    t.datetime "finished_at"
   end
 
   create_table "managers", force: :cascade do |t|

@@ -20,6 +20,10 @@ Rails.application.routes.draw do
           # Passwords
           post 'forgot_password', to: 'passwords#create', as: :forgot_password
           post 'update_password', to: 'passwords#update', as: :update_password
+          
+          #Recover password for the app
+          post 'recover_password', to: 'passwords#app_recover_password', as: :app_recover_password
+          post 'app_update_password', to: 'passwords#app_update_password', as: :app_update_password
 
           put 'update', to: 'agents#update'
         end
@@ -40,6 +44,10 @@ Rails.application.routes.draw do
           # Passwords
           post 'forgot_password', to: 'passwords#create', as: :forgot_password
           post 'update_password', to: 'passwords#update', as: :update_password
+
+          #Recover password for the app
+          post 'recover_password', to: 'passwords#app_recover_password', as: :app_recover_password
+          post 'app_update_password', to: 'passwords#app_update_password', as: :app_update_password
 
           put 'update', to: 'customers#update'
         end
