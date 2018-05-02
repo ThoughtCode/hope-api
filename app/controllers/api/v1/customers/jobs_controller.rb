@@ -6,7 +6,7 @@ class Api::V1::Customers::JobsController < Api::V1::ApiController
     jobs = current_user.jobs.all
     set_response(
       200,
-      'Jobs successfully listed.',
+      'Trabajos listados exitosamente',
       serialize_job(jobs)
     )
   end
@@ -14,10 +14,14 @@ class Api::V1::Customers::JobsController < Api::V1::ApiController
   def create
     job = Job.new(job_params)
     job.status = 0
-    if job.save
-      set_response(200, 'Job created', serialize_job(job))
+    if job.check_dates?
+      if job.save
+        set_response(200, 'Trabajo creado exitosamente', serialize_job(job))
+      else
+        set_response(422, job.errors)
+      end
     else
-      set_response(422, job.errors)
+      set_response(422, 'La fecha no puede ser menor al dia de hoy')
     end
   end
 
@@ -69,12 +73,12 @@ class Api::V1::Customers::JobsController < Api::V1::ApiController
   def job_params
     params
       .require(:job)
-      .permit(:property_id, :date,
+      .permit(:property_id, :started_at,
               job_details_attributes: %i[id service_id value _destroy])
   end
 
   def set_job
-    @job = Job.find_by(id: params[:id])
+    @job = Job.find_by(hashed_id: params[:id])
   end
 
   def check_ownership

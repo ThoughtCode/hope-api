@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180503144100) do
+ActiveRecord::Schema.define(version: 20180508163138) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -37,6 +37,7 @@ ActiveRecord::Schema.define(version: 20180503144100) do
     t.integer "status"
     t.integer "mobile_token"
     t.datetime "mobile_token_expiration"
+    t.boolean "online", default: true
     t.index ["email"], name: "index_agents_on_email", unique: true
     t.index ["reset_password_token"], name: "index_agents_on_reset_password_token", unique: true
   end
@@ -124,6 +125,13 @@ ActiveRecord::Schema.define(version: 20180503144100) do
     t.string "cell_phone"
     t.integer "customer_id"
     t.string "hashed_id"
+  end
+
+  create_table "proposals", force: :cascade do |t|
+    t.string "hashed_id"
+    t.integer "job_id"
+    t.integer "agent_id"
+    t.integer "status"
   end
 
   create_table "service_types", force: :cascade do |t|

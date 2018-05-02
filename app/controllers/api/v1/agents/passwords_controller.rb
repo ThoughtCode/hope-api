@@ -51,7 +51,6 @@ class Api::V1::Agents::PasswordsController < Api::V1::ApiController
     end
   end
 
-
   private
 
   def set_agent
