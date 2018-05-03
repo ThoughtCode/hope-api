@@ -1,6 +1,7 @@
 module Api::V1
   class Agents::RegistrationsController < Devise::RegistrationsController
     include Serializable
+    include Responsable
     before_action :ensure_params, only: [:create]
     skip_before_action :verify_authenticity_token
 
@@ -8,6 +9,7 @@ module Api::V1
     def create
       agent = Agent.new(agent_params)
       if agent.save
+        agent.acquire_access_token!
         set_response(200, 'Signed Up successfully!', serialize_agent(agent))
       else
         set_response(422, agent.errors)
@@ -26,13 +28,6 @@ module Api::V1
     def ensure_params
       return if params[:agent].present?
       set_response(422, 'Missing params!')
-    end
-
-    def set_response(status, message, data = nil)
-      render status: status, json: {
-        message: message,
-        data: data
-      }
     end
   end
 end

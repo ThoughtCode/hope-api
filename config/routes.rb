@@ -1,8 +1,8 @@
 Rails.application.routes.draw do
   devise_for :managers, ActiveAdmin::Devise.config
   devise_for :customers
-  ActiveAdmin.routes(self)
   devise_for :agents
+  ActiveAdmin.routes(self)
   root 'pages#home'
   namespace :api, defaults: { format: :json } do
     namespace :v1 do
@@ -13,7 +13,7 @@ Rails.application.routes.draw do
 
       # Devise Mapping
       namespace :agents do
-        devise_scope :agents do
+        devise_scope :agent do
           post 'signup', to: 'registrations#create'
           post 'signin', to: 'sessions#create'
           delete 'signout', to: 'sessions#destroy'
