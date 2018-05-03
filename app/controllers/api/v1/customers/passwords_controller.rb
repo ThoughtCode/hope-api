@@ -34,11 +34,15 @@ module Api::V1
 
     def app_update_password
       user = Customer.find_by_mobile_token(password_params.fetch(:mobile_token))
-      if user.update(password_params.except(:mobile_token))
-        user.unset_reset_password_pin!
-        set_response(200, 'Contraseña reseteada exitosamente')
+      if !user.check_token_expiration_date
+        if user.update(password_params.except(:mobile_token))
+          user.unset_reset_password_pin!
+          set_response(200, 'Contraseña reseteada exitosamente')
+        else
+          set_response(404, user.errors)
+        end
       else
-        set_response(404, user.errors)
+        set_response(401, 'El pin ha expirado')
       end
     end
 
