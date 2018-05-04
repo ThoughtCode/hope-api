@@ -75,7 +75,6 @@ RSpec.describe Api::V1::Customers::PasswordsController, type: :controller do
       )
     end
   end
-
   describe 'POST #app_update_password' do
     it 'return 200 with message successfully' do
       customer.set_reset_password_pin!
@@ -100,6 +99,8 @@ RSpec.describe Api::V1::Customers::PasswordsController, type: :controller do
     end
     it 'return 401 with message if pin expired' do
       customer.set_reset_password_pin!
+      allow(DateTime).to receive(:current)
+        .and_return(DateTime.current + 7.hours)
       post :app_update_password, params: { customer: {
         mobile_token: customer.mobile_token,
         password: '123456',

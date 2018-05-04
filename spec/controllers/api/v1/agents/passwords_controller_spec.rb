@@ -95,5 +95,16 @@ RSpec.describe Api::V1::Agents::PasswordsController, type: :controller do
       } }
       expect(response.status).to eq(404)
     end
+    it 'return 401 with message if pin expired' do
+      agent.set_reset_password_pin!
+      allow(DateTime).to receive(:current)
+        .and_return(DateTime.current + 7.hours)
+      post :app_update_password, params: { agent: {
+        mobile_token: agent.mobile_token,
+        password: '123456',
+        password_confirmation: '123456'
+      } }
+      expect(response.status).to eq(401)
+    end
   end
 end
