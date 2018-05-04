@@ -29,7 +29,7 @@ RSpec.describe Api::V1::Customers::RegistrationsController, type: :controller do
     it 'return 200 with valid params and create customer' do
       post :create, params: valid_params
       expect do
-        CustomerWelcomeMailer.send_welcome_email(Customer.last).deliver
+        CustomerMailer.send_welcome_email(Customer.last).deliver
       end .to change(ActionMailer::Base.deliveries, :count).by 1
       expect(response.status).to eq(200)
     end

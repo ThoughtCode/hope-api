@@ -25,3 +25,5 @@ Metrics/BlockLength:
     - 'spec/**/*.rb'
 Style/FrozenStringLiteralComment:
   Enabled: false
+Style/DateTime:
+  Enabled: false
