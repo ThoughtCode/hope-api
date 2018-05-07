@@ -3,7 +3,9 @@ module Api::V1
     skip_before_action :disable_access_by_tk, only: %i[
       create update app_recover_password app_update_password
     ]
-    before_action :set_customer, only: %i[create app_recover_password]
+    before_action :set_customer, only: %i[
+      create app_recover_password app_update_password
+    ]
 
     def create
       if @customer
@@ -33,16 +35,19 @@ module Api::V1
     end
 
     def app_update_password
-      user = Customer.find_by_mobile_token(password_params.fetch(:mobile_token))
-      if !user.check_token_expiration_date
-        if user.update(password_params.except(:mobile_token))
-          user.unset_reset_password_pin!
-          set_response(200, 'Contraseña reseteada exitosamente')
+      if @customer
+        if !@customer.check_token_expiration_date
+          if @customer.update(password_params.except(:mobile_token))
+            @customer.unset_reset_password_pin!
+            set_response(200, 'Contraseña reseteada exitosamente')
+          else
+            set_response(404, @customer.errors)
+          end
         else
-          set_response(404, user.errors)
+          set_response(401, 'El pin ha expirado')
         end
       else
-        set_response(401, 'El pin ha expirado')
+        set_response(404, 'El correo no existe')
       end
     end
 
@@ -54,7 +59,7 @@ module Api::V1
 
     def password_params
       params.require(:customer)
-            .permit(:mobile_token, :password, :password_confirmation)
+            .permit(:email, :mobile_token, :password, :password_confirmation)
     end
   end
 end

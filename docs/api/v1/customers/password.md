@@ -120,6 +120,7 @@ Body:
 ```json
 {
   "customer": {
+    "email": "email@example.com",
     "mobile_token": "XXXXXX",
     "password": "1234567",
     "password_confirmation": "1234567"

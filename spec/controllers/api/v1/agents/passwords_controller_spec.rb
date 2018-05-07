@@ -77,6 +77,7 @@ RSpec.describe Api::V1::Agents::PasswordsController, type: :controller do
     it 'return 200 with message successfully' do
       agent.set_reset_password_pin!
       post :app_update_password, params: { agent: {
+        email: agent.email,
         mobile_token: agent.mobile_token,
         password: '123456',
         password_confirmation: '123456'
@@ -89,6 +90,7 @@ RSpec.describe Api::V1::Agents::PasswordsController, type: :controller do
     it 'return 404 with message if no user' do
       agent.set_reset_password_pin!
       post :app_update_password, params: { agent: {
+        email: Faker::Internet.email,
         mobile_token: agent.mobile_token,
         password: '123456',
         password_confirmation: '1234'
@@ -100,6 +102,7 @@ RSpec.describe Api::V1::Agents::PasswordsController, type: :controller do
       allow(DateTime).to receive(:current)
         .and_return(DateTime.current + 7.hours)
       post :app_update_password, params: { agent: {
+        email: agent.email,
         mobile_token: agent.mobile_token,
         password: '123456',
         password_confirmation: '123456'
