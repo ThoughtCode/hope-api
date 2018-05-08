@@ -13,4 +13,10 @@ class CustomerMailer < ApplicationMailer
     mail(to: @user.email,
          subject: 'Recupera la contraseña')
   end
+
+  def send_proposal_received(proposal, customer, url)
+    @url = url + '/cliente/propuesta/' + proposal.hashed_id
+    mail(to: customer.email,
+         subject: 'Propuesta recibida')
+  end
 end

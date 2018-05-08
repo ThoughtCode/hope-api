@@ -22,6 +22,7 @@ RSpec.describe Api::V1::Customers::JobsController, type: :controller do
       customer.acquire_access_token!
       @request.env['HTTP_AUTHORIZATION'] = "Token #{customer.access_token}"
       get :index
+      expect(response.status).to eq(200)
       expect(JSON.parse(response.body)).to include('message' => 'Trabajos '\
         'listados exitosamente')
     end

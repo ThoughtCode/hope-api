@@ -59,7 +59,7 @@ Body:
 
 Method: `DELETE`
 
-URI: `/api/v1/agent/signout`
+URI: `/api/v1/agents/signout`
 
 headers["HTTP_AUTHORIZATION"] = "Token user.access_token"
 
