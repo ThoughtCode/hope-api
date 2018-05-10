@@ -15,7 +15,7 @@ class Job < ApplicationRecord
   def check_dates
     if started_at <= Time.current
       errors.add(:base, 'La fecha de inicio no puede ser menor a la '\
-          'feche de hoy')
+          'fecha de hoy')
     end
     throw :abort if started_at <= Time.current
   end
