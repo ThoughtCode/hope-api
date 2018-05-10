@@ -29,7 +29,7 @@ class Api::V1::Agents::ProposalsController < Api::V1::ApiController
   def destroy
     if @job
       if @proposal
-        @proposal.destroy!
+        @proposal.destroy
         set_response(200, 'La propuesta ha sido eliminada exitosamente')
       else
         set_response(404, 'La propuesta no existe')
