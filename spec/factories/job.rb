@@ -1,7 +1,7 @@
 FactoryBot.define do
   factory :job do
     property
-    started_at Time.current
+    started_at Time.current + 1.hours
 
     factory :job_with_details do
       agent

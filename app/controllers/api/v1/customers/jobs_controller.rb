@@ -13,15 +13,10 @@ class Api::V1::Customers::JobsController < Api::V1::ApiController
 
   def create
     job = Job.new(job_params)
-    job.status = 0
-    if job.check_dates?
-      if job.save
-        set_response(200, 'Trabajo creado exitosamente', serialize_job(job))
-      else
-        set_response(422, job.errors)
-      end
+    if job.save
+      set_response(200, 'Trabajo creado exitosamente', serialize_job(job))
     else
-      set_response(422, 'La fecha no puede ser menor al dia de hoy')
+      set_response(422, job.errors)
     end
   end
 

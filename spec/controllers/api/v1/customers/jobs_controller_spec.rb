@@ -14,7 +14,7 @@ RSpec.describe Api::V1::Customers::JobsController, type: :controller do
   let(:agent) { FactoryBot.create(:agent) }
   let(:property) { FactoryBot.create(:property) }
   let(:service) { FactoryBot.create(:service) }
-  let(:job) { FactoryBot.create(:job) }
+  let(:job) { FactoryBot.create(:job_with_details) }
   let(:customer2) { FactoryBot.create(:customer) }
   let(:url) { ENV['FRONTEND_URL'] }
   describe 'GET #index' do

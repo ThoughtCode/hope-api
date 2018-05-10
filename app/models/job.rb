@@ -4,16 +4,21 @@ class Job < ApplicationRecord
   belongs_to :property
   has_many :job_details, dependent: :destroy
   has_many :services, through: :job_details
+  before_create :check_dates
   after_save :calculate_price
   after_create_commit :send_email_to_agents
 
   accepts_nested_attributes_for :job_details
 
-  def check_dates?
-    started_at >= Time.current
-  end
-
   private
+
+  def check_dates
+    if started_at <= Time.current
+      errors.add(:base, 'La fecha de inicio no puede ser menor a la '\
+          'feche de hoy')
+    end
+    throw :abort if started_at <= Time.current
+  end
 
   def calculate_price
     duration = job_details.sum(:time)
