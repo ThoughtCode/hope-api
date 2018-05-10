@@ -22,7 +22,7 @@ ActiveAdmin.register Customer do
   filter :birthday
 
   form do |f|
-    f.semantic_errors * f.object.errors.keys
+    f.semantic_errors *f.object.errors.keys
     f.inputs 'Customer Details' do
       f.input :email
       f.input :password

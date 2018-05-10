@@ -1,13 +1,51 @@
 es:
+  devise:
+    failure:
+      manager:
+        not_found_in_database: "El email no se encuentra"
   date:
+    month_names:
+    -
+    - enero
+    - febrero
+    - marzo
+    - abril
+    - mayo
+    - junio
+    - julio
+    - agosto
+    - septiembre
+    - octubre
+    - noviembre
+    - diciembre
+    abbr_month_names:
+    -
+    - ene
+    - feb
+    - mar
+    - abr
+    - may
+    - jun
+    - jul
+    - ago
+    - sep
+    - oct
+    - nov
+    - dic
     formats:
       default: "%-d/%-m/%Y"
       long: "%m/%d/%Y"
+      short: "%-d de %b"
+  time:
+    formats:
+      default: "%-d/%-m/%Y"
+      long: "%m/%d/%Y %H:%M"
       short: "%-d de %b"
   activerecord:
     errors:
       messages:
         blank: "Los campos no pueden estar vacios"
+        taken: "ya ha sido tomado"
       models:
         job_detail:
           attributes:
@@ -35,6 +73,9 @@ es:
             type_service:
               inclusion: "Debe seleccionar un tipo de servicio"
     models:
+      property:
+        one: "Propiedad"
+        other: "Propiedades"
       city:
         one: "Ciudad"
         other: "Ciudades"
@@ -57,10 +98,46 @@ es:
         one: "Servicio"
         other: "Servicios"
     attributes:
+      property:
+        name: "Nombre"
+        neightborhood: "Barrio"
+        p_street: "Calle Principal"
+        number: "Numero"
+        s_street: "Calle Secundaria"
+        details: "Detalles"
+        additional_reference: "Referencia Adicional"
+        phone: "Telefono"
+        cell_phone: "Celular"
+        customer: "Cliente"
+        hashed_id: "Hashed_id"
+      service:
+        name: "Nombre"
+        service_type: "Servicio Padre"
+        type_service: "Tipo de Servicio"
+        quantity: "Cantidad"
+        time: "Tiempo"
+        price: "Precio"
+      service_type:
+        name: "Nombre"
+        services: "Servicios"
       city:
         name: "Nombre"
       neightborhood:
         name: "Nombre"
+      agent:
+        first_name: "Nombre"
+        last_name: "Apellido"
+        national_id: "Cedula"
+        cell_phone: "Celular"
+        birthday: "Cumpleaños"
+        status: "Estado"
+      customer:
+        first_name: "Nombre"
+        last_name: "Apellido"
+        national_id: "Cedula"
+        cell_phone: "Celular"
+        birthday: "Cumpleaños"
+        status: "Estado"
   active_admin:
     dashboard: Inicio
     dashboard_welcome:

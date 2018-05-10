@@ -38,8 +38,12 @@ gem 'bson', '~> 4.3'
 
 gem 'rack-cors', :require => 'rack/cors'
 
+# Upload image
 gem 'carrierwave'
 gem 'fog'
+
+# Background Jobs
+gem 'sidekiq', '~> 5.1', '>= 5.1.3'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to
