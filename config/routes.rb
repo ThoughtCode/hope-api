@@ -43,7 +43,7 @@ Rails.application.routes.draw do
           get 'accepted/:id', to: 'proposals#accepted'
           get 'refused/:id', to: 'proposals#refused'
         end
-        resources :service_types, only: [:index] do
+        resources :service_types, only: [:index, :show] do
           resources :services, only: [:index]
         end
 
