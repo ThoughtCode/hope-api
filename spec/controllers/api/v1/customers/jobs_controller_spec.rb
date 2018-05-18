@@ -22,6 +22,7 @@ RSpec.describe Api::V1::Customers::JobsController, type: :controller do
       customer.acquire_access_token!
       @request.env['HTTP_AUTHORIZATION'] = "Token #{customer.access_token}"
       get :index
+      expect(response.status).to eq(200)
       expect(JSON.parse(response.body)).to include('message' => 'Trabajos '\
         'listados exitosamente')
     end
@@ -55,6 +56,26 @@ RSpec.describe Api::V1::Customers::JobsController, type: :controller do
       {
         property_id: property.id,
         started_at: Time.current + 3.hours,
+        job_details_attributes: [{
+          service_id: service.id,
+          value: 1
+        }]
+      } }
+      expect do
+        SendEmailToAgentsJob.perform_later(Job.last.hashed_id, url)
+      end .to enqueue_job
+      perform_enqueued_jobs do
+        SendEmailToAgentsJob.perform_later(Job.last.hashed_id, url)
+      end
+    end
+    it 'send email to agents if availability' do
+      FactoryBot.create_list(:agent, 3)
+      customer.acquire_access_token!
+      @request.env['HTTP_AUTHORIZATION'] = "Token #{customer.access_token}"
+      post :create, params: { job:
+      {
+        property_id: property.id,
+        started_at: Time.now,
         job_details_attributes: [{
           service_id: service.id,
           value: 1

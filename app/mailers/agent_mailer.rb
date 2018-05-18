@@ -9,7 +9,7 @@ class AgentMailer < ApplicationMailer
   end
 
   def send_email_to_agent(agent, job_id, url)
-    @url = url + '/cliente/dashboard/trabajos/' + job_id.to_s
+    @url = url + '/agente/trabajos/' + job_id.to_s
     mail(to: agent.email,
          subject: 'Hay un nuevo trabajo disponible')
   end

@@ -15,6 +15,10 @@ Rails.application.routes.draw do
 
       # Devise Mapping
       namespace :agents do
+        resources :jobs, only: [:show] do
+        resources :proposals, only: [:create, :destroy]
+        end
+        get 'proposals', to: 'proposals#index'
         devise_scope :agent do
           post 'signup', to: 'registrations#create'
           post 'signin', to: 'sessions#create'
@@ -23,7 +27,7 @@ Rails.application.routes.draw do
           post 'forgot_password', to: 'passwords#create', as: :forgot_password
           post 'update_password', to: 'passwords#update', as: :update_password
           
-          #Recover password for the app
+          # Recover password for the app
           post 'recover_password', to: 'passwords#app_recover_password', as: :app_recover_password
           post 'app_update_password', to: 'passwords#app_update_password', as: :app_update_password
 
@@ -34,10 +38,15 @@ Rails.application.routes.draw do
       
       namespace :customers do
         resources :properties, except: [:new, :edit]
-        resources :jobs, except: [:new, :edit]
+        resources :jobs, except: [:new, :edit] do
+          resources :proposals, only: [:show]
+          get 'accepted/:id', to: 'proposals#accepted'
+          get 'refused/:id', to: 'proposals#refused'
+        end
         resources :service_types, only: [:index] do
           resources :services, only: [:index]
         end
+
         devise_scope :customer do
           post 'signup', to: 'registrations#create'
           post 'facebook', to: 'providers#facebook'

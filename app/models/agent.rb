@@ -4,6 +4,7 @@ class Agent < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable
   has_many :jobs
+  has_many :proposals
   enum status: %i[pending accepted refused]
   scope :filter_by_availability, lambda { |job|
     Agent.where.not(
