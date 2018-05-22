@@ -47,6 +47,10 @@ Rails.application.routes.draw do
           resources :services, only: [:index]
         end
 
+        resources :cities, only: [:index] do
+          resources :neightborhoods, only: [:index]
+        end
+
         devise_scope :customer do
           post 'signup', to: 'registrations#create'
           post 'facebook', to: 'providers#facebook'
