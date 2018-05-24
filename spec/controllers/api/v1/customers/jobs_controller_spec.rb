@@ -61,31 +61,12 @@ RSpec.describe Api::V1::Customers::JobsController, type: :controller do
           value: 1
         }]
       } }
+      hashed_id = Job.last.hashed_id
       expect do
-        SendEmailToAgentsJob.perform_later(Job.last.hashed_id, url)
+        SendEmailToAgentsJob.perform_later(hashed_id, url)
       end .to enqueue_job
       perform_enqueued_jobs do
-        SendEmailToAgentsJob.perform_later(Job.last.hashed_id, url)
-      end
-    end
-    it 'send email to agents if availability' do
-      FactoryBot.create_list(:agent, 3)
-      customer.acquire_access_token!
-      @request.env['HTTP_AUTHORIZATION'] = "Token #{customer.access_token}"
-      post :create, params: { job:
-      {
-        property_id: property.id,
-        started_at: Time.now,
-        job_details_attributes: [{
-          service_id: service.id,
-          value: 1
-        }]
-      } }
-      expect do
-        SendEmailToAgentsJob.perform_later(Job.last.hashed_id, url)
-      end .to enqueue_job
-      perform_enqueued_jobs do
-        SendEmailToAgentsJob.perform_later(Job.last.hashed_id, url)
+        SendEmailToAgentsJob.perform_later(hashed_id, url)
       end
     end
     it 'return 422 with invalid params' do

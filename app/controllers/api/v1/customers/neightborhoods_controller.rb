@@ -6,7 +6,7 @@ class Api::V1::Customers::NeightborhoodsController < Api::V1::ApiController
     neightborhoods = @city.neightborhoods
     set_response(
       200,
-      'Ciudades listadas exitosamente',
+      'Barrios listados exitosamente',
       serialize_neightborhood(neightborhoods)
     )
   end
