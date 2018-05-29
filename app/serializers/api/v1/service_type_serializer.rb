@@ -3,7 +3,11 @@ class Api::V1::ServiceTypeSerializer
   set_id :hashed_id
   attributes :name
 
-  attribute :services do |s|
-    s.services.as_json
+  attribute :service_base do |s|
+    s.services.where(type_service: 'base')
+  end
+
+  attribute :services_addons do |s|
+    s.services.where(type_service: 'addon')
   end
 end
