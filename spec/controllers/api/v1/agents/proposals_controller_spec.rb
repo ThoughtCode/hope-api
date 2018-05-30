@@ -30,7 +30,7 @@ RSpec.describe Api::V1::Agents::ProposalsController, type: :controller do
       )
     end
     it 'return 422 if agent have jobs' do
-      job = FactoryBot.create(:job_with_details, :one_day_ago)
+      job = FactoryBot.create(:job_with_details, :six_hour_future)
       job.save!
       agent = job.agent
       agent.acquire_access_token!

@@ -36,4 +36,12 @@ module Serializable
   def serialize_proposal_for_agents(proposal)
     Api::V1::ProposalForAgentsSerializer.new(proposal)
   end
+
+  def serialize_city(city)
+    Api::V1::CitySerializer.new(city)
+  end
+
+  def serialize_neightborhood(neightborhood)
+    Api::V1::NeightborhoodSerializer.new(neightborhood)
+  end
 end
