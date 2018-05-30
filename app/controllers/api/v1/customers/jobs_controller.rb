@@ -4,10 +4,13 @@ class Api::V1::Customers::JobsController < Api::V1::ApiController
 
   def index
     jobs = current_user.jobs.all
+    jobs = check_status(jobs)
+    jobs = jobs.page(params[:current_page]).per(params[:limit])
     set_response(
       200,
       'Trabajos listados exitosamente',
-      serialize_job(jobs)
+      serialize_job(jobs),
+      jobs.page(1).total_pages
     )
   end
 
@@ -78,5 +81,18 @@ class Api::V1::Customers::JobsController < Api::V1::ApiController
 
   def check_ownership
     @job.property.customer != current_user
+  end
+
+  def check_status(jobs)
+    if params[:status] == 'nextjobs'
+      jobs = jobs.where(
+        'finished_at > ? AND (status = ? OR status = ?)', Date.current, 0, 1
+      )
+    elsif params[:status] == 'history'
+      jobs = jobs.where(
+        'finished_at < ? AND (status = ? )', Date.current, 0
+      )
+    end
+    jobs
   end
 end
