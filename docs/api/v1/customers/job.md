@@ -16,24 +16,35 @@ Table of Contents:
 
 ```json
 {
-  "data": [
-    {
-      "id": "JOB_ID",
+  "data": [{
+      "id": "5b0498f5483a273007b2c209",
       "type": "job",
       "attributes": {
-        "property_id": "JOB_PROPERTY_ID",
-        "date": "JOB_DATE",
-        "duration": "JOB_DURATION",
-        "total": "JOB_TOTAL",
-        "status": "JOB_STATUS",
-        "job_details": [
-          {
-            Job Details Object
-          }
-        ]
+        "property_id": 3,
+        "started_at": "2018-05-25T01:25:00.000Z",
+        "finished_at": "2018-05-25T12:25:00.000Z",
+        "duration": 11.0,
+        "total": 85.0,
+        "status": "pending", /* pending, accepted */
+        "property": {
+          "id":3,
+          "name":"Working Up",
+          "neightborhood_id":1,
+          "p_street":"San Ignacio",
+          "number":"123456",
+          "s_street":"Gonzalo Suarez",
+          "details":"Edificio Working Up",
+          "additional_reference":null,
+          "phone":null,
+          "cell_phone":"1234567",
+          "customer_id":1,
+          "hashed_id":"5b047de0483a272c135ee438"
+        },
+        "agent":null,
+        "job_details":[Job Details Example],
+        "proposals":[]
       }
-    }
-  ]
+    }]
 }
 ```
 
@@ -41,37 +52,151 @@ Table of Contents:
 
 ```json
 {
-  "id": "JOB_DETAIL_ID",
-  "service_id": "JOB_DETAIL_SERVICE_ID",
-  "value": "JOB_DETAIL_VALUE",
-  "time": "JOB_DETAIL_TIME",
-  "price_total": "JOB_DETAIL_PRICE_TOTAL",
+  "id":219,
+  "service_id":7,
+  "value":1,
+  "time":6.0,
+  "price_total":5.0,
   "service": {
-    "id": "SERVICE_ID",
-    "service_type_id": "SERVICE_SERVICE_TYPE_ID",
-    "type_service": "SERVICE_TYPE_SERVICE",
-    "name": "SERVICE_NAME",
-    "quantity": "SERVICE_QUANTITY",
-    "time": "SERVICE_TIME",
-    "price": "SERVICE_PRICE"
+    "id":7,
+    "service_type_id":2,
+    "type_service":"base",
+    "name":"Limpieza de apartamento de 2 cuartos",
+    "quantity":false,
+    "time":6.0,
+    "price":5.0
   }
 }
 ```
 
 # Index
 
+# Future Jobs
+
 Method: `GET`
 
 Header: `[HTTP_AUTHORIZATION]` = `Token token=XXXXXXXXXXXXXX`
 
-URI: `/api/v1/customers/jobs`
+URI: `/api/v1/customers/jobs?status=nextjobs&current_page=1&limit=4`
 
 ## Return example on success, 200
 
+
+
 ```json
 {
-  "message": "Job successfully listed.",
-  "data": [Returns an array of `Job` object.]
+  "message": "Trabajos listados exitosamente",
+  "job": {
+    "data": [{
+      "id": "5b0498f5483a273007b2c209",
+      "type": "job",
+      "attributes": {
+        "property_id": 3,
+        "started_at": "2018-05-25T01:25:00.000Z",
+        "finished_at": "2018-05-25T12:25:00.000Z",
+        "duration": 11.0,
+        "total": 85.0,
+        "status": "pending", /* pending, accepted */
+        "property": {
+          "id":3,
+          "name":"Working Up",
+          "neightborhood_id":1,
+          "p_street":"San Ignacio",
+          "number":"123456",
+          "s_street":"Gonzalo Suarez",
+          "details":"Edificio Working Up",
+          "additional_reference":null,
+          "phone":null,
+          "cell_phone":"1234567",
+          "customer_id":1,
+          "hashed_id":"5b047de0483a272c135ee438"
+        },
+        "agent":null,
+        "job_details":[
+          {"id":219,
+          "service_id":7,
+          "value":1,
+          "time":6.0,
+          "price_total":5.0,
+          "service": {
+            "id":7,
+            "service_type_id":2,
+            "type_service":"base",
+            "name":"Limpieza de apartamento de 2 cuartos",
+            "quantity":false,
+            "time":6.0,
+            "price":5.0
+          }
+        }],
+        "proposals":[]
+      }
+    }]
+  }
+}
+
+```
+
+# History Jobs
+
+Method: `GET`
+
+Header: `[HTTP_AUTHORIZATION]` = `Token token=XXXXXXXXXXXXXX`
+
+URI: `/api/v1/customers/jobs?status=history&current_page=1&limit=4`
+
+## Return example on success, 200
+
+
+
+```json
+{
+  "message": "Trabajos listados exitosamente",
+  "job": {
+    "data": [{
+      "id": "5b0498f5483a273007b2c209",
+      "type": "job",
+      "attributes": {
+        "property_id": 3,
+        "started_at": "2018-05-25T01:25:00.000Z",
+        "finished_at": "2018-05-25T12:25:00.000Z",
+        "duration": 11.0,
+        "total": 85.0,
+        "status": "expired",
+        "property": {
+          "id":3,
+          "name":"Working Up",
+          "neightborhood_id":1,
+          "p_street":"San Ignacio",
+          "number":"123456",
+          "s_street":"Gonzalo Suarez",
+          "details":"Edificio Working Up",
+          "additional_reference":null,
+          "phone":null,
+          "cell_phone":"1234567",
+          "customer_id":1,
+          "hashed_id":"5b047de0483a272c135ee438"
+        },
+        "agent":null,
+        "job_details":[
+          {"id":219,
+          "service_id":7,
+          "value":1,
+          "time":6.0,
+          "price_total":5.0,
+          "service": {
+            "id":7,
+            "service_type_id":2,
+            "type_service":"base",
+            "name":"Limpieza de apartamento de 2 cuartos",
+            "quantity":false,
+            "time":6.0,
+            "price":5.0
+          }
+        }],
+        "proposals":[]
+      }
+    }]
+  }
 }
 
 ```
