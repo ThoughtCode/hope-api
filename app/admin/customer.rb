@@ -1,6 +1,6 @@
 ActiveAdmin.register Customer do
   permit_params :email, :password, :first_name, :last_name, :cell_phone,
-                :birthday, :national_id
+                :birthday, :national_id, :avatar
 
   index do
     selectable_column
@@ -11,6 +11,7 @@ ActiveAdmin.register Customer do
     column :email
     column :cell_phone
     column :birthday
+    column :avatar
     actions
   end
 
@@ -31,6 +32,7 @@ ActiveAdmin.register Customer do
       f.input :national_id
       f.input :cell_phone
       f.input :birthday, start_year: 1960
+      f.input :avatar
     end
     f.actions
   end
