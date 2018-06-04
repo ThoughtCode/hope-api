@@ -1,7 +1,7 @@
 class Api::V1::ServiceTypeSerializer
   include FastJsonapi::ObjectSerializer
   set_id :hashed_id
-  attributes :name
+  attributes :name, :image
 
   attribute :service_base do |s|
     s.services.where(type_service: 'base')
