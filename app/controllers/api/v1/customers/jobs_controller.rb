@@ -90,7 +90,7 @@ class Api::V1::Customers::JobsController < Api::V1::ApiController
       )
     elsif params[:status] == 'history'
       jobs = jobs.where(
-        'finished_at < ? AND (status = ? )', Date.current, 0
+        'finished_at < ? AND (status = ? )', Date.current, 3
       )
     end
     jobs
