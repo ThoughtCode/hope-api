@@ -19,6 +19,7 @@ ActiveAdmin.register Job do
     f.inputs 'Trabajos' do
       f.input :property
       f.input :started_at
+      f.input :status
       f.has_many :job_details, heading: 'Detalles' , new_record: "Añadir un nuevo detalle" do |d|
         d.input :service
         d.input :value
