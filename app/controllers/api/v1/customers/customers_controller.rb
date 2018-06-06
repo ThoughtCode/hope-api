@@ -4,7 +4,8 @@ class Api::V1::Customers::CustomersController < Api::V1::ApiController
 
   def update
     if @customer.update(customer_params)
-      set_response(200,
+      set_response(
+        200,
         'Customer have been updated successfully.',
         serialize_customer(@customer)
       )
@@ -14,7 +15,8 @@ class Api::V1::Customers::CustomersController < Api::V1::ApiController
   end
 
   def current
-    set_response(200,
+    set_response(
+      200,
       'Usuario listado exitosamente.',
       serialize_customer(current_user)
     )
