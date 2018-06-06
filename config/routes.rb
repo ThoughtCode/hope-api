@@ -37,6 +37,7 @@ Rails.application.routes.draw do
 
       
       namespace :customers do
+        get 'current', to: 'customers#current'
         resources :properties, except: [:new, :edit]
         resources :jobs, except: [:new, :edit] do
           resources :proposals, only: [:show]

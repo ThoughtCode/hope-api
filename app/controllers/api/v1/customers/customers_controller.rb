@@ -1,15 +1,25 @@
 class Api::V1::Customers::CustomersController < Api::V1::ApiController
   include Serializable
-  before_action :set_customer, only: [:update]
+  before_action :set_customer, only: %i[update current_user]
 
   def update
     if @customer.update(customer_params)
-      set_response(200,
-                   'Customer have been updated successfully.',
-                   serialize_customer(@customer))
+      set_response(
+        200,
+        'Customer have been updated successfully.',
+        serialize_customer(@customer)
+      )
     else
       set_response(422, @customer.errors)
     end
+  end
+
+  def current
+    set_response(
+      200,
+      'Usuario listado exitosamente.',
+      serialize_customer(current_user)
+    )
   end
 
   private
