@@ -50,7 +50,7 @@ module Api::V1
     def render_unauthorized
       # For some reason on error the headers are not set
       # Setting it manually
-      set_response(401, 'email/password mismatch')
+      set_response(401, 'Correo o contraseña invalidos.')
     end
 
     def render_forbidden

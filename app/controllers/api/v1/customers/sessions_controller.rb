@@ -6,7 +6,7 @@ class Api::V1::Customers::SessionsController < Api::V1::ApiController
   def create
     if @user&.valid_password?(params[:customer][:password])
       if @user.acquire_access_token!
-        set_response(200, 'Signed In successfully!', serialize_customer(@user))
+        set_response(200, 'Ingreso exitosamente!', serialize_customer(@user))
       else
         # :nocov:
         set_response(422, 'Could not get or '\

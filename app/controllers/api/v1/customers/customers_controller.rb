@@ -6,7 +6,7 @@ class Api::V1::Customers::CustomersController < Api::V1::ApiController
     if @customer.update(customer_params)
       set_response(
         200,
-        'Customer have been updated successfully.',
+        'Datos actualizados exitosamente',
         serialize_customer(@customer)
       )
     else
