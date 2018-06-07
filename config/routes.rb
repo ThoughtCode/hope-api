@@ -38,6 +38,7 @@ Rails.application.routes.draw do
       
       namespace :customers do
         get 'current', to: 'customers#current'
+        put 'change_password', to: 'customers#change_password'
         resources :properties, except: [:new, :edit]
         resources :jobs, except: [:new, :edit] do
           resources :proposals, only: [:show]
