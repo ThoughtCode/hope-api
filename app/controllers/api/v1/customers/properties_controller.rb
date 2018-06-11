@@ -6,7 +6,7 @@ class Api::V1::Customers::PropertiesController < Api::V1::ApiController
     properties = current_user.properties.all
     set_response(
       200,
-      'Property successfully listed.',
+      'Propiedades listadas',
       serialize_property(properties)
     )
   end
@@ -15,7 +15,7 @@ class Api::V1::Customers::PropertiesController < Api::V1::ApiController
     property = Property.new(property_params)
     property.customer = current_user
     if property.save
-      set_response(200, 'Property created', serialize_property(property))
+      set_response(200, 'Propiedad creada exitosamente', serialize_property(property))
     else
       set_response(422, property.errors)
     end
@@ -25,16 +25,16 @@ class Api::V1::Customers::PropertiesController < Api::V1::ApiController
     if @property
       if !check_ownership
         if @property.update(property_params)
-          set_response(200, 'Updated property successfully',
+          set_response(200, 'Propiedad actualizada exitosamente',
                        serialize_property(@property))
         else
           set_response(422, @property.errors)
         end
       else
-        set_response(404, 'Property does not exists.')
+        set_response(404, 'La propiedad no existe')
       end
     else
-      set_response(404, 'Property does not exists.')
+      set_response(404, 'La propiedad no existe')
     end
   end
 
@@ -42,22 +42,22 @@ class Api::V1::Customers::PropertiesController < Api::V1::ApiController
     if @property
       if !check_ownership
         @property.destroy
-        set_response(200, 'Property was deleted successfully.')
+        set_response(200, 'La propiedad fue eliminada exitosamente')
       else
-        set_response(404, 'Property does not exists.')
+        set_response(404, 'La propiedad no existe')
       end
     else
-      set_response(404, 'Property does not exists.')
+      set_response(404, 'La propiedad no existe')
     end
   end
 
   def show
     if @property
       if !check_ownership
-        set_response(200, 'Property found successfully.',
+        set_response(200, 'Propiedad encontrada exitosamente',
                      serialize_property(@property))
       else
-        set_response(404, 'Property does not exists.')
+        set_response(404, 'La propiedad no existe')
       end
     else
       set_response(404, 'Property does not exist.')
@@ -70,7 +70,7 @@ class Api::V1::Customers::PropertiesController < Api::V1::ApiController
     params
       .require(:property)
       .permit(:name, :neightborhood_id, :p_street, :number, :s_street, :details,
-              :cell_phone)
+              :additional_reference, :cell_phone, :phone)
   end
 
   def set_property
