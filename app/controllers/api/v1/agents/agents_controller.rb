@@ -21,7 +21,8 @@ class Api::V1::Agents::AgentsController < Api::V1::ApiController
   def agent_params
     params.require(:agent)
           .permit(:access_token, :first_name, :last_name, :email, :password,
-                  :password_confirmation, :national_id, :cell_phone, :birthday)
+                  :avatar, :password_confirmation, :national_id, :cell_phone,
+                  :birthday)
   end
 
   def set_agent
