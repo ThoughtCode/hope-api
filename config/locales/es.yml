@@ -50,11 +50,11 @@ es:
         job_detail:
           attributes:
             service:
-              required: "El servicio debe existir"
+              required: "El servicio debe existir."
         job:
           attributes:
             property:
-              required: "La propiedad debe existir"
+              required: "La propiedad debe existir."
         property:
           attributes:
             neightborhood:

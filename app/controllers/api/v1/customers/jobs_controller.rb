@@ -19,7 +19,7 @@ class Api::V1::Customers::JobsController < Api::V1::ApiController
     if job.save
       set_response(200, 'Trabajo creado exitosamente', serialize_job(job))
     else
-      set_response(422, job.errors)
+      set_response(422, job.errors.full_messages)
     end
   end
 
