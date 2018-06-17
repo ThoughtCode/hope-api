@@ -33,6 +33,8 @@ Rails.application.routes.draw do
 
           put 'update', to: 'agents#update'
         end
+        resources :reviews, only: [:index, :show, :create]
+        
       end
 
       
@@ -68,6 +70,8 @@ Rails.application.routes.draw do
 
           put 'update', to: 'customers#update'
         end
+
+        resources :reviews, only: [:index, :show, :create]
       end
     end
   end

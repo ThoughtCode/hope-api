@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180614150448) do
+ActiveRecord::Schema.define(version: 20180616154821) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -135,6 +135,17 @@ ActiveRecord::Schema.define(version: 20180614150448) do
     t.integer "status"
   end
 
+  create_table "reviews", force: :cascade do |t|
+    t.string "hashed_id"
+    t.bigint "job_id"
+    t.string "owner_type"
+    t.bigint "owner_id"
+    t.text "comment"
+    t.integer "qualification", default: 0
+    t.index ["job_id"], name: "index_reviews_on_job_id"
+    t.index ["owner_type", "owner_id"], name: "index_reviews_on_owner_type_and_owner_id"
+  end
+
   create_table "service_types", force: :cascade do |t|
     t.string "name"
     t.string "hashed_id"
@@ -151,4 +162,5 @@ ActiveRecord::Schema.define(version: 20180614150448) do
     t.string "icon"
   end
 
+  add_foreign_key "reviews", "jobs"
 end

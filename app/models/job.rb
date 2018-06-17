@@ -5,11 +5,13 @@ class Job < ApplicationRecord
   has_many :job_details, dependent: :destroy
   has_many :services, through: :job_details
   has_many :proposals
+  has_many :reviews
+
   before_create :check_dates
   after_save :calculate_price
   after_create_commit :send_email_to_agents
 
-  enum status: %i[pending accepted cancelled expired]
+  enum status: %i[pending accepted cancelled expired completed]
 
   accepts_nested_attributes_for :job_details
 
