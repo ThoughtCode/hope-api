@@ -44,4 +44,8 @@ module Serializable
   def serialize_neightborhood(neightborhood)
     Api::V1::NeightborhoodSerializer.new(neightborhood)
   end
+
+  def serialize_review(review)
+    Api::V1::ReviewSerializer.new(review)
+  end
 end

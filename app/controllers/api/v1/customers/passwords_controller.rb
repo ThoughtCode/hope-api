@@ -1,5 +1,5 @@
-module Api::V1
-  class Customers::PasswordsController < Api::V1::ApiController
+module Api::V1::Customers
+  class PasswordsController < CustomerUsersController
     skip_before_action :disable_access_by_tk, only: %i[
       create update app_recover_password app_update_password
     ]
