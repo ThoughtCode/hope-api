@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180531160217) do
+ActiveRecord::Schema.define(version: 20180616154821) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -38,6 +38,7 @@ ActiveRecord::Schema.define(version: 20180531160217) do
     t.integer "mobile_token"
     t.datetime "mobile_token_expiration"
     t.boolean "online", default: true
+    t.string "avatar"
     t.index ["email"], name: "index_agents_on_email", unique: true
     t.index ["reset_password_token"], name: "index_agents_on_reset_password_token", unique: true
   end
@@ -134,6 +135,17 @@ ActiveRecord::Schema.define(version: 20180531160217) do
     t.integer "status"
   end
 
+  create_table "reviews", force: :cascade do |t|
+    t.string "hashed_id"
+    t.bigint "job_id"
+    t.string "owner_type"
+    t.bigint "owner_id"
+    t.text "comment"
+    t.integer "qualification", default: 0
+    t.index ["job_id"], name: "index_reviews_on_job_id"
+    t.index ["owner_type", "owner_id"], name: "index_reviews_on_owner_type_and_owner_id"
+  end
+
   create_table "service_types", force: :cascade do |t|
     t.string "name"
     t.string "hashed_id"
@@ -147,6 +159,8 @@ ActiveRecord::Schema.define(version: 20180531160217) do
     t.boolean "quantity"
     t.float "time"
     t.float "price"
+    t.string "icon"
   end
 
+  add_foreign_key "reviews", "jobs"
 end

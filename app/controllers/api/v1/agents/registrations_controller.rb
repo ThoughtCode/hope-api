@@ -22,7 +22,7 @@ module Api::V1
       params.require(:agent)
             .permit(:first_name, :last_name, :email, :password,
                     :password_confirmation, :national_id, :cell_phone,
-                    :birthday)
+                    :birthday, :avatar)
     end
 
     def ensure_params

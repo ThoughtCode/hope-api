@@ -23,7 +23,7 @@ module Api::V1
 
     def disable_access_by_tk
       authenticate_or_request_with_http_token do |token|
-        @user = find_by_token(token)
+        find_by_token(token)
         unless @user
           set_response(401,
                        'HTTP Token: Access denied.')
@@ -35,8 +35,8 @@ module Api::V1
     end
 
     def find_by_token(token)
-      Agent.find_by(access_token: token) ||
-        Customer.find_by(access_token: token)
+      @user = Agent.find_by(access_token: token) ||
+              Customer.find_by(access_token: token)
     end
 
     def render_internal_server_error(exception)

@@ -1,11 +1,16 @@
 class Agent < ApplicationRecord
-  include Tokenizable
   include Pinable
+  include Reviewable
+  include Tokenizable
+
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable
   has_many :jobs
   has_many :proposals
+  has_many :reviews, as: :owner
+
   enum status: %i[pending accepted refused]
+  mount_uploader :avatar, AvatarUploader
   scope :filter_by_availability, lambda { |job|
     Agent.where.not(
       id: Job.where(

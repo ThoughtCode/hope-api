@@ -46,15 +46,16 @@ es:
       messages:
         blank: "Los campos no pueden estar vacios"
         taken: "ya ha sido tomado"
+        record_invalid: "Registro inválido"
       models:
         job_detail:
           attributes:
             service:
-              required: "El servicio debe existir"
+              required: "El servicio debe existir."
         job:
           attributes:
             property:
-              required: "La propiedad debe existir"
+              required: "La propiedad debe existir."
         property:
           attributes:
             neightborhood:
@@ -97,6 +98,12 @@ es:
       service:
         one: "Servicio"
         other: "Servicios"
+      job:
+        one: "Trabajo"
+        other: "Trabajos"
+      review:
+        one: "Calificación"
+        other: "Calificaciones"
     attributes:
       property:
         name: "Nombre"
@@ -138,6 +145,21 @@ es:
         cell_phone: "Celular"
         birthday: "Cumpleaños"
         status: "Estado"
+      job:
+        property_id: "Propiedad"
+        duration: "Duración"
+        agent_id: "Agente"
+        total: "Total"
+        hashed_id: "Id"
+        started_at: "Comenzado"
+        finished_at: "Finalizado"
+        status: "Estado"
+      review:
+        hashed_id: "Id"
+        job: "Trabajo"
+        owner: "Dueño"
+        comment: "Comentario"
+        qualification: "Calificación"
   active_admin:
     dashboard: Inicio
     dashboard_welcome:
