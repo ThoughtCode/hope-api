@@ -9,12 +9,13 @@ Rails.application.routes.draw do
   namespace :api, defaults: { format: :json } do
     namespace :v1 do
       match '/*all',
-            to: 'api#cors_default_options_check',
-            constraints: { method: 'OPTIONS' }, via: [:options]
+      to: 'api#cors_default_options_check',
+      constraints: { method: 'OPTIONS' }, via: [:options]
       get '/ping' => 'api#ping'
-
+      
       # Devise Mapping
       namespace :agents do
+        put 'change_password', to: 'agents#change_password'
         resources :jobs, only: [:index, :show, :accepted, :completed] do
           resources :proposals, only: [:create, :destroy]
         end
