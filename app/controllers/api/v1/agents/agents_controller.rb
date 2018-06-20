@@ -17,6 +17,24 @@ module Api::V1::Agents
       end
     end
 
+    def change_password
+      if @agent.valid_password?(params[:agent][:current_password])
+        if @agent.update(agent_params)
+          set_response(
+            200,
+            'Contraseña actualizada exitosamente',
+            serialize_agent(@agent)
+          )
+        end
+      else
+        set_response(
+          401,
+          'La contraseña actual no coincide',
+          serialize_agent(current_user)
+        )
+      end
+    end
+
     private
 
     def agent_params
