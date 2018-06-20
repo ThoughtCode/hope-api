@@ -1,5 +1,5 @@
 module Api::V1::Agents
-  class AgentsController < AgentController
+  class AgentsController < AgentUsersController
     include Serializable
     before_action :set_agent, only: [:update]
 
