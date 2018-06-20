@@ -25,3 +25,5 @@
 
 .rdb
 dump.rdb
+.vscode/
+bin/

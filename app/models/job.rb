@@ -12,6 +12,7 @@ class Job < ApplicationRecord
   after_create_commit :send_email_to_agents
 
   enum status: %i[pending accepted cancelled expired completed]
+  enum frequency: %i[one_time weekly fortnightly monthly]
 
   accepts_nested_attributes_for :job_details
 

@@ -15,8 +15,8 @@ Rails.application.routes.draw do
 
       # Devise Mapping
       namespace :agents do
-        resources :jobs, only: [:show] do
-        resources :proposals, only: [:create, :destroy]
+        resources :jobs, only: [:index, :show, :accepted, :completed] do
+          resources :proposals, only: [:create, :destroy]
         end
         get 'proposals', to: 'proposals#index'
         devise_scope :agent do

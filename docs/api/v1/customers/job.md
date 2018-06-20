@@ -25,14 +25,15 @@ Table of Contents:
         "finished_at": "2018-05-25T12:25:00.000Z",
         "duration": 11.0,
         "total": 85.0,
-        "status": "pending", /* pending, accepted */
+        "status": "pending", /* pending accepted cancelled expired completed */
+        "frequency": "monthly", /* one_time weekly fortnightly monthly */
         "property": {
           "id":3,
           "name":"Working Up",
           "neightborhood_id":1,
           "p_street":"San Ignacio",
           "number":"123456",
-          "s_street":"Gonzalo Suarez",
+          "s_street":"González Suarez",
           "details":"Edificio Working Up",
           "additional_reference":null,
           "phone":null,
@@ -81,8 +82,6 @@ URI: `/api/v1/customers/jobs?status=nextjobs&current_page=1&limit=4`
 
 ## Return example on success, 200
 
-
-
 ```json
 {
   "message": "Trabajos listados exitosamente",
@@ -96,7 +95,8 @@ URI: `/api/v1/customers/jobs?status=nextjobs&current_page=1&limit=4`
         "finished_at": "2018-05-25T12:25:00.000Z",
         "duration": 11.0,
         "total": 85.0,
-        "status": "pending", /* pending, accepted */
+        "status": "pending", /* pending accepted cancelled expired completed */
+        "frequency": 3, /* 0 = one_time, 1 = weekly, 2 = fortnightly, 3 = monthly */  
         "property": {
           "id":3,
           "name":"Working Up",
@@ -146,8 +146,6 @@ URI: `/api/v1/customers/jobs?status=history&current_page=1&limit=4`
 
 ## Return example on success, 200
 
-
-
 ```json
 {
   "message": "Trabajos listados exitosamente",
@@ -161,7 +159,8 @@ URI: `/api/v1/customers/jobs?status=history&current_page=1&limit=4`
         "finished_at": "2018-05-25T12:25:00.000Z",
         "duration": 11.0,
         "total": 85.0,
-        "status": "expired",
+        "status": "expired", /* pending accepted cancelled expired completed */
+        "frequency": 3, /* 0 = one_time, 1 = weekly, 2 = fortnightly, 3 = monthly */  
         "property": {
           "id":3,
           "name":"Working Up",
