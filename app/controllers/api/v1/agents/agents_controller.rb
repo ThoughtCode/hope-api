@@ -1,7 +1,7 @@
 module Api::V1::Agents
   class AgentsController < AgentUsersController
     include Serializable
-    before_action :set_agent, only: [:update]
+    before_action :set_agent, only: %i[update current_user change_password]
 
     def update
       if @agent
@@ -15,6 +15,14 @@ module Api::V1::Agents
       else
         set_response(404, 'Agent not found.')
       end
+    end
+
+    def current
+      set_response(
+        200,
+        'Usuario listado exitosamente.',
+        serialize_agent(current_user)
+      )
     end
 
     def change_password
@@ -39,13 +47,13 @@ module Api::V1::Agents
 
     def agent_params
       params.require(:agent)
-            .permit(:access_token, :first_name, :last_name, :email, :password,
+            .permit(:first_name, :last_name, :email, :password,
                     :avatar, :password_confirmation, :national_id, :cell_phone,
                     :birthday)
     end
 
     def set_agent
-      @agent = Agent.find_by_access_token(params[:agent][:access_token])
+      @agent = current_user
     end
   end
 end

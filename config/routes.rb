@@ -15,6 +15,7 @@ Rails.application.routes.draw do
       
       # Devise Mapping
       namespace :agents do
+        get 'current', to: 'agents#current'
         put 'change_password', to: 'agents#change_password'
         resources :jobs, only: [:index, :show, :accepted, :completed] do
           resources :proposals, only: [:create, :destroy]

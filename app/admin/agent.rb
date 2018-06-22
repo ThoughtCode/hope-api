@@ -1,6 +1,6 @@
 ActiveAdmin.register Agent do
   permit_params :email, :password, :first_name, :last_name, :cell_phone,
-                :birthday, :status, :national_id
+                :birthday, :status, :national_id, :avatar
 
   index do
     selectable_column
@@ -34,6 +34,7 @@ ActiveAdmin.register Agent do
       f.input :cell_phone
       f.input :birthday, start_year: 1960
       f.input :status
+      f.input :avatar
     end
     f.actions
   end
