@@ -6,7 +6,7 @@ module Api::V1::Agents
     def index
       # Agregar filtros
       jobs = Job.all.order(id: :desc)
-      jobs = filter(params[:filter], jobs) if params[:filter]
+      jobs = filter(params, jobs)
       jobs = jobs.page(params[:current_page]).per(10)
       set_response(
         200,
@@ -18,7 +18,7 @@ module Api::V1::Agents
 
     def accepted
       jobs = current_user.jobs.pending.order(id: :desc)
-      jobs = filter(params[:filter], jobs) if params[:filter]
+      jobs = filter(params, jobs)
       jobs = jobs.page(params[:current_page]).per(10)
       set_response(
         200,
@@ -30,7 +30,7 @@ module Api::V1::Agents
 
     def completed
       jobs = current_user.jobs.completed.order(id: :desc)
-      jobs = filter(params[:filter], jobs) if params[:filter]
+      jobs = filter(params, jobs)
       jobs = jobs.page(params[:current_page]).per(10)
       set_response(
         200,
