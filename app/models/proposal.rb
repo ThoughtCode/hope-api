@@ -13,7 +13,7 @@ class Proposal < ApplicationRecord
   end
 
   def set_proposal_to_job
-    job.agent = agent
+    job.update_columns(agent_id: agent.id, status: 'accepted')
     self.status = 'accepted'
     set_other_proposals_to_refused
   end
