@@ -1,7 +1,7 @@
 module Api::V1::Customers
   class JobsController < CustomerUsersController
     include Serializable
-    before_action :set_job, only: %i[show update destroy]
+    before_action :set_job, only: %i[show update destroy cancelled]
 
     def index
       jobs = current_user.jobs.all
@@ -67,6 +67,22 @@ module Api::V1::Customers
       end
     end
 
+    def cancelled
+      if @job
+        @job.set_job_to_cancelled
+        @job.save
+        set_response(
+          200,
+          'Trabajo cancelado exitosamente'
+        )
+      else
+        set_response(
+          404,
+          'El trabajo no existe'
+        )
+      end
+    end
+
     private
 
     def job_params
@@ -77,7 +93,7 @@ module Api::V1::Customers
     end
 
     def set_job
-      @job = Job.find_by(hashed_id: params[:id])
+      @job = Job.find_by(hashed_id: params[:id] || params[:job_id])
     end
 
     def check_ownership
