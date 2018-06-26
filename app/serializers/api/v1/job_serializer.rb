@@ -8,6 +8,10 @@ class Api::V1::JobSerializer
     j.job_details.as_json(except: [:job_id], include: [:service])
   end
 
+  attribute :customer do |j|
+    j.property.customer
+  end
+
   attribute :proposals do |j|
     j.proposals.as_json(except: [:job_id], include: [:agent])
   end

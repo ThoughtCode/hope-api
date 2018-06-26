@@ -5,7 +5,7 @@ module Api::V1::Agents
 
     def index
       # Agregar filtros
-      jobs = Job.all.order(id: :desc)
+      jobs = Job.all.pending.order(id: :desc)
       jobs = filter(params, jobs)
       jobs = jobs.page(params[:current_page]).per(10)
       set_response(
@@ -17,7 +17,7 @@ module Api::V1::Agents
     end
 
     def accepted
-      jobs = current_user.jobs.pending.order(id: :desc)
+      jobs = current_user.jobs.accepted.order(id: :desc)
       jobs = filter(params, jobs)
       jobs = jobs.page(params[:current_page]).per(10)
       set_response(
@@ -58,8 +58,8 @@ module Api::V1::Agents
     def filter(flt, jobs)
       jobs = jobs.where('started_at >= ?', flt[:date_from]) if flt[:date_from]
       jobs = jobs.where('started_at <= ?', flt[:date_to]) if flt[:date_to]
-      jobs = jobs.where('total >= ?', flt[:min_price]) if flt[:min_price]
-      jobs = jobs.where('total <= ?', flt[:max_price]) if flt[:max_price]
+      jobs = jobs.where('total >= ?', flt[:min_price]) if flt[:min_price] != '0'
+      jobs = jobs.where('total <= ?', flt[:max_price]) if flt[:max_price] != '0'
       jobs = jobs.where(frequency: flt[:frequency]) if flt[:frequency]
       jobs
     end
