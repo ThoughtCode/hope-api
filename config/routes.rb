@@ -45,6 +45,7 @@ Rails.application.routes.draw do
         put 'change_password', to: 'customers#change_password'
         resources :properties, except: [:new, :edit]
         resources :jobs, except: [:new, :edit] do
+          get 'cancelled', to: 'jobs#cancelled'
           resources :proposals, only: [:show]
           get 'accepted/:id', to: 'proposals#accepted'
           get 'refused/:id', to: 'proposals#refused'
