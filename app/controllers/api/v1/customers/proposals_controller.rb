@@ -29,7 +29,7 @@ module Api::V1::Customers
           proposal.set_proposal_to_job
           proposal.save
           set_response(
-            200, 'Propuesta aceptada exitosamente'
+            200, 'Propuesta aceptada exitosamente', serialize_job(@job)
           )
         else
           set_response(404, 'La propuesta no existe')

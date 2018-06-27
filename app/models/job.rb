@@ -16,6 +16,10 @@ class Job < ApplicationRecord
 
   accepts_nested_attributes_for :job_details
 
+  def set_job_to_cancelled
+    self.status = 'cancelled'
+  end
+
   private
 
   def check_dates
