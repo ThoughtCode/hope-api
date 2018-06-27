@@ -12,7 +12,7 @@ module Api::V1::Agents
         200,
         'Trabajos listados exitosamente',
         serialize_job(jobs),
-        jobs.page(1).total_pages
+        jobs.total_pages
       )
     end
 
@@ -56,11 +56,11 @@ module Api::V1::Agents
     end
 
     def filter(flt, jobs)
-      jobs = jobs.where('started_at >= ?', flt[:date_from]) if flt[:date_from]
-      jobs = jobs.where('started_at <= ?', flt[:date_to]) if flt[:date_to]
+      jobs = jobs.where('started_at >= ?', flt[:date_from]) if flt[:date_from] != 'null'
+      jobs = jobs.where('started_at <= ?', flt[:date_to]) if flt[:date_to] != 'null'
       jobs = jobs.where('total >= ?', flt[:min_price]) if flt[:min_price] != '0'
       jobs = jobs.where('total <= ?', flt[:max_price]) if flt[:max_price] != '0'
-      jobs = jobs.where(frequency: flt[:frequency]) if flt[:frequency]
+      jobs = jobs.where(frequency: flt[:frequency]) if flt[:frequency] != 'null'
       jobs
     end
   end
