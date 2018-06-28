@@ -6,6 +6,7 @@ class Job < ApplicationRecord
   has_many :services, through: :job_details
   has_many :proposals
   has_many :reviews
+  has_many :penalties
 
   before_create :check_dates
   after_save :calculate_price
@@ -17,13 +18,18 @@ class Job < ApplicationRecord
   accepts_nested_attributes_for :job_details
 
   def set_job_to_cancelled
+    cancel_booking
     self.status = 'cancelled'
   end
 
   def cancel_booking
     unless can_cancel_booking?
-      amount = Config.fetch('cancelation_penalty_amount') ? Config.fetch('cancelation_penalty_amount') : 0
-      cleaners.map { |cleaner| Penalty.create!(amount: amount, cleaner: cleaner, booking: self)}
+      amount = if Config.fetch('cancelation_penalty_amount')
+                 Config.fetch('cancelation_penalty_amount')
+               else
+                 0
+               end
+      Penalty.create!(amount: amount, customer: cleaner)
     end
   end
 
