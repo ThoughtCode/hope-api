@@ -14,13 +14,17 @@ module Api::V1::Agents
 
     def create
       if @job
-        proposal = Proposal.new(
-          job: @job, agent: current_user, status: 'pending'
-        )
-        if proposal.save
-          set_response(200, 'Se ha postulado exitosamente')
+        if @job.proposals.where(agent: current_user).exists?
+          set_response(422, 'Ya te has postulado para este trabajo')
         else
-          set_response(422, proposal.errors)
+          proposal = Proposal.new(
+            job: @job, agent: current_user, status: 'pending'
+          )
+          if proposal.save
+            set_response(200, 'Se ha postulado exitosamente')
+          else
+            set_response(422, proposal.errors)
+          end
         end
       else
         set_response(404, 'El trabajo no existe')

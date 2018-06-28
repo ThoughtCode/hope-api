@@ -20,6 +20,21 @@ class Job < ApplicationRecord
     self.status = 'cancelled'
   end
 
+  def cancel_booking
+    unless can_cancel_booking?
+      amount = Config.fetch('cancelation_penalty_amount') ? Config.fetch('cancelation_penalty_amount') : 0
+      cleaners.map { |cleaner| Penalty.create!(amount: amount, cleaner: cleaner, booking: self)}
+    end
+  end
+
+  def can_cancel_booking?
+    if Config.fetch('cancelation_penalty_time')
+      ((started_at - Time.current) / 3600) >= Config.fetch('cancelation_penalty_time').to_i
+    else
+      true
+    end
+  end
+
   private
 
   def check_dates
