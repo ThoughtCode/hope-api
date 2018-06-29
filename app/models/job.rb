@@ -29,7 +29,7 @@ class Job < ApplicationRecord
                else
                  0
                end
-      Penalty.create!(amount: amount, customer: cleaner)
+      Penalty.create!(amount: amount, customer: property.customer)
     end
   end
 
