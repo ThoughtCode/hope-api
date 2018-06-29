@@ -2,7 +2,7 @@ class Proposal < ApplicationRecord
   include Hashable
   belongs_to :job
   belongs_to :agent
-  before_save :check_job_availability
+  # before_save :check_job_availability
   after_create_commit :send_email_notify_to_customer, on: :create
   enum status: %i[pending accepted refused expired]
 
