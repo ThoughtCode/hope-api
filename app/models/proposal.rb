@@ -32,7 +32,7 @@ class Proposal < ApplicationRecord
     agents = Agent.filter_by_availability(job)
     unless agents.exists?(id: agent.id)
       errors.add(
-        :agent, message: 'No tiene disponibilidad para aceptar este trabajo'
+        'No tiene disponibilidad para aceptar este trabajo'
       )
     end
     throw :abort unless agents.exists?(id: agent.id)
