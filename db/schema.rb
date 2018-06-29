@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180627211422) do
+ActiveRecord::Schema.define(version: 20180628195614) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -75,6 +75,7 @@ ActiveRecord::Schema.define(version: 20180627211422) do
     t.string "avatar"
     t.integer "mobile_token"
     t.datetime "mobile_token_expiration"
+    t.integer "penalties_id"
     t.index ["email"], name: "index_customers_on_email", unique: true
     t.index ["reset_password_token"], name: "index_customers_on_reset_password_token", unique: true
   end
@@ -119,6 +120,13 @@ ActiveRecord::Schema.define(version: 20180627211422) do
   create_table "neightborhoods", force: :cascade do |t|
     t.string "name"
     t.integer "city_id"
+  end
+
+  create_table "penalties", force: :cascade do |t|
+    t.integer "amount"
+    t.boolean "paid"
+    t.boolean "false"
+    t.integer "customer_id"
   end
 
   create_table "properties", force: :cascade do |t|

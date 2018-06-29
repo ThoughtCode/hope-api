@@ -69,6 +69,7 @@ module Api::V1::Customers
 
     def cancelled
       if @job
+        @job.cancel_booking
         @job.set_job_to_cancelled
         @job.save
         set_response(
