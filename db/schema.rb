@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180628195614) do
+ActiveRecord::Schema.define(version: 20180629155401) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -49,8 +49,8 @@ ActiveRecord::Schema.define(version: 20180628195614) do
 
   create_table "configs", force: :cascade do |t|
     t.string "key"
-    t.text "value"
     t.text "description"
+    t.string "value"
   end
 
   create_table "customers", force: :cascade do |t|
@@ -124,9 +124,8 @@ ActiveRecord::Schema.define(version: 20180628195614) do
 
   create_table "penalties", force: :cascade do |t|
     t.integer "amount"
-    t.boolean "paid"
-    t.boolean "false"
     t.integer "customer_id"
+    t.boolean "paid", default: false
   end
 
   create_table "properties", force: :cascade do |t|

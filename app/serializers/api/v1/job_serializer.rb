@@ -15,4 +15,8 @@ class Api::V1::JobSerializer
   attribute :proposals do |j|
     j.proposals.as_json(except: [:job_id], include: [:agent])
   end
+
+  attribute :can_cancel do |j|
+    j.can_cancel_booking?
+  end
 end

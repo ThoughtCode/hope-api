@@ -5,6 +5,14 @@ class Proposal < ApplicationRecord
   before_save :check_job_availability
   after_create_commit :send_email_notify_to_customer, on: :create
   enum status: %i[pending accepted refused expired]
+  scope :check_availability, lambda { |job, agent|
+    Job.all.where(
+      'finished_at >= ? AND started_at <= ? AND agent_id = ? ',
+      job.started_at,
+      job.finished_at,
+      agent.id
+    )
+  }
 
   def send_email_notify_to_customer
     url = ENV['FRONTEND_URL']
@@ -29,12 +37,10 @@ class Proposal < ApplicationRecord
   private
 
   def check_job_availability
-    agents = Agent.filter_by_availability(job)
-    unless agents.exists?(id: agent.id)
-      errors.add(
-        :agent, message: 'No tiene disponibilidad para aceptar este trabajo'
-      )
+    jobs = Proposal.check_availability(job, agent)
+    unless jobs.empty?
+      errors[:base] << 'No tiene disponibilidad para aceptar este trabajo'
     end
-    throw :abort unless agents.exists?(id: agent.id)
+    throw :abort unless Proposal.check_availability(job, agent).empty?
   end
 end
