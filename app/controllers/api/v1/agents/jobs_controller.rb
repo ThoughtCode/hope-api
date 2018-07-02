@@ -5,7 +5,7 @@ module Api::V1::Agents
 
     def index
       # Agregar filtros
-      jobs = Job.all.pending.order(id: :desc)
+      jobs = Job.all.where('started_at > ?', Date.current).pending.order(started_at: :asc)
       jobs = filter(params, jobs)
       jobs = jobs.page(params[:current_page]).per(10)
       set_response(
