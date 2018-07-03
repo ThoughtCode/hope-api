@@ -49,9 +49,9 @@ module Api::V1::Agents
     end
 
     def set_review
-      job = Job.find_by(hashed_id: params[:id])
+      job = current_user.jobs.find_by(hashed_id: params[:id])
       return set_response(404, 'Calificación no encontrada') if job.blank?
-      @review = Review.find_by(job: job)
+      @review = job.reviews.first
     end
   end
 end
