@@ -17,6 +17,7 @@ module Api::V1::Agents
     end
 
     def accepted
+      byebug
       jobs = current_user.jobs.accepted.order(id: :desc)
       jobs = filter(params, jobs)
       jobs = jobs.page(params[:current_page]).per(10)

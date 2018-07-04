@@ -17,7 +17,9 @@ Rails.application.routes.draw do
       namespace :agents do
         get 'current', to: 'agents#current'
         put 'change_password', to: 'agents#change_password'
-        resources :jobs, only: [:index, :show, :accepted, :completed] do
+        get '/jobs/accepted', to: 'jobs#accepted'
+        get '/jobs/completed', to: 'jobs#completed'
+        resources :jobs, only: [:index, :show] do
           resources :proposals, only: [:create, :destroy]
         end
         get 'proposals', to: 'proposals#index'
