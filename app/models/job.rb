@@ -42,6 +42,7 @@ class Job < ApplicationRecord
 
   def job_recurrency
     new_job = dup
+    new_job.status = 'accepted'
     job_details.each do |d|
       new_job.job_details << d.dup
     end
@@ -54,9 +55,16 @@ class Job < ApplicationRecord
       new_job.started_at = started_at + 28.days
     end
     new_job.save!
+    send_email_autocreated_job(new_job)
   end
 
   private
+
+  def send_email_autocreated_job(job)
+    customer = job.property.customer
+    url = ENV['FRONTEND_URL']
+    CustomerMailer.send_job_recursivity(job, customer, url).deliver
+  end
 
   def check_dates
     if started_at <= Time.current

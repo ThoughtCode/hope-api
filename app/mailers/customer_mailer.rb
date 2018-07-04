@@ -19,4 +19,11 @@ class CustomerMailer < ApplicationMailer
     mail(to: customer.email,
          subject: 'Propuesta recibida')
   end
+
+  def send_job_recursivity(job, customer, url)
+    @url = url + '/cliente/trabajo/' + job.hashed_id
+    @url_cancel = url + '/cliente/trabajo/' + job.hashed_id + '/cancelar'
+    mail(to: customer.email,
+         subject: 'Trabajo creado automaticamente')
+  end
 end

@@ -20,6 +20,7 @@ Rails.application.routes.draw do
         get '/jobs/accepted', to: 'jobs#accepted'
         get '/jobs/completed', to: 'jobs#completed'
         resources :jobs, only: [:index, :show] do
+          post 'review', to: 'reviews#create'
           resources :proposals, only: [:create, :destroy]
         end
         get 'proposals', to: 'proposals#index'
