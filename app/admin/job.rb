@@ -1,5 +1,5 @@
 ActiveAdmin.register Job do
-  permit_params :property_id, :started_at, job_details_attributes: [ :service_id, :value ]
+  permit_params :property_id, :started_at, :status, job_details_attributes: [ :service_id, :value ]
 
   show do
     attributes_table do
