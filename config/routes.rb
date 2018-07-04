@@ -48,6 +48,7 @@ Rails.application.routes.draw do
         resources :properties, except: [:new, :edit]
         resources :jobs, except: [:new, :edit] do
           get 'cancelled', to: 'jobs#cancelled'
+          post 'review', to: 'reviews#create'
           resources :proposals, only: [:show]
           get 'accepted/:id', to: 'proposals#accepted'
           get 'refused/:id', to: 'proposals#refused'

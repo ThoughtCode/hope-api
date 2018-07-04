@@ -13,6 +13,7 @@ class Review < ApplicationRecord
     already_reviewed = job.reviews.find_by(owner: owner).blank?
     msg = 'ya calificado por usted'
     errors.add(:job, msg) unless already_reviewed
+    job.job_recurrency if job.frequency != 'one_time'
   end
 
   def complete_job

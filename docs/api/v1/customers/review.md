@@ -55,7 +55,7 @@ URI: `/api/v1/customers/reviews`
 
 Method: `POST`
 
-URI: `/api/v1/customers/reviews`
+URI: `/api/v1/customers/jobs/:job_id/review`
 
 Header: `[HTTP_AUTHORIZATION]` = `Token token=XXXXXXXXXXXXXX`
 
@@ -66,8 +66,7 @@ Header: `[HTTP_AUTHORIZATION]` = `Token token=XXXXXXXXXXXXXX`
     review: { 
         "qualification": REVIEW_QUALIFICATION(Integer),
         "comment": REVIEW_COMMENT(String),
-    },
-    "job_id": JOB_HASHED_ID(String)
+    }
 }
 
 ```

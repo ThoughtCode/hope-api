@@ -23,22 +23,37 @@ class Job < ApplicationRecord
   end
 
   def cancel_booking
-    unless can_cancel_booking?
-      amount = if Config.fetch('cancelation_penalty_amount')
-                 Config.fetch('cancelation_penalty_amount')
-               else
-                 0
-               end
-      Penalty.create!(amount: amount, customer: property.customer)
-    end
+    amount = if Config.fetch('cancelation_penalty_amount')
+               Config.fetch('cancelation_penalty_amount')
+             else
+               0
+             end
+    Penalty.create!(amount: amount, customer: property.customer) unless can_cancel_booking?
   end
 
   def can_cancel_booking?
+    time = Config.fetch('cancelation_penalty_time')
     if Config.fetch('cancelation_penalty_time')
-      ((started_at - Time.current) / 3600) >= Config.fetch('cancelation_penalty_time').to_i
+      ((started_at - Time.current) / 3600) >= time.to_i
     else
       true
     end
+  end
+
+  def job_recurrency
+    new_job = dup
+    job_details.each do |d|
+      new_job.job_details << d.dup
+    end
+    case frequency
+    when 'weekly'
+      new_job.started_at = started_at + 7.days
+    when 'fortnightly'
+      new_job.started_at = started_at + 14.days
+    when 'monthly'
+      new_job.started_at = started_at + 28.days
+    end
+    new_job.save!
   end
 
   private
@@ -60,6 +75,6 @@ class Job < ApplicationRecord
   end
 
   def send_email_to_agents
-    SendEmailToAgentsJob.perform_later(hashed_id, ENV['FRONTEND_URL'])
+    SendEmailToAgentsJob.perform_later(hashed_id, ENV['FRONTEND_URL']) unless agent
   end
 end
