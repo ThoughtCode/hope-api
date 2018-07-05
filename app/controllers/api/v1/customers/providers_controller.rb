@@ -15,7 +15,6 @@ module Api::V1::Customers
         customer.save
       else
         customer = Customer.new(@data)
-        byebug
         customer.remote_avatar_url = @data[:avatar]['url']
         if customer.save
           customer.acquire_access_token!
