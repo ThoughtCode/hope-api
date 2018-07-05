@@ -54,6 +54,7 @@ class Job < ApplicationRecord
   def calculate_price
     duration = job_details.sum(:time)
     total = job_details.sum(:price_total)
+    total += (total * 0.12)
     finished_at = started_at + duration.hour
     update_columns(duration: duration, total: total, finished_at: finished_at)
   end
