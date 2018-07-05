@@ -15,7 +15,8 @@ module Api::V1::Customers
         customer.save
       else
         customer = Customer.new(@data)
-        customer.avatar.url = @data['avatar']['url']
+        byebug
+        customer.remote_avatar_url = @data[:avatar]['url']
         if customer.save
           customer.acquire_access_token!
           set_response(200, 'User successfully created!',
@@ -45,7 +46,7 @@ module Api::V1::Customers
     def prepare_data
       graph = Koala::Facebook::API.new(user_params[:facebook_access_token])
       user_data = graph.get_object('me?fields=name,first_name,last_name,picture,'\
-                                   'email,id')
+                                   'email,id,birthday')
       @data = {
         email: user_data['email'],
         first_name: user_data['first_name'],
@@ -53,7 +54,8 @@ module Api::V1::Customers
         uid: user_data['id'],
         avatar: user_data['picture']['data'],
         provider: 'facebook',
-        password: Devise.friendly_token.first(20)
+        password: Devise.friendly_token.first(20),
+        birthday: user_data['birthday']
       }
     end
   end
