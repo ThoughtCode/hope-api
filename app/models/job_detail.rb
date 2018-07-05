@@ -8,7 +8,7 @@ class JobDetail < ApplicationRecord
   def calculate_price
     service = Service.find(service_id)
     time = service.time * value
-    price_total = service.price * value
+    price_total = service.price * time
     update_columns(time: time, price_total: price_total)
   end
 end

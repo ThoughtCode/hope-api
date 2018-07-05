@@ -44,12 +44,13 @@ module Api::V1::Customers
     def prepare_data
       graph = Koala::Facebook::API.new(user_params[:facebook_access_token])
       user_data = graph.get_object('me?fields=name,first_name,last_name,'\
-                                   'email,id,picture.type(large)')
+                                   'email,id,picture', api_verison: 'v3.0')
       @data = {
         email: user_data['email'],
         first_name: user_data['first_name'],
         last_name: user_data['last_name'],
         uid: user_data['id'],
+        avatar: user_data['picture'].data.url,
         provider: 'facebook',
         password: Devise.friendly_token.first(20)
       }

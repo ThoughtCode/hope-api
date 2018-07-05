@@ -41,6 +41,6 @@ class Proposal < ApplicationRecord
     unless jobs.empty?
       errors[:base] << 'No tiene disponibilidad para aceptar este trabajo'
     end
-    throw :abort unless Proposal.check_availability(job, agent).empty?
+    throw :abort unless jobs.empty?
   end
 end
