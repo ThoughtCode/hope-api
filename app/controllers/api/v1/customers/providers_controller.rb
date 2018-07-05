@@ -42,9 +42,10 @@ module Api::V1::Customers
     end
 
     def prepare_data
+      byebug
       graph = Koala::Facebook::API.new(user_params[:facebook_access_token])
       user_data = graph.get_object('me?fields=name,first_name,last_name,'\
-                                   'email,id,picture.type(large)')
+                                   'email,id,picture')
       @data = {
         email: user_data['email'],
         first_name: user_data['first_name'],
