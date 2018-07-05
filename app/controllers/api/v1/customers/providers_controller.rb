@@ -15,7 +15,7 @@ module Api::V1::Customers
         customer.save
       else
         customer = Customer.new(@data)
-        customer.avatar.url = @data.avatar.url
+        customer.avatar.url = @data['avatar']['url']
         if customer.save
           customer.acquire_access_token!
           set_response(200, 'User successfully created!',
