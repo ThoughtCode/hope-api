@@ -4,6 +4,18 @@ class Api::V1::JobSerializer
   attributes :property_id, :started_at, :finished_at, :duration, :total,
              :status, :frequency, :property, :agent
 
+  # attribute :agent do |j|
+  #   Api::V1::AgentSerializer.new(j.agent)
+  # end
+
+  attribute :agent_rewiews_count do |j|
+    j.agent.reviews.count
+  end
+  
+  attribute :agent_rewiews_average do |j|
+    j.agent.reviews_average
+  end
+
   attribute :job_details do |j|
     j.job_details.as_json(except: [:job_id], include: [:service])
   end
