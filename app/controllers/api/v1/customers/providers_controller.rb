@@ -50,7 +50,7 @@ module Api::V1::Customers
         first_name: user_data['first_name'],
         last_name: user_data['last_name'],
         uid: user_data['id'],
-        avatar: user_data['picture'].data.url,
+        avatar: user_data['picture']['data']['url'],
         provider: 'facebook',
         password: Devise.friendly_token.first(20)
       }
