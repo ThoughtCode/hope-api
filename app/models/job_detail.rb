@@ -6,7 +6,6 @@ class JobDetail < ApplicationRecord
   private
 
   def calculate_price
-    byebug
     service = Service.find(service_id)
     time = service.time * value
     price_total = service.price * time
