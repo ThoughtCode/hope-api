@@ -44,7 +44,7 @@ module Api::V1::Customers
 
     def prepare_data
       graph = Koala::Facebook::API.new(user_params[:facebook_access_token])
-      user_data = graph.get_object('me?fields=name,first_name,last_name,picture'\
+      user_data = graph.get_object('me?fields=name,first_name,last_name,picture,'\
                                    'email,id')
       @data = {
         email: user_data['email'],
