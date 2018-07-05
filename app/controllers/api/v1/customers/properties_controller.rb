@@ -70,8 +70,8 @@ module Api::V1::Customers
     def property_params
       params
         .require(:property)
-        .permit(:name, :neightborhood_id, :p_street, :number, :s_street, :details,
-                :additional_reference, :cell_phone, :phone)
+        .permit(:name, :neightborhood_id, :p_street, :number, :s_street,
+                :additional_reference, :phone)
     end
 
     def set_property
