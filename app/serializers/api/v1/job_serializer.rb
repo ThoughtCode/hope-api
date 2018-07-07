@@ -9,11 +9,15 @@ class Api::V1::JobSerializer
   # end
 
   attribute :agent_rewiews_count do |j|
-    j.agent.reviews.count unless j.agent.nil?
+    j.agent.my_qualifications.count unless j.agent.nil?
   end
   
   attribute :agent_rewiews_average do |j|
     j.agent.reviews_average unless j.agent.nil?
+  end
+
+  attribute :agent_rewiews do |j|
+    j.agent.my_qualifications unless j.agent.nil?
   end
 
   attribute :job_details do |j|

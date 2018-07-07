@@ -20,7 +20,14 @@ module Reviewable
   # Returns all qualifications given to an object
   #
   def my_qualifications
-    Review.where.not(id: Review.where(owner: self)
-          .where(job_id: reviews.pluck(:job_id)))
+    completed_jobs = jobs.completed
+    my_reviews = Review.where(job_id: completed_jobs.pluck(:id))
+    unless completed_jobs.blank?
+      Review.where(job_id: completed_jobs.pluck(:id)).each do |r| 
+        r if (r.owner_id != self.id && r.owner_type != self.class.name)
+      end
+    end
+    return my_reviews
+    # Review.where(job_id: reviews.pluck(:job_id)).where.not(id: Review.where(owner: self))
   end
 end
