@@ -14,5 +14,8 @@ class Api::V1::ProposalSerializer
   attribute :agent_rewiews do |j|
     j.agent.reviews unless j.agent.nil?
   end
-
+  
+  attribute :agent do |j|
+    Api::V1::AgentSerializer(j.agent) unless j.agent.nil?
+  end
 end

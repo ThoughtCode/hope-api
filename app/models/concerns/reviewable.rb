@@ -6,6 +6,8 @@ module Reviewable
   # Returns a Review row depending on a given job
   #
   def my_job_review(job)
+    # TODO: Check this, because of 
+    #       my_qualifications issues in sql query construction
     Review.where.not(id: job.reviews.where(owner: self).pluck(:id)).first
   end
 
