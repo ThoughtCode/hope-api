@@ -21,6 +21,11 @@ class Job < ApplicationRecord
   def set_job_to_cancelled
     cancel_booking
     self.status = 'cancelled'
+    send_email_to_agent if agent
+  end
+
+  def send_email_to_agent
+    AgentMailer.job_cancelled_email(agent).deliver
   end
 
   def cancel_booking
