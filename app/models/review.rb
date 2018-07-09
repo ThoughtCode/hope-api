@@ -16,7 +16,8 @@ class Review < ApplicationRecord
   end
 
   def complete_job
-    job.completed! if job.reviews.any?
+    job.completed! if job.reviews.any? && owner.class.name == 'Agent'
+    job.job_recurrency if job.frequency != 'one_time' && owner.class.name == 'Agent'
     # TODO: Send email notification
   end
 end

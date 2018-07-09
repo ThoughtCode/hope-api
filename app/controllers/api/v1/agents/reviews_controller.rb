@@ -14,13 +14,19 @@ module Api::V1::Agents
     end
 
     def create
-      review = @job.reviews.new(@review_params)
-      if review.save
-        set_response(
-          200, 'Calificación creada exitosamente', serialize_review(review)
-        )
+      if @job
+        review = @job.reviews.new(@review_params)
+        if review.save
+          set_response(
+            200, 'Calificación creada exitosamente', serialize_review(review)
+          )
+        else
+          set_response(422, review.errors.full_messages)
+        end
       else
-        set_response(422, review.errors.full_messages)
+        set_response(
+          404, 'El trabajo no existe'
+        )
       end
     end
 

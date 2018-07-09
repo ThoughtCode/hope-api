@@ -20,6 +20,7 @@ Rails.application.routes.draw do
         get '/jobs/accepted', to: 'jobs#accepted'
         get '/jobs/completed', to: 'jobs#completed'
         resources :jobs, only: [:index, :show] do
+          post 'review', to: 'reviews#create'
           resources :proposals, only: [:create, :destroy]
         end
         get 'proposals', to: 'proposals#index'
@@ -48,6 +49,7 @@ Rails.application.routes.draw do
         resources :properties, except: [:new, :edit]
         resources :jobs, except: [:new, :edit] do
           get 'cancelled', to: 'jobs#cancelled'
+          post 'review', to: 'reviews#create'
           resources :proposals, only: [:show]
           get 'accepted/:id', to: 'proposals#accepted'
           get 'refused/:id', to: 'proposals#refused'
