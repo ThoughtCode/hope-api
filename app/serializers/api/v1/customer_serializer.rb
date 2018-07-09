@@ -4,4 +4,16 @@ class Api::V1::CustomerSerializer
   set_id :id # optional
   attributes :first_name, :last_name, :email, :access_token, :avatar,
              :national_id, :cell_phone
+
+  attribute :rewiews_count do |c|
+    c.my_qualifications.count
+  end
+  
+  attribute :rewiews_average do |c|
+    c.reviews_average
+  end
+  
+  attribute :rewiews do |c|
+    c.my_qualifications
+  end
 end

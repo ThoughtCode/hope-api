@@ -6,7 +6,7 @@ class Job < ApplicationRecord
   has_many :services, through: :job_details
   has_many :proposals
   has_many :agents, through: :proposals
-  has_many :reviews
+  has_many :reviews, dependent: :destroy
   has_many :penalties
 
   before_create :check_dates

@@ -24,6 +24,10 @@ class Api::V1::JobSerializer
     j.property.customer
   end
 
+  attribute :property do |j|
+    Api::V1::PropertySerializer.new(j.property)
+  end
+
   attribute :proposals do |j|
     Api::V1::ProposalSerializer.new(j.proposals)
   end
