@@ -17,13 +17,19 @@ class Proposal < ApplicationRecord
   def send_email_notify_to_customer
     url = ENV['FRONTEND_URL']
     customer = job.property.customer
-    CustomerMailer.send_proposal_received(self, customer, url).deliver
+    CustomerMailer.send_proposal_received(job, customer, url).deliver
   end
 
   def set_proposal_to_job
     job.update_columns(agent_id: agent.id, status: 'accepted')
     self.status = 'accepted'
+    send_mailer_to_agent_accepted
     set_other_proposals_to_refused
+  end
+
+  def send_mailer_to_agent_accepted
+    url = ENV['FRONTEND_URL']
+    AgentMailer.send_proposal_accepted(agent, job.hashed_id, url).deliver
   end
 
   def set_to_refused

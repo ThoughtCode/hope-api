@@ -13,4 +13,11 @@ class AgentMailer < ApplicationMailer
     mail(to: agent.email,
          subject: 'Hay un nuevo trabajo disponible')
   end
+
+  def send_proposal_accepted(agent, job_id, url)
+    @url = url + '/agente/trabajo/' + job_id.to_s
+    mail(to: agent.email,
+         subject: 'Te han aceptado una propuesta para un trabajo')
+  end
+
 end
