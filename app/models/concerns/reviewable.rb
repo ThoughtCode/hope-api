@@ -13,7 +13,7 @@ module Reviewable
   #
   def reviews_average
     reviews = my_qualifications
-    return ((reviews.sum(:qualification) / reviews.count) * 2.0).round / 2.0 unless reviews.count == 0
+    return ((reviews.pluck(:qualification).sum / reviews.count) * 2.0).round / 2.0 unless reviews.count == 0
     return 0
   end
 
