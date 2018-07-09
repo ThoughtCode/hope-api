@@ -4,7 +4,7 @@ class Api::V1::ProposalSerializer
   attributes :id, :job, :agent
 
   attribute :agent_rewiews_count do |j|
-    j.agent.reviews.count unless j.agent.nil?
+    j.agent.my_qualifications.count unless j.agent.nil?
   end
   
   attribute :agent_rewiews_average do |j|
@@ -14,5 +14,8 @@ class Api::V1::ProposalSerializer
   attribute :agent_rewiews do |j|
     j.agent.reviews unless j.agent.nil?
   end
-
+  
+  attribute :agent do |j|
+    Api::V1::AgentSerializer.new(j.agent) unless j.agent.nil?
+  end
 end
