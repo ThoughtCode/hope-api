@@ -4,11 +4,15 @@ class Api::V1::AgentSerializer
   set_id :id # optional
   attributes :first_name, :last_name, :email, :access_token, :avatar,
              :national_id, :cell_phone
-  attribute :rewiews_count do |j|
-    j.reviews.count
+  attribute :rewiews_count do |a|
+    a.my_qualifications.count
   end
   
-  attribute :rewiews_average do |j|
-    j.reviews_average
+  attribute :rewiews_average do |a|
+    a.reviews_average
+  end
+  
+  attribute :rewiews do |a|
+    Api::V1::ReviewSerializer.new(a.my_qualifications)
   end
 end

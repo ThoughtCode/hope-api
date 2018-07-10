@@ -4,10 +4,6 @@ class Api::V1::JobSerializer
   attributes :property_id, :started_at, :finished_at, :duration, :total,
              :status, :frequency, :property, :agent
 
-  # attribute :agent do |j|
-  #   Api::V1::AgentSerializer.new(j.agent)
-  # end
-
   attribute :agent_rewiews_count do |j|
     j.agent.my_qualifications.count unless j.agent.nil?
   end
@@ -17,7 +13,7 @@ class Api::V1::JobSerializer
   end
 
   attribute :agent_rewiews do |j|
-    j.agent.my_qualifications unless j.agent.nil?
+    Api::V1::ReviewSerializer.new(j.agent.my_qualifications) unless j.agent.nil?
   end
 
   attribute :job_details do |j|
@@ -28,8 +24,12 @@ class Api::V1::JobSerializer
     j.property.customer
   end
 
+  attribute :property do |j|
+    Api::V1::PropertySerializer.new(j.property)
+  end
+
   attribute :proposals do |j|
-    j.proposals.as_json(except: [:job_id], include: [:agent])
+    Api::V1::ProposalSerializer.new(j.proposals)
   end
 
   attribute :can_cancel do |j|
