@@ -13,6 +13,6 @@ class Api::V1::AgentSerializer
   end
   
   attribute :rewiews do |a|
-    a.my_qualifications
+    Api::V1::ReviewSerializer.new(a.my_qualifications)
   end
 end

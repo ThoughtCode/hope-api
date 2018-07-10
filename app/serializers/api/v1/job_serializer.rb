@@ -13,7 +13,7 @@ class Api::V1::JobSerializer
   end
 
   attribute :agent_rewiews do |j|
-    j.agent.my_qualifications unless j.agent.nil?
+    Api::V1::ReviewSerializer.new(j.agent.my_qualifications) unless j.agent.nil?
   end
 
   attribute :job_details do |j|
