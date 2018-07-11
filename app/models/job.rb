@@ -64,6 +64,10 @@ class Job < ApplicationRecord
     send_email_autocreated_job(new_job)
   end
 
+  def can_review?(user)
+    reviews.where(owner: user).blank?
+  end
+
   private
 
   def send_email_autocreated_job(job)
@@ -81,8 +85,8 @@ class Job < ApplicationRecord
   end
 
   def calculate_price
-    duration = job_details.sum(:time)
-    total = job_details.sum(:price_total)
+    duration = job_details.pluck(:time).compact.sum
+    total = job_details.pluck(:price_total).compact.sum
     total += (total * 0.12)
     finished_at = started_at + duration.hour
     update_columns(duration: duration, total: total, finished_at: finished_at)
