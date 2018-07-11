@@ -27,16 +27,16 @@ module Api::V1::Customers
       if @job
         if !check_ownership
           if @job.update(job_params)
-            set_response(200, 'Updated job successfully',
+            set_response(200, 'Trabajo actualizado exitosamente',
                          serialize_job(@job))
           else
             set_response(422, @job.errors)
           end
         else
-          set_response(404, 'Job does not exists.')
+          set_response(404, 'El trabajo no existe.')
         end
       else
-        set_response(404, 'Job does not exists.')
+        set_response(404, 'El trabajo no existe.')
       end
     end
 
@@ -44,28 +44,46 @@ module Api::V1::Customers
       if @job
         if !check_ownership
           @job.destroy
-          set_response(200, 'Job was deleted successfully.')
+          set_response(200, 'El trabajo fue borrado exitosamente.')
         else
-          set_response(404, 'Job does not exists.')
+          set_response(404, 'El trabajo no existe.')
         end
       else
-        set_response(404, 'Job does not exists.')
+        set_response(404, 'El trabajo no existe.')
       end
     end
 
     def show
       if @job
         if !check_ownership
-          set_response(200, 'Job found successfully.',
-                       serialize_job(@job).as_json.merge(can_review:  @job.can_review?(current_user)))
+          set_response(200, 'El trabajo fue encontrado exitosamente.',
+                       serialize_job(@job)
         else
-          set_response(404, 'Job does not exists.')
+          set_response(404, 'El trabajo no existe.')
         end
       else
-        set_response(404, 'Job does not exist.')
+        set_response(404, 'El trabajo no existe')
       end
     end
 
+    def can_review
+      if @job
+        if !check_ownership
+          can = @job.can_review?(current_user) ? true : false
+          can_msg = if  @job.can_review?(current_user)
+                      'El trabajo fue encontrado exitosamente.'
+                    else
+                      'You cannot review'
+                    end
+          set_response(200, can_msg, can)
+        else
+          set_response(404, 'El trabajo no existe.')
+        end
+      else
+        set_response(404, 'El trabajo no existe.')
+      end
+    end
+    
     def cancelled
       if @job
         @job.set_job_to_cancelled
