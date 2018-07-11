@@ -11,7 +11,7 @@ class Proposal < ApplicationRecord
       job.started_at,
       job.finished_at,
       agent.id,
-      4
+      2
     )
   }
 

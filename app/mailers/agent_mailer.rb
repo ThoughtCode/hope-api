@@ -16,14 +16,12 @@ class AgentMailer < ApplicationMailer
 
   def job_cancelled_email(agent)
     mail(to: agent.email,
-      subject: 'Han cancelado un trabajo')
+         subject: 'Han cancelado un trabajo')
   end
 
   def send_proposal_accepted(agent, job_id, url)
-    byebug
     @url = url + '/agente/trabajo/' + job_id.to_s
     mail(to: agent.email,
          subject: 'Te han aceptado una propuesta para un trabajo')
   end
-
 end
