@@ -4,9 +4,10 @@ module Api::V1::Agents
     before_action :set_job, only: :show
 
     def index
-      # Agregar filtros
+      proposals = current_user.proposals.pluck(:job_id)
       jobs = Job.all.where('started_at > ?', Date.current).pending.order(started_at: :asc)
       jobs = filter(params, jobs)
+      jobs = jobs.where.not(id: proposals)
       jobs = jobs.page(params[:current_page]).per(10)
       set_response(
         200,
@@ -56,11 +57,11 @@ module Api::V1::Agents
     end
 
     def filter(flt, jobs)
-      jobs = jobs.where('started_at >= ?', flt[:date_from]) if (flt[:date_from] != 'null' && !flt[:date_from].nil?)
-      jobs = jobs.where('started_at <= ?', flt[:date_to]) if (flt[:date_to] != 'null' && !flt[:date_to].nil?)
-      jobs = jobs.where('total >= ?', flt[:min_price]) if (flt[:min_price] != '0' && !flt[:min_price].nil?)
-      jobs = jobs.where('total <= ?', flt[:max_price]) if (flt[:max_price] != '0' && !flt[:max_price].nil?)
-      jobs = jobs.where(frequency: flt[:frequency]) if (flt[:frequency] != 'null' && !flt[:frequency].nil?)
+      jobs = jobs.where('started_at >= ?', flt[:date_from]) if flt[:date_from] != 'null' && !flt[:date_from].nil?
+      jobs = jobs.where('started_at <= ?', flt[:date_to]) if flt[:date_to] != 'null' && !flt[:date_to].nil?
+      jobs = jobs.where('total >= ?', flt[:min_price]) if flt[:min_price] != '0' && !flt[:min_price].nil?
+      jobs = jobs.where('total <= ?', flt[:max_price]) if flt[:max_price] != '0' && !flt[:max_price].nil?
+      jobs = jobs.where(frequency: flt[:frequency]) if flt[:frequency] != 'null' && !flt[:frequency].nil?
       jobs
     end
   end
