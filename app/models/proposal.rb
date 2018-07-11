@@ -18,7 +18,7 @@ class Proposal < ApplicationRecord
   def send_email_notify_to_customer
     url = ENV['FRONTEND_URL']
     customer = job.property.customer
-    CustomerMailer.send_proposal_received(job, customer, url).deliver
+    SendEmailToCustomerProposal.perform_later(job, customer, url)
   end
 
   def set_proposal_to_job

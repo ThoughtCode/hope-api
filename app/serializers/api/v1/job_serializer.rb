@@ -5,11 +5,11 @@ class Api::V1::JobSerializer
              :status, :frequency, :property, :agent
 
   attribute :agent_rewiews_count do |j|
-    j.agent.my_qualifications.count unless j.agent.nil?
+    j.agent&.my_qualifications&.count
   end
-  
+
   attribute :agent_rewiews_average do |j|
-    j.agent.reviews_average unless j.agent.nil?
+    j.agent&.reviews_average
   end
 
   attribute :agent_rewiews do |j|
@@ -32,7 +32,5 @@ class Api::V1::JobSerializer
     Api::V1::ProposalSerializer.new(j.proposals)
   end
 
-  attribute :can_cancel do |j|
-    j.can_cancel_booking?
-  end
+  attribute :can_cancel, &:can_cancel_booking?
 end
