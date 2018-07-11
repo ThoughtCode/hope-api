@@ -57,7 +57,7 @@ module Api::V1::Customers
       if @job
         if !check_ownership
           set_response(200, 'Job found successfully.',
-                       serialize_job(@job))
+                       serialize_job(@job).as_json.merge(can_review:  @job.can_review?(current_user)))
         else
           set_response(404, 'Job does not exists.')
         end

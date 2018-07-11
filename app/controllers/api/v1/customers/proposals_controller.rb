@@ -26,11 +26,16 @@ module Api::V1::Customers
       if @job
         proposal = @job.proposals.find_by(hashed_id: params[:id])
         if proposal
-          proposal.set_proposal_to_job
-          proposal.save
-          set_response(
-            200, 'Propuesta aceptada exitosamente', serialize_job(@job)
-          )
+          if proposal.can_accept_agent
+            proposal.set_proposal_to_job
+            set_response(
+              200, 'Propuesta aceptada exitosamente', serialize_job(@job)
+            )
+          else
+            set_response(422,
+                         'El agente ya tiene un trabajo asignado en esta fecha',
+                         serialize_job(@job))
+          end
         else
           set_response(404, 'La propuesta no existe')
         end

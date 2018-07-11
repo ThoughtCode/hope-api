@@ -25,6 +25,7 @@ class Proposal < ApplicationRecord
     self.status = 'accepted'
     send_mailer_to_agent_accepted
     set_other_proposals_to_refused
+    save
   end
 
   def send_mailer_to_agent_accepted
@@ -38,6 +39,12 @@ class Proposal < ApplicationRecord
 
   def set_other_proposals_to_refused
     job.proposals.where.not(id: id).update_all(status: 'refused')
+  end
+
+  def can_accept_agent
+    jobs = Proposal.check_availability(job, agent)
+    destroy unless jobs.empty?
+    jobs.empty?
   end
 
   private
