@@ -34,7 +34,8 @@ class Job < ApplicationRecord
              else
                0
              end
-    Penalty.create!(amount: amount, customer: property.customer) unless can_cancel_booking?
+    customer = property.customer
+    Penalty.create!(amount: amount, customer: customer) unless can_cancel_booking?
   end
 
   def can_cancel_booking?
