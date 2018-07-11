@@ -57,7 +57,7 @@ module Api::V1::Customers
       if @job
         if !check_ownership
           set_response(200, 'El trabajo fue encontrado exitosamente.',
-                       serialize_job(@job)
+                       serialize_job(@job))
         else
           set_response(404, 'El trabajo no existe.')
         end
@@ -70,10 +70,10 @@ module Api::V1::Customers
       if @job
         if !check_ownership
           can = @job.can_review?(current_user) ? true : false
-          can_msg = if  @job.can_review?(current_user)
+          can_msg = if @job.can_review?(current_user)
                       'El trabajo fue encontrado exitosamente.'
                     else
-                      'You cannot review'
+                      'No puedes realizar esta calificacion en este momento'
                     end
           set_response(200, can_msg, can)
         else
@@ -83,7 +83,7 @@ module Api::V1::Customers
         set_response(404, 'El trabajo no existe.')
       end
     end
-    
+
     def cancelled
       if @job
         @job.set_job_to_cancelled
