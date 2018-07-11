@@ -50,6 +50,7 @@ Rails.application.routes.draw do
         resources :jobs, except: [:new, :edit] do
           get 'cancelled', to: 'jobs#cancelled'
           post 'review', to: 'reviews#create'
+          post 'can_review', to: 'reviews#can_review'
           resources :proposals, only: [:show]
           get 'accepted/:id', to: 'proposals#accepted'
           get 'refused/:id', to: 'proposals#refused'
