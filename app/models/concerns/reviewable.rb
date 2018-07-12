@@ -8,7 +8,7 @@ module Reviewable
   def my_job_review(job)
     # TODO: Check this, because of 
     #       my_qualifications issues in sql query construction
-    Review.where.not(id: job.reviews.where(owner: self).pluck(:id)).first
+    Review.where.not(id: job.reviews.where(owner: self).pluck(:id).compact).first
   end
 
   # Returns the review's average given to an object
@@ -24,9 +24,9 @@ module Reviewable
   def my_qualifications
     completed_jobs = jobs.completed
     my_reviews = Review.where(job_id: completed_jobs.pluck(:id))
-    return Review.where(job_id: completed_jobs.pluck(:id)).each do |r| 
-             r if (r.owner_id != self.id && r.owner_type != self.class.name)
-           end unless completed_jobs.blank?
+    return my_reviews
+           .map{|r| r if r.owner_type != self.class.name }
+           .compact
     return my_reviews
   end
 end
