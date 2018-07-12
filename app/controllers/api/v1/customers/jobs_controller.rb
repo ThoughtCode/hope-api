@@ -1,7 +1,7 @@
 module Api::V1::Customers
   class JobsController < CustomerUsersController
     include Serializable
-    before_action :set_job, only: %i[show update destroy cancelled]
+    before_action :set_job, only: %i[show update destroy cancelled can_review]
     def index
       jobs = current_user.jobs.all
       jobs = check_status(jobs)
@@ -75,7 +75,10 @@ module Api::V1::Customers
                     else
                       'No puedes realizar esta calificacion en este momento'
                     end
-          set_response(200, can_msg, can)
+          render status: 200, json: {
+            message: can_msg,
+            can_review: can
+          }
         else
           set_response(404, 'El trabajo no existe.')
         end
