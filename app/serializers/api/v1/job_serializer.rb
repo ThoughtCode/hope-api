@@ -1,8 +1,8 @@
 class Api::V1::JobSerializer
   include FastJsonapi::ObjectSerializer
-  set_id :hashed_id # optional
+  set_id :hashed_id
   attributes :property_id, :started_at, :finished_at, :duration, :total,
-             :status, :frequency, :property, :agent
+             :status, :frequency, :property, :agent, :details
 
   attribute :agent_rewiews_count do |j|
     j.agent&.my_qualifications&.count

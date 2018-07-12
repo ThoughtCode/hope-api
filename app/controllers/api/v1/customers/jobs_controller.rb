@@ -105,7 +105,7 @@ module Api::V1::Customers
     def job_params
       params
         .require(:job)
-        .permit(:property_id, :started_at, :frequency,
+        .permit(:property_id, :started_at, :frequency, :details,
                 job_details_attributes: %i[id service_id value _destroy])
     end
 
