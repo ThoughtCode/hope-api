@@ -4,10 +4,6 @@ class Api::V1::JobForAgentsSerializer
   attributes :id, :property_id, :started_at, :finished_at, :duration, :total,
              :status
 
-  attribute :job_details do |j|
-    j.job_details.as_json(except: [:job_id], include: [:service])
-  end
-
   attribute :customer_rewiews_count do |j|
     j.property.customer&.my_qualifications&.count
   end
@@ -25,6 +21,6 @@ class Api::V1::JobForAgentsSerializer
   end
 
   attribute :customer do |j|
-    j.property.customer
+    Api::V1::CustomerSerializer.new(j.property.customer)
   end
 end
