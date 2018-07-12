@@ -26,4 +26,16 @@ class CustomerMailer < ApplicationMailer
     mail(to: customer.email,
          subject: 'Trabajo creado automaticamente')
   end
+
+  def send_job_completed(customer, job_id, url)
+    @url = url + '/cliente/trabajo/' + job_id.to_s
+    mail(to: customer.email,
+         subject: 'Se ha completado un trabajo con exito')
+  end
+
+  def send_email_review(job_id, customer, url)
+    @url = url + '/cliente/trabajo/' + job_id.to_s
+    mail(to: customer.email,
+         subject: 'Te han calificado')
+  end
 end

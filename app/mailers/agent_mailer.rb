@@ -24,4 +24,16 @@ class AgentMailer < ApplicationMailer
     mail(to: agent.email,
          subject: 'Te han aceptado una propuesta para un trabajo')
   end
+
+  def send_job_completed(agent, job_id, url)
+    @url = url + '/agente/trabajo/' + job_id.to_s
+    mail(to: agent.email,
+         subject: 'Se ha completado un trabajo con exito')
+  end
+
+  def send_email_review(job_id, agent, url)
+    @url = url + '/agente/trabajo/' + job_id.to_s
+    mail(to: agent.email,
+         subject: 'Te han calificado')
+  end
 end

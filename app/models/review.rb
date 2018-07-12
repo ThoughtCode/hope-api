@@ -3,6 +3,7 @@ class Review < ApplicationRecord
   belongs_to :job
   belongs_to :owner, polymorphic: true
   after_create :complete_job
+  after_create :send_counterpart_email
 
   validates_presence_of :comment, :qualification, :job
   validate :can_create
@@ -18,9 +19,22 @@ class Review < ApplicationRecord
     errors.add(:job, msg) unless Time.now > job.started_at
   end
 
+  def send_counterpart_email
+    url = ENV['FRONTEND_URL']
+    if owner.class.name == 'Agent'
+      customer = job.property.customer
+      SendEmailToCounterpartCustomerJob.perform_later(job, customer, url)
+    else
+      agent = job.agent
+      SendEmailToCounterpartAgentJob.perform_later(job, agent, url)
+    end
+  end
+
   def complete_job
-    job.completed! if job.reviews.any? && owner.class.name == 'Agent'
-    job.job_recurrency if job.frequency != 'one_time' && owner.class.name == 'Agent'
-    # TODO: Send email notification
+    return nil if owner.class.name == 'Customer' || job.reviews.none?
+    job.completed!
+    job.job_recurrency if job.frequency != 'one_time'
+    url = ENV['FRONTEND_URL']
+    SendEmailCompletedJob.perform_later(owner, customer, url)
   end
 end
