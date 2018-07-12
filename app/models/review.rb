@@ -13,6 +13,9 @@ class Review < ApplicationRecord
     already_reviewed = job.reviews.find_by(owner: owner).blank?
     msg = 'ya calificado por usted'
     errors.add(:job, msg) unless already_reviewed
+    msg = 'no puede recibir reviews aún, usted debe esperar '\
+          'hasta después de la fecha contratada'
+    errors.add(:job, msg) unless Time.now > job.started_at
   end
 
   def complete_job
