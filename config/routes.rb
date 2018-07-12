@@ -19,6 +19,7 @@ Rails.application.routes.draw do
         put 'change_password', to: 'agents#change_password'
         get '/jobs/accepted', to: 'jobs#accepted'
         get '/jobs/completed', to: 'jobs#completed'
+        get '/jobs/postulated', to: 'jobs#postulated'
         resources :jobs, only: [:index, :show] do
           post 'review', to: 'reviews#create'
           resources :proposals, only: [:create, :destroy]

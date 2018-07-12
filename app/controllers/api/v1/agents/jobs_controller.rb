@@ -17,6 +17,19 @@ module Api::V1::Agents
       )
     end
 
+    def postulated
+      proposals = current_user.proposals.pluck(:job_id)
+      jobs = Job.all.where('started_at > ?', Date.current).pending.order(started_at: :asc)
+      jobs = jobs.where(id: proposals)
+      jobs = jobs.page(params[:current_page]).per(10)
+      set_response(
+        200,
+        'Trabajos listados exitosamente',
+        serialize_job(jobs),
+        jobs.total_pages
+      )
+    end
+
     def accepted
       jobs = current_user.jobs.accepted.order(id: :desc)
       jobs = filter(params, jobs)
