@@ -1,7 +1,7 @@
 module Api::V1::Agents
   class JobsController < AgentUsersController
     include Serializable
-    before_action :set_job, only: :show
+    before_action :set_job, only: [:show, :can_review, :can_apply]
 
     def index
       proposals = current_user.proposals.pluck(:job_id)
@@ -55,19 +55,43 @@ module Api::V1::Agents
     end
 
     def show
-      if @job
-        set_response(200, 'Trabajo econtrado existosamente.',
-                     serialize_job_for_agents(@job))
-      else
-        set_response(404, 'El trabajo no existe')
-      end
+      set_response(200, 'Trabajo econtrado existosamente.',
+                   serialize_job_for_agents(@job))
+    end
+
+    def can_review
+      can = @job.can_review?(current_user)
+      can_msg = if can
+                  'El trabajo fue encontrado exitosamente.'
+                else
+                  'No puedes realizar esta calificacion en este momento'
+                end
+      render status: 200, json: {
+        message: can_msg,
+        can_review: can
+      }
+    end
+
+    def can_apply
+      can = !@job.proposals.where(agent: current_user).exists?
+      can_msg = if can
+                  'El trabajo fue encontrado exitosamente.'
+                else
+                  'No puedes aplicar a este trabajo'
+                end
+      render status: 200, json: {
+        message: can_msg,
+        can_review: can
+      }
     end
 
     private
 
     def set_job
       @job = Job.find_by(hashed_id: params[:id])
+      return set_response(404, 'El trabajo no existe.') unless @job
     end
+
 
     def filter(flt, jobs)
       jobs = jobs.where('started_at >= ?', flt[:date_from]) if flt[:date_from] != 'null' && !flt[:date_from].nil?

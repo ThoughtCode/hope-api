@@ -69,8 +69,8 @@ module Api::V1::Customers
     def can_review
       if @job
         if !check_ownership
-          can = @job.can_review?(current_user) ? true : false
-          can_msg = if @job.can_review?(current_user)
+          can = @job.can_review?(current_user)
+          can_msg = if can
                       'El trabajo fue encontrado exitosamente.'
                     else
                       'No puedes realizar esta calificacion en este momento'

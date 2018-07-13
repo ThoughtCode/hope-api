@@ -22,6 +22,8 @@ Rails.application.routes.draw do
         get '/jobs/postulated', to: 'jobs#postulated'
         resources :jobs, only: [:index, :show] do
           post 'review', to: 'reviews#create'
+          get 'can_review', to: 'jobs#can_review'
+          get 'can_apply', to: 'jobs#can_apply'
           resources :proposals, only: [:create, :destroy]
         end
         get 'proposals', to: 'proposals#index'

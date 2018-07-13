@@ -23,4 +23,5 @@ class Api::V1::JobForAgentsSerializer
   attribute :customer do |j|
     Api::V1::CustomerSerializer.new(j.property.customer)
   end
+
 end
