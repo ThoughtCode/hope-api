@@ -88,7 +88,7 @@ module Api::V1::Agents
     private
 
     def set_job
-      @job = Job.find_by(hashed_id: params[:id])
+      @job = Job.find_by(hashed_id: params[:id] || params[:job_id])
       return set_response(404, 'El trabajo no existe.') unless @job
     end
 
