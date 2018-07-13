@@ -61,7 +61,6 @@ class Job < ApplicationRecord
     when 'monthly'
       new_job.started_at = started_at + 28.days
     end
-    byebug
     new_job.save!
     send_email_autocreated_job(new_job)
   end
