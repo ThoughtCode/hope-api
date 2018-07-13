@@ -4,7 +4,7 @@ class CustomerMailer < ApplicationMailer
   def send_welcome_email(user)
     @user = user
     mail(to: @user.email,
-         subject: 'Thanks for signing up for our amazing app')
+         subject: 'Gracias por registrarte a nuestra fantastica app')
   end
 
   def send_recover_password_app_email(user)

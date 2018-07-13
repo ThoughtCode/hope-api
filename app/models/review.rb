@@ -35,6 +35,6 @@ class Review < ApplicationRecord
     job.completed!
     job.job_recurrency if job.frequency != 'one_time'
     url = ENV['FRONTEND_URL']
-    SendEmailCompletedJob.perform_later(owner, customer, url)
+    SendEmailCompletedJob.perform_later(owner, job, url)
   end
 end
