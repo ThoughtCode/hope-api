@@ -38,4 +38,17 @@ class CustomerMailer < ApplicationMailer
     mail(to: customer.email,
          subject: 'Te han calificado')
   end
+
+  def send_email_create_job(job, customer, url)
+    @url = url + '/cliente/trabajo/' + job.hashed_id.to_s
+    @job = job
+    service_base = job.job_details.select { |j| j.service.type_service == 'base' }
+    @service_base_name = service_base.map { |j| j.service.name }.first
+    @service_base_price = service_base.map(&:price_total).first
+    @services_addon = job.job_details.select { |j| j.service.type_service == 'addon' }
+    @iva = job.job_details.map(&:price_total).sum * 0.12
+    @total = job.job_details.map(&:price_total).sum + @iva
+    mail(to: customer.email,
+         subject: 'Creaste un trabajo')
+  end
 end

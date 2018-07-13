@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
+  </head>
+  <body>
+    <h1>Has creado un trabajo</h1>
+    <div>
+      <p>Recibo</p>
+      <ul>
+        <li><%= @service_base_name %> <%= @service_base_price %></li>
+        <% @services_addon.each do |j|%>
+          <li><%= j.service.name %> <%= j.price_total %></li>
+        <% end %>
+        <li>IVA: <%= @iva %></li>
+        <li>Total: <%= @total %></li>
+      </ul>
+    </div>
+    <p>Para ver mas detalles sobre el trabajo en este link: <%= @url %></p>
+  </body>
+</html>

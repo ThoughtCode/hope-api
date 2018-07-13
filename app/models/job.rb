@@ -11,7 +11,7 @@ class Job < ApplicationRecord
 
   before_create :check_dates
   after_save :calculate_price
-  after_create_commit :send_email_to_agents
+  after_create_commit :send_email_create_job
 
   enum status: %i[pending accepted cancelled expired completed]
   enum frequency: %i[one_time weekly fortnightly monthly]
@@ -93,7 +93,8 @@ class Job < ApplicationRecord
     update_columns(duration: duration, total: total, finished_at: finished_at)
   end
 
-  def send_email_to_agents
+  def send_email_create_job
+    SendEmailJobCreateJob.perform_later(self, property.customer, ENV['FRONTEND_URL'])
     SendEmailToAgentsJob.perform_later(hashed_id, ENV['FRONTEND_URL']) unless agent
   end
 end
