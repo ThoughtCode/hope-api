@@ -36,4 +36,10 @@ class AgentMailer < ApplicationMailer
     mail(to: agent.email,
          subject: 'Te han calificado')
   end
+
+  def send_welcome_email(user)
+    @user = user
+    mail(to: @user.email,
+         subject: 'Gracias por registrarte a nuestra fantastica app')
+  end
 end

@@ -10,7 +10,7 @@ module Api::V1
       if customer.save
         customer.acquire_access_token!
         set_response(200,
-                     'Signed Up successfully!',
+                     'Ingresado exitosamente',
                      serialize_customer(customer))
       else
         set_response(422, customer.errors)

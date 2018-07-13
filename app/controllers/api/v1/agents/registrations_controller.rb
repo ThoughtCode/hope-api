@@ -10,7 +10,7 @@ module Api::V1
       agent = Agent.new(agent_params)
       if agent.save
         agent.acquire_access_token!
-        set_response(200, 'Signed Up successfully!', serialize_agent(agent))
+        set_response(200, 'Ingresado exitosamente', serialize_agent(agent))
       else
         set_response(422, agent.errors)
       end

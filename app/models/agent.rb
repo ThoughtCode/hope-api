@@ -11,6 +11,8 @@ class Agent < ApplicationRecord
 
   enum status: %i[pending accepted refused]
   mount_uploader :avatar, AvatarUploader
+  after_create :send_welcome_email
+
   scope :filter_by_availability, lambda { |job|
     Agent.where.not(
       id: Job.where(
@@ -24,5 +26,11 @@ class Agent < ApplicationRecord
   def send_recover_password_email
     set_reset_password_pin!
     AgentMailer.send_recover_password_app_email(self).deliver
+  end
+
+  private
+
+  def send_welcome_email
+    AgentMailer.send_welcome_email(self).deliver
   end
 end
