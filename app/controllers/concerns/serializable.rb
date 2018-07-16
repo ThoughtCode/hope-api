@@ -48,4 +48,8 @@ module Serializable
   def serialize_review(review)
     Api::V1::ReviewSerializer.new(review)
   end
+
+  def serialize_job_calendar(job)
+    Api::V1::JobCalendarSerializer.new(job)
+  end
 end

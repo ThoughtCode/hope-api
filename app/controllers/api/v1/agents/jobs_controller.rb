@@ -1,7 +1,7 @@
 module Api::V1::Agents
   class JobsController < AgentUsersController
     include Serializable
-    before_action :set_job, only: [:show, :can_review, :can_apply]
+    before_action :set_job, only: %i[show can_review can_apply]
 
     def index
       proposals = current_user.proposals.pluck(:job_id)
@@ -39,6 +39,15 @@ module Api::V1::Agents
         'Trabajos listados exitosamente',
         serialize_job(jobs),
         jobs.page(1).total_pages
+      )
+    end
+
+    def calendar
+      jobs = current_user.jobs.accepted.order(id: :desc)
+      set_response(
+        200,
+        'Trabajos listados exitosamente',
+        serialize_job_calendar(jobs)
       )
     end
 
@@ -91,7 +100,6 @@ module Api::V1::Agents
       @job = Job.find_by(hashed_id: params[:id] || params[:job_id])
       return set_response(404, 'El trabajo no existe.') unless @job
     end
-
 
     def filter(flt, jobs)
       jobs = jobs.where('started_at >= ?', flt[:date_from]) if flt[:date_from] != 'null' && !flt[:date_from].nil?

@@ -20,6 +20,7 @@ Rails.application.routes.draw do
         get '/jobs/accepted', to: 'jobs#accepted'
         get '/jobs/completed', to: 'jobs#completed'
         get '/jobs/postulated', to: 'jobs#postulated'
+        get '/jobs/calendar', to: 'jobs#calendar'
         resources :jobs, only: [:index, :show] do
           post 'review', to: 'reviews#create'
           get 'can_review', to: 'jobs#can_review'
