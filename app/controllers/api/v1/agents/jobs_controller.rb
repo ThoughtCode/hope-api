@@ -81,7 +81,7 @@ module Api::V1::Agents
                 end
       render status: 200, json: {
         message: can_msg,
-        can_review: can
+        can_apply: can
       }
     end
 
