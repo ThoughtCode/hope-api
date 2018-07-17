@@ -1,17 +1,18 @@
-Rails.application.routes.draw do
-  require 'sidekiq/web'
-  mount Sidekiq::Web => '/sidekiq'
-  devise_for :managers, ActiveAdmin::Devise.config
-  devise_for :customers
-  devise_for :agents
-  ActiveAdmin.routes(self)
-  root 'pages#home'
-  namespace :api, defaults: { format: :json } do
-    namespace :v1 do
-      match '/*all',
-      to: 'api#cors_default_options_check',
-      constraints: { method: 'OPTIONS' }, via: [:options]
-      get '/ping' => 'api#ping'
+  Rails.application.routes.draw do
+    require 'sidekiq/web'
+    mount Sidekiq::Web => '/sidekiq'
+    devise_for :managers, ActiveAdmin::Devise.config
+    devise_for :customers
+    devise_for :agents
+    ActiveAdmin.routes(self)
+    root 'pages#home'
+    namespace :api, defaults: { format: :json } do
+      namespace :v1 do
+        match '/*all',
+        to: 'api#cors_default_options_check',
+        constraints: { method: 'OPTIONS' }, via: [:options]
+        get '/ping' => 'api#ping'
+      post '/contact' => 'api#contact'
       
       # Devise Mapping
       namespace :agents do
