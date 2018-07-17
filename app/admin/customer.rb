@@ -22,6 +22,30 @@ ActiveAdmin.register Customer do
   filter :cell_phone
   filter :birthday
 
+  show do
+    attributes_table do
+      row :first_name
+      row :last_name
+      row :national_id
+      row :email
+      row :cell_phone
+      row :birthday
+      row :avatar
+    end
+    panel "Propiedades" do
+      properties = customer.properties
+      table_for properties do
+        column :name
+        column :neightborhood
+        column :p_street
+        column :number
+        column :s_street
+        column :additional_reference
+        column :phone
+      end
+    end
+  end
+
   form do |f|
     f.semantic_errors *f.object.errors.keys
     f.inputs 'Customer Details' do

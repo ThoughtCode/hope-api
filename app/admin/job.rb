@@ -9,10 +9,21 @@ ActiveAdmin.register Job do
     panel "Detalles" do
       job_details = Job.find(params['id']).job_details
       table_for job_details do
-        column :service_id
+        column :service
         column :value
       end
     end
+  end
+
+  index do
+    selectable_column
+    id_column
+    column :property
+    column :duration
+    column :agent
+    column :total
+    column :state
+    column :started_at
   end
 
   form do |f|
