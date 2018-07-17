@@ -7,7 +7,7 @@ module Api::V1
     rescue_from ActiveRecord, with: :render_internal_server_error
     rescue_from ActiveRecord::RecordNotFound, with: :record_not_found
     rescue_from ActiveRecord::RecordInvalid, with: :active_model_errors
-    before_action :disable_access_by_tk
+    before_action :disable_access_by_tk, except: :contact
 
     def cors_default_options_check
       options = request.method == 'OPTIONS'
@@ -15,7 +15,15 @@ module Api::V1
       render json: '' if options
     end
 
+    def contact
+      ContactMailer.contact_mail(contact_params).deliver
+      set_response(200, 'Tu correo ha sido enviado')
+    end
+
     private
+      def contact_params
+        params.require(:contact).permit(:username, :celular, :correo)
+      end
 
     def current_user
       @user
