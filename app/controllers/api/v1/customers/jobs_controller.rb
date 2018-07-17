@@ -129,7 +129,6 @@ module Api::V1::Customers
         jobs = jobs.where(
           'started_at < ? AND (status = ? )', DateTime.current, 4
         )
-        byebug
       end
       jobs
     end
