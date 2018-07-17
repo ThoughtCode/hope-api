@@ -23,7 +23,7 @@ ActiveAdmin.register Job do
     column :duration
     column :agent
     column :total
-    column :state
+    column :status
     column :started_at
     actions
   end
