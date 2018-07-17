@@ -38,4 +38,14 @@ ActiveAdmin.register Agent do
     end
     f.actions
   end
+
+  controller do   
+    def update
+      if params[:agent][:password].blank? && params[:agent][:password_confirmation].blank?
+        params[:agent].delete(:password)
+        params[:agent].delete(:password_confirmation)
+      end
+      super
+    end
+  end
 end
