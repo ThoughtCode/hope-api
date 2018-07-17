@@ -11,6 +11,7 @@ ActiveAdmin.register Job do
       table_for job_details do
         column :service
         column :value
+        column :price_total
       end
     end
   end
