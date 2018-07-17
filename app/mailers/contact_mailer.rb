@@ -1,8 +1,8 @@
 class ContactMailer < ApplicationMailer
   def contact_mail(params)
-    @name = params[:username]
+    @name = params[:name]
     @cellphone = params[:celular]
-    @email = params[:correo]
+    @email = params[:email]
 
     managers = Manager.all
     managers.each do |manager|
