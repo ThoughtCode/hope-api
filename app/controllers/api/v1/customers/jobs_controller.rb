@@ -123,12 +123,13 @@ module Api::V1::Customers
     def check_status(jobs)
       if params[:status] == 'nextjobs'
         jobs = jobs.where(
-          'finished_at > ? AND (status = ? OR status = ?)', Date.current, 0, 1
+          'finished_at > ? AND (status = ? OR status = ?)', DateTime.current, 0, 1
         )
       elsif params[:status] == 'history'
         jobs = jobs.where(
-          'started_at < ? AND (status = ? )', Date.current, 4
+          'started_at < ? AND (status = ? )', DateTime.current, 4
         )
+        byebug
       end
       jobs
     end
