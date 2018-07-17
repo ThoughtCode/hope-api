@@ -43,7 +43,7 @@ module Api::V1::Agents
     end
 
     def calendar
-      jobs = current_user.jobs.accepted.order(id: :desc)
+      jobs = current_user.jobs.where(status: %i[accepted completed pending]).order(id: :desc)
       set_response(
         200,
         'Trabajos listados exitosamente',
