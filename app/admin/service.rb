@@ -11,5 +11,6 @@ ActiveAdmin.register Service do
     column :quantity
     column :time
     column :price
+    actions
   end
 end

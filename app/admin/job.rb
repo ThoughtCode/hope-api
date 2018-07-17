@@ -24,6 +24,7 @@ ActiveAdmin.register Job do
     column :total
     column :state
     column :started_at
+    actions
   end
 
   form do |f|
