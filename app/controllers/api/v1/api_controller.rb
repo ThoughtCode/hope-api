@@ -22,7 +22,7 @@ module Api::V1
 
     private
       def contact_params
-        params.require(:contact).permit(:username, :celular, :correo)
+        params.require(:contact).permit(:name, :celular, :email)
       end
 
     def current_user
