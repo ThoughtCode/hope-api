@@ -6,7 +6,7 @@ class ContactMailer < ApplicationMailer
 
     managers = Manager.all
     managers.each do |manager|
-      mail(to: "jalagut8@gmail.com", subject: "Nuevo contacto")
+      mail(to: manager.email, subject: "Nuevo contacto")
     end
   end
 end
