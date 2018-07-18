@@ -66,7 +66,7 @@ class Job < ApplicationRecord
   end
 
   def can_review?(user)
-    reviews.where(owner: user).blank? && Time.now > started_at
+    reviews.where(owner: user).blank? && Time.now > started_at && (user == agent || user == property.customer)
   end
 
   private
