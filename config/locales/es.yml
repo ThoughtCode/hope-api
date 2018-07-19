@@ -62,6 +62,8 @@ es:
               required: "El barrio debe existir"
         customer:
           attributes:
+            reset_password_token:
+              invalid: 'El token es invalido'
             password:
               too_short: "La contraseña debe ser mayor a %{count} caracteres"
             password_confirmation:

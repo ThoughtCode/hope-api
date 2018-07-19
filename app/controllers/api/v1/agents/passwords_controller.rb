@@ -10,17 +10,16 @@ module Api::V1::Agents
     def create
       if @agent
         @agent.send_reset_password_instructions
-        set_response(200, 'Reset password instructions have '\
-          'been sent to email')
+        set_response(200, 'Un email se ha enviado a su correo')
       else
-        set_response(404, 'Email does not exist')
+        set_response(404, 'El correo no existe')
       end
     end
 
     def update
       user = Agent.reset_password_by_token(params)
       if user.errors.empty?
-        set_response(200, 'Reset password successfully')
+        set_response(200, 'Contraseña reseteada exitosamente')
       else
         set_response(404, user.errors)
       end
