@@ -7,7 +7,7 @@ module Api::V1::Agents
       if @agent
         if @agent.update(agent_params.except(:access_token))
           set_response(200,
-                       'Agent have been updated successfully.',
+                       'Se ha actualizado sastifactoriamente',
                        serialize_agent(@agent))
         else
           set_response(422, @agent.errors)

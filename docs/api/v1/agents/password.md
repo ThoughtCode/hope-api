@@ -6,7 +6,8 @@ Table of Contents:
 - [Update password Agent](#update-password-agent)
 - [App Recover password Agent](#app-recover-password-agent)
 - [App Update password Agent](#app-update-password-agent)
-# Recover Password Customer
+
+## Recover Password Customer
 
 Method: `POST`
 
@@ -22,7 +23,7 @@ Body:
 }
 ```
 
-## Return example on success, 200
+### Return example on success, 200
 
 ```json
 {
@@ -30,7 +31,7 @@ Body:
 }
 ```
 
-## Return example on failure, 404
+### Return example on failure, 404
 
 ```json
 {
@@ -38,7 +39,7 @@ Body:
 }
 ```
 
-# Update Password Customer
+## Update Password Customer
 
 Method: `POST`
 
@@ -54,7 +55,7 @@ Body:
 }
 ```
 
-## Return example on success, 200
+### Return example on success, 200
 
 ```json
 {
@@ -64,7 +65,7 @@ Body:
 
 It should redirect to login
 
-## Return example on failure, 404
+### Return example on failure, 404
 
 ```json
 {
@@ -76,7 +77,7 @@ It should redirect to login
 }
 ```
 
-# App Recover Password Customer
+## App Recover Password Customer
 
 Method: `POST`
 
@@ -92,7 +93,7 @@ Body:
 }
 ```
 
-## Return example on success, 200
+### Return example on success, 200
 
 ```json
 {
@@ -100,7 +101,7 @@ Body:
 }
 ```
 
-## Return example on failure, 404
+### Return example on failure, 404
 
 ```json
 {
@@ -108,7 +109,7 @@ Body:
 }
 ```
 
-# App Update Password Customer
+## App Update Password Customer
 
 Method: `POST`
 
@@ -127,7 +128,7 @@ Body:
 }
 ```
 
-## Return example on success, 200
+### Return example on success, 200
 
 ```json
 {
@@ -137,7 +138,7 @@ Body:
 
 It should redirect to login
 
-## Return example on failure, 404
+### Return example on failure, 404
 
 ```json
 {

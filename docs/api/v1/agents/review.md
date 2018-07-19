@@ -93,7 +93,7 @@ Header: `[HTTP_AUTHORIZATION]` = `Token token=XXXXXXXXXXXXXX`
 
 Method: `GET`
 
-URI: `/api/v1/agents/reviews/:id` -> `id is the job.hashed_id` 
+URI: `/api/v1/agents/reviews/:id` -> `id is the job.hashed_id`
 
 Header: `[HTTP_AUTHORIZATION]` = `Token token=XXXXXXXXXXXXXX`
 

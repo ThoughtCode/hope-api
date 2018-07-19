@@ -4,42 +4,36 @@ Table of Contents:
 
 - [Update Agent](#update-agent)
 
-# Update Agent
+## Update Agent
 
 Method: `PUT`
 
 URI: `/api/v1/agents/update`
 
-HTTP HEADER:
-
-['HTTP-AUTHORIZATION'] = "Token sdoifhFAKEzdslhvlzirug(access_token)"
+HEADER: `['HTTP-AUTHORIZATION'] = "Token (access_token)"`
 
 Body:
 
 ```json
 {
-  "customer": {
-    "access_token": "gaegfvakFAKEjdnaoihcpaidifnaFAKEdkjf",
+  "agent": {
     "first_name": "FIRST_NAME",
     "last_name": "LAST_NAME",
     "email": "YOUR_EMAIL@EMAIL.COM",
-    "password": "XXXXXX",
-    "national_id": "123456",
     "cell_phone": "1234567890",
-    "birthdday": "xx/xx/xxxx"
   }
 }
 ```
 
-## Return example on success, 200
+### Return example on success, 200
 
 ```json
 {
-  "message": "Agent have been updated successfully."
+  "message": "Se ha actualizado sastifactoriamente"
 }
 ```
 
-## Return example on failure, 422
+### Return example on failure, 422
 
 ```json
 {
@@ -47,10 +41,108 @@ Body:
 }
 ```
 
-## Return example on failure, 404
+### Return example on failure, 404
 
 ```json
 {
   "message": "Agent not found."
+}
+```
+
+## Update Agent Avatar
+
+Method: `PUT`
+
+Header: `['HTTP-AUTHORIZATION'] = "Token (access_token)"`
+
+Content-Type: multipart/form-data;
+
+URI: `/api/v1/agents/update`
+
+Body:
+
+```json
+{
+  "agent": {
+    "avatar": file,
+  }
+}
+```
+
+### Return example on success, 200
+
+```json
+{
+  "message": "Se ha actualizado sastifactoriamente"
+}
+```
+
+## Get Current Agent
+
+Method: `GET`
+
+Header: `['HTTP-AUTHORIZATION'] = "Token (access_token)"`
+
+Content-Type: multipart/form-data;
+
+URI: `/api/v1/agents/current`
+
+### Return example on success, 200
+
+```json
+{
+  "message": "Usuario listado exitosamente.",
+  "agent": {
+    "data": {
+      "id": "28",
+      "type": "agent",
+      "attributes": {
+        "first_name": "Rai",
+        "last_name": "Romero",
+        "email": "rainieromadrid@gmail.com",
+        "access_token": "61a1027d7fc02baf6a5f43001133c685",
+        "avatar": {
+          "url": "https://noc-noc.s3.amazonaws.com/uploads/agent/avatar/28/Rai.jpeg"
+        },
+        "national_id": "22399185",
+        "cell_phone": "1234567890",
+        "rewiews_count": 0,
+        "rewiews_average": 0,
+        "rewiews": {
+          "data": []
+        }
+      }
+    }
+  }
+}
+```
+
+## Change Agent Password
+
+Method: `PUT`
+
+Header: `['HTTP-AUTHORIZATION'] = "Token (access_token)"`
+
+Content-Type: multipart/form-data;
+
+URI: `/api/v1/agents/change_password`
+
+body: 
+
+```json
+{
+  "agent": {
+    "current_password": xxxxx,
+    "password": xxxxx,
+    "password_confirmation": xxxx,
+  }
+}
+```
+
+### Return example on success, 200
+
+```json
+{
+  "message": "Contraseña actualizada exitosamente",
 }
 ```

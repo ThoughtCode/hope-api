@@ -10,7 +10,6 @@ Table of Contents:
 
 ## Object example
 
-
 ### Job Object Example
 
 ```json
@@ -25,7 +24,7 @@ Table of Contents:
     "total": 145.6,
     "status": "pending",
     "frequency": "fortnightly",
-    "property": { 
+    "property": {
     },
     "agent": null, // If not assigned, Object agent example if assigned
     "details": "",
@@ -210,7 +209,7 @@ Header: `[HTTP_AUTHORIZATION]` = `Token token=XXXXXXXXXXXXXX`
 
 URI: `/api/v1/agents/jobs/accepted?date_from=<datetime>&date_to=<datetime>&min_price=<number>&max_price=<number>&frequency=<number[0|1|2|3]>&current_page=<integer>`
 
-### Return example on success, 200
+### Return example on success for accepted, 200
 
 ```json
 {
@@ -232,7 +231,7 @@ Header: `[HTTP_AUTHORIZATION]` = `Token token=XXXXXXXXXXXXXX`
 
 URI: `/api/v1/agents/jobs/completed?date_from=<datetime>&date_to=<datetime>&min_price=<number>&max_price=<number>&frequency=<number[0|1|2|3]>&current_page=<integer>`
 
-### Return example on success, 200
+### Return example on success for completed, 200
 
 ```json
 {
@@ -246,7 +245,7 @@ URI: `/api/v1/agents/jobs/completed?date_from=<datetime>&date_to=<datetime>&min_
 
 ```
 
-# Show
+## Show
 
 Method: `GET`
 
@@ -254,7 +253,7 @@ Header: `[HTTP_AUTHORIZATION]` = `Token token=XXXXXXXXXXXXXX`
 
 URI: `/api/v1/agents/jobs/:id`
 
-## return example on success
+### return example on success
 
 Body:
 
