@@ -83,7 +83,6 @@ Method: `GET`
 
 Header: `['HTTP-AUTHORIZATION'] = "Token (access_token)"`
 
-Content-Type: multipart/form-data;
 
 URI: `/api/v1/agents/current`
 
@@ -123,11 +122,9 @@ Method: `PUT`
 
 Header: `['HTTP-AUTHORIZATION'] = "Token (access_token)"`
 
-Content-Type: multipart/form-data;
-
 URI: `/api/v1/agents/change_password`
 
-body: 
+body:
 
 ```json
 {

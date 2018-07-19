@@ -9,8 +9,7 @@ Table of Contents:
 - [Destroy](#destroy)
 - [Show](#show)
 
-
-# Property object example
+## Property object example
 
 ```json
 {
@@ -24,18 +23,16 @@ Table of Contents:
         "p_street": "PROPERTY_P_STREET",
         "number": "PROPERTY_NUMBER",
         "s_street": "PROPERTY_S_STREET",
-        "additional_reference": "PROPERTY_ADDITIONAL_REFERENCE",
         "phone": "PROPERTY_PHONE",
         "neightborhood_id": "PROPERTY_NEIGHTBORHOOD_ID",
-        "neightborhood": "PROPERTY_NEIGHTBORHOOD_NAME",
-        "city_id": "PROPERTY_CITY_ID",
-        "city": "PROPERTY_CITY_NAME"
+        "aditional_references0": "ADITIONAL_REFERENCE"
       }
     }
   ]
 }
 ```
-# Index
+
+## Index
 
 Method: `GET`
 
@@ -43,7 +40,7 @@ Header: `[HTTP_AUTHORIZATION]` = `Token token=XXXXXXXXXXXXXX`
 
 URI: `/api/v1/customers/properties`
 
-## Return example on success, 200
+### Return example on success, 200
 
 ```json
 {
@@ -53,14 +50,14 @@ URI: `/api/v1/customers/properties`
 
 ```
 
-## Return example on failure, 401
+### Return example on failure, 401
 
 ```
   Unauthorized
 
 ```
 
-# Create
+## Create
 
 Method: `POST`
 
@@ -68,7 +65,23 @@ URI: `/api/v1/customers/properties`
 
 Header: `[HTTP_AUTHORIZATION]` = `Token token=XXXXXXXXXXXXXX`
 
-## Return example on success, 200
+body:
+
+```json
+{
+  "property": {
+    "name": "PROPERTY_NAME",
+    "neightborhood_id": "PROPERTY_NEIGHTBORHOOD_ID",
+    "p_street": "PROPERTY_P_STREET",
+    "s_street": "PROPERTY_S_STREET",
+    "number": "PROPERTY_NUMBER",
+    "phone": "PROPERTY_PHONE",
+    "aditional_references0": "ADITIONAL_REFERENCE"
+  }
+}
+```
+
+### Return example on success, 200
 
 ```json
 {
@@ -78,13 +91,13 @@ Header: `[HTTP_AUTHORIZATION]` = `Token token=XXXXXXXXXXXXXX`
 
 ```
 
-## Return example on failure, 422
+### Return example on failure, 422
 
 ```json
   unprocessable entity
 ```
 
-# Update
+## Update
 
 Method: `PUT`
 
@@ -92,7 +105,7 @@ URI: `/api/v1/customers/properties/:id`
 
 Header: `[HTTP_AUTHORIZATION]` = `Token token=XXXXXXXXXXXXXX`
 
-## Return example on success, 200
+### Return example on success, 200
 
 ```json
 {
@@ -102,13 +115,13 @@ Header: `[HTTP_AUTHORIZATION]` = `Token token=XXXXXXXXXXXXXX`
 
 ```
 
-## Return example on failure, 422
+### Return example on failure, 422
 
 ```json
   unprocessable entity
 ```
 
-## Return example on failure, 404
+### Return example on failure, 404
 
 ```json
 {
@@ -117,7 +130,7 @@ Header: `[HTTP_AUTHORIZATION]` = `Token token=XXXXXXXXXXXXXX`
 }
 ```
 
-# Destroy
+## Destroy
 
 Method: `DELETE`
 
@@ -125,7 +138,7 @@ URI: `/api/v1/customers/properties/:id`
 
 Header: `[HTTP_AUTHORIZATION]` = `Token token=XXXXXXXXXXXXXX`
 
-## Return example on success, 200
+### Return example on success, 200
 
 ```json
 {
@@ -135,7 +148,7 @@ Header: `[HTTP_AUTHORIZATION]` = `Token token=XXXXXXXXXXXXXX`
 
 ```
 
-## Return example on failure, 404
+### Return example on failure, 404
 
 ```json
 {
@@ -144,7 +157,7 @@ Header: `[HTTP_AUTHORIZATION]` = `Token token=XXXXXXXXXXXXXX`
 }
 ```
 
-# Show
+## Show
 
 Method: `GET`
 
@@ -152,7 +165,7 @@ URI: `/api/v1/customers/properties/:id`
 
 Header: `[HTTP_AUTHORIZATION]` = `Token token=XXXXXXXXXXXXXX`
 
-## Return example on success, 200
+### Return example on success, 200
 
 ```json
 {
@@ -162,7 +175,7 @@ Header: `[HTTP_AUTHORIZATION]` = `Token token=XXXXXXXXXXXXXX`
 
 ```
 
-## Return example on failure, 404
+### Return example on failure, 404
 
 ```json
 {
