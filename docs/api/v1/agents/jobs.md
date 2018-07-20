@@ -267,3 +267,39 @@ Body:
   }
 }
 ```
+
+## Can Apply
+
+Method: `GET`
+
+Header: `[HTTP_AUTHORIZATION]` = `Token token=XXXXXXXXXXXXXX`
+
+URI: `/api/v1/agents/jobs/:job_id/can_apply`
+
+### Return example on success for completed, 200
+
+```json
+{
+  "message": "El trabajo fue encontrado exitosamente.",
+  "can_apply": true
+}
+
+```
+
+## Can Review
+
+Method: `GET`
+
+Header: `[HTTP_AUTHORIZATION]` = `Token token=XXXXXXXXXXXXXX`
+
+URI: `api/v1/agents/jobs/:job_id/can_review`
+
+### Return example on success for completed, 200
+
+```json
+{
+  "message": "No puedes realizar esta calificacion en este momento",
+  "can_review": false
+}
+
+```
