@@ -2,6 +2,7 @@ class Customer < ApplicationRecord
   include Pinable
   include Reviewable
   include Tokenizable
+  include Hashable
 
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable

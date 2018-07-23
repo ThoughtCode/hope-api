@@ -22,6 +22,7 @@
         get '/jobs/completed', to: 'jobs#completed'
         get '/jobs/postulated', to: 'jobs#postulated'
         get '/jobs/calendar', to: 'jobs#calendar'
+        get '/customer/:customer_id/reviews', to: 'reviews#customer_reviews'
         resources :jobs, only: [:index, :show] do
           post 'review', to: 'reviews#create'
           get 'can_review', to: 'jobs#can_review'

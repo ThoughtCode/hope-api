@@ -2,6 +2,7 @@ class Agent < ApplicationRecord
   include Pinable
   include Reviewable
   include Tokenizable
+  include Hashable
 
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable

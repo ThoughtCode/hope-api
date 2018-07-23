@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180712202213) do
+ActiveRecord::Schema.define(version: 20180723182619) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -39,6 +39,7 @@ ActiveRecord::Schema.define(version: 20180712202213) do
     t.boolean "online", default: true
     t.string "avatar"
     t.integer "status", default: 0
+    t.string "hashed_id"
     t.index ["email"], name: "index_agents_on_email", unique: true
     t.index ["reset_password_token"], name: "index_agents_on_reset_password_token", unique: true
   end
@@ -76,6 +77,7 @@ ActiveRecord::Schema.define(version: 20180712202213) do
     t.integer "mobile_token"
     t.datetime "mobile_token_expiration"
     t.integer "penalties_id"
+    t.string "hashed_id"
     t.index ["email"], name: "index_customers_on_email", unique: true
     t.index ["reset_password_token"], name: "index_customers_on_reset_password_token", unique: true
   end

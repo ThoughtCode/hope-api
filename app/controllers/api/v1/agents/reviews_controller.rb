@@ -4,6 +4,7 @@ module Api::V1::Agents
     before_action :review_params, only: :create
     before_action :set_job, only: :create
     before_action :set_review, only: :show
+    before_action :set_customer, only: :customer_reviews
 
     def index
       reviews = current_user.my_qualifications
@@ -40,6 +41,17 @@ module Api::V1::Agents
       set_response(422, 'Usted no ha sido calificado')
     end
 
+    def customer_reviews
+      if @customer
+        reviews = @customer.my_qualifications
+        set_response(
+          200, 'Calificaciónes encontradas exitosamente', serialize_review(reviews)
+        )
+      else
+        set_response(404, 'El cliente no existe')
+      end
+    end
+
     private
 
     def review_params
@@ -52,6 +64,10 @@ module Api::V1::Agents
       @job = current_user.jobs
                          .eager_load(:reviews)
                          .find_by(hashed_id: params[:job_id])
+    end
+
+    def set_customer
+      @customer = Customer.find_by(hashed_id: params[:customer_id])
     end
 
     def set_review
