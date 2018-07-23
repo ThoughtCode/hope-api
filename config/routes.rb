@@ -52,6 +52,7 @@
       namespace :customers do
         get 'current', to: 'customers#current'
         put 'change_password', to: 'customers#change_password'
+        get '/agent/:agent_id/reviews', to: 'reviews#agent_reviews'
         resources :properties, except: [:new, :edit]
         resources :jobs, except: [:new, :edit] do
           get 'cancelled', to: 'jobs#cancelled'

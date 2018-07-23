@@ -4,6 +4,7 @@ module Api::V1::Customers
     before_action :review_params, only: :create
     before_action :set_job, only: :create
     before_action :set_review, only: :show
+    before_action :set_agent, only: :agent_reviews
 
     def index
       reviews = current_user.my_qualifications
@@ -34,12 +35,27 @@ module Api::V1::Customers
       set_response(422, 'Usted no ha sido calificado')
     end
 
+    def agent_reviews
+      if @agent
+        reviews = @agent.my_qualifications
+        set_response(
+          200, 'Calificaciónes encontradas exitosamente', serialize_review(reviews)
+        )
+      else
+        set_response(404, 'El cliente no existe')
+      end
+    end
+
     private
 
     def review_params
       @review_params = params.require(:review)
                              .permit(:qualification, :comment)
                              .merge(owner: current_user)
+    end
+
+    def set_agent
+      @agent = Agent.find_by(hashed_id: params[:agent_id])
     end
 
     def set_job
