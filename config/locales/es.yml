@@ -76,6 +76,9 @@ es:
             type_service:
               inclusion: "Debe seleccionar un tipo de servicio"
     models:
+      config:
+        one: "Configuracion"
+        other: "Configuraciones"
       property:
         one: "Propiedad"
         other: "Propiedades"
