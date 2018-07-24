@@ -114,3 +114,21 @@ Header: `[HTTP_AUTHORIZATION]` = `Token token=XXXXXXXXXXXXXX`
   "data": []
 }
 ```
+
+## Customer Reviews
+
+Method: `GET`
+
+URI: `/api/v1/customers/agent/:agent_id/reviews` -> `agent_id is the agent.hashed_id`
+
+Header: `[HTTP_AUTHORIZATION]` = `Token token=XXXXXXXXXXXXXX`
+
+### Return example on success, 200
+
+```json
+{
+  "message": "Calificación encontrada exitosamente.",
+  "review": [Array of Review object]
+}
+
+```
