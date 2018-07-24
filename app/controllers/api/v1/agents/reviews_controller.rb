@@ -67,7 +67,7 @@ module Api::V1::Agents
     end
 
     def set_customer
-      @customer = Customer.find_by(hashed_id: params[:customer_id])
+      @customer = Customer.find_by(id: params[:customer_id])
     end
 
     def set_review
