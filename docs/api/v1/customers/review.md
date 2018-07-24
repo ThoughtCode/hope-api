@@ -12,17 +12,44 @@ Table of Contents:
 
 ```json
 {
-  "data": [
-    {
-        "id": "REVIEW_HASHED_ID",
-        "type": "review",
+  "id": "5b490001dd135a50d9f9a22d",
+  "type": "review",
+  "attributes": {
+    "id": 41,
+    "comment": "adsasdasd",
+    "qualification": 5,
+    "owner": {
+      "data": {
+        "id": "1",
+        "type": "customer",
         "attributes": {
-            "id": "REVIEW_ID",
-            "comment": "REVIEW_COMMENT",
-            "qualification": "REVIEW_QUALIFICATION"
+          "first_name": "Rainiero",
+          "last_name": "Romero",
+          "email": "rainieromadrid@gmail.com",
+          "access_token": "70925c27142314a4d8b850cf8c4a46ab",
+          "avatar": {
+            "url": "https://noc-noc.s3.amazonaws.com/uploads/agent/avatar/1/apartment-blinds-cabinets-349749__1_.jpg"
+          },
+          "national_id": "22399185",
+          "cell_phone": "1234556789",
+          "hashed_id": null,
+          "rewiews_count": 2,
+          "rewiews_average": 5,
+          "rewiews": [
+            {
+              "id": 42,
+              "hashed_id": "5b49006edd135a50d9f9a22e",
+              "job_id": 70,
+              "owner_type": "Customer",
+              "owner_id": 1,
+              "comment": "Muy bueno",
+              "qualification": 5
+            },
+          ]
         }
+      }
     }
-  ]
+  }
 }
 ```
 
