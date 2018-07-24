@@ -76,6 +76,9 @@ es:
             type_service:
               inclusion: "Debe seleccionar un tipo de servicio"
     models:
+      penalty:
+        one: "Penalidad"
+        other: "Penalidades"
       config:
         one: "Configuracion"
         other: "Configuraciones"
