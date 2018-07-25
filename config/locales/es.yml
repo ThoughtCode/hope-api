@@ -101,8 +101,8 @@ es:
         one: "Administrador"
         other: "Administradores"
       service_type:
-        one: "Tipo de Servicio"
-        other: "Tipos de Servicio"
+        one: "Servicio Padre"
+        other: "Servicios Padre"
       service:
         one: "Servicio"
         other: "Servicios"
