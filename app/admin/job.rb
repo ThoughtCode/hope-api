@@ -16,6 +16,15 @@ ActiveAdmin.register Job do
     end
   end
 
+  filter :agent
+  filter :property
+  filter :duration
+  filter :total
+  filter :started_at
+  filter :finished_at
+  filter :status
+  filter :frequency
+
   index do
     selectable_column
     id_column
@@ -25,6 +34,7 @@ ActiveAdmin.register Job do
     column :total
     column :status
     column :started_at
+    column :frequency
     actions
   end
 

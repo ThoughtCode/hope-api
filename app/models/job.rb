@@ -13,7 +13,7 @@ class Job < ApplicationRecord
   after_save :calculate_price
   after_create_commit :send_email_create_job
 
-  enum status: %i[pending accepted cancelled expired completed]
+  enum status: %i[pending accepted cancelled completed]
   enum frequency: %i[one_time weekly fortnightly monthly]
 
   accepts_nested_attributes_for :job_details
