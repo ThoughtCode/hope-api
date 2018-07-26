@@ -7,11 +7,13 @@ class Api::V1::AgentSerializer
   attribute :rewiews_count do |a|
     a.my_qualifications.count
   end
-  
-  attribute :rewiews_average do |a|
-    a.reviews_average
+
+  attribute :rewiews_average, &:reviews_average
+
+  attribute :jobs_count do |a|
+    a.jobs.completed.count
   end
-  
+
   attribute :rewiews do |a|
     Api::V1::ReviewSerializer.new(a.my_qualifications)
   end

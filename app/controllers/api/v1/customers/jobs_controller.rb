@@ -127,7 +127,7 @@ module Api::V1::Customers
         )
       elsif params[:status] == 'history'
         jobs = jobs.where(
-          'started_at < ? AND (status = ? )', DateTime.current, 4
+          'started_at < ? AND (status = ? )', DateTime.current, 3
         )
       end
       jobs

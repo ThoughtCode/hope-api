@@ -69,6 +69,11 @@ class Job < ApplicationRecord
     reviews.where(owner: user).blank? && Time.now > started_at && (user == agent || user == property.customer)
   end
 
+  def service_type_image
+    image = job_details.select { |jd| jd.service.type_service == 'base' }.first
+    image.service.service_type.image
+  end
+
   private
 
   def send_email_autocreated_job(job)

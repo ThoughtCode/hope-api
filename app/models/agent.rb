@@ -29,6 +29,10 @@ class Agent < ApplicationRecord
     AgentMailer.send_recover_password_app_email(self).deliver
   end
 
+  def agent_jobs_count
+    jobs.completed.count
+  end
+
   private
 
   def send_welcome_email

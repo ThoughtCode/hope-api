@@ -12,6 +12,10 @@ class Api::V1::JobSerializer
     j.agent&.reviews_average
   end
 
+  attribute :agent_jobs_count do |j|
+    j.agent&.agent_jobs_count
+  end
+
   attribute :agent_rewiews do |j|
     Api::V1::ReviewSerializer.new(j.agent.my_qualifications) unless j.agent.nil?
   end
@@ -19,6 +23,8 @@ class Api::V1::JobSerializer
   attribute :job_details do |j|
     j.job_details.as_json(except: [:job_id], include: [:service])
   end
+
+  attribute :service_type_image, &:service_type_image
 
   attribute :customer do |j|
     j.property.customer
