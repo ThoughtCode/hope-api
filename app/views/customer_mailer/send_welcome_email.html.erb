@@ -4,7 +4,8 @@
     <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
   </head>
   <body>
-    <h1>Gracias por ingresar, <%= @user.first_name %>!</h1>
-    <p>Ahora entra y solicita los mejores servicios para ti</p>
+    <h1><%= @user.first_name %>, tu registro fue éxitoso</h1>
+    <p>Bienvenido a la plataforma Noc Noc donde podrás solicitar
+    servicios con los mejores profesionales para ti. Para ingresar da clic <strong href="<%=@url%>"><a>Aquí</a></strong></p>
   </body>
 </html>

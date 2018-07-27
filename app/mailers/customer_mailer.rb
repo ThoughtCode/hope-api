@@ -3,8 +3,9 @@ class CustomerMailer < ApplicationMailer
 
   def send_welcome_email(user)
     @user = user
+    @url = 'https://www.nocnoc.com.ec/'
     mail(to: @user.email,
-         subject: 'Gracias por registrarte a nuestra fantastica app')
+         subject: 'Notificación de Registro a Noc Noc')
   end
 
   def send_recover_password_app_email(user)
