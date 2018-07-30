@@ -7,7 +7,7 @@ class Proposal < ApplicationRecord
   enum status: %i[pending accepted refused expired]
   scope :check_availability, lambda { |job, agent|
     Job.all.where(
-      'finished_at >= ? AND started_at <= ? AND agent_id = ? AND status != ?',
+      'finished_at >= ? AND started_at <= ? AND agent_id = ? AND status = ?',
       job.started_at,
       job.finished_at,
       agent.id,
