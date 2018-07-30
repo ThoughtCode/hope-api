@@ -61,6 +61,7 @@ class Job < ApplicationRecord
     when 'monthly'
       new_job.started_at = started_at + 28.days
     end
+    return nil if new_job.started_at > finished_recurrency_at
     new_job.save!
     send_email_autocreated_job(new_job)
   end
