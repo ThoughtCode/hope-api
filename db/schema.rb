@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180723182619) do
+ActiveRecord::Schema.define(version: 20180730165409) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -101,6 +101,7 @@ ActiveRecord::Schema.define(version: 20180723182619) do
     t.integer "status", default: 0
     t.integer "frequency", default: 0
     t.text "details"
+    t.datetime "finished_recurrency_at"
   end
 
   create_table "managers", force: :cascade do |t|
