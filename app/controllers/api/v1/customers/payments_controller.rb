@@ -1,5 +1,5 @@
-module Api::V1::Customers
-  class PaymentsController < ApiController
+module Api::V1
+  class Customers::PaymentsController < ApiController
     skip_before_action :disable_access_by_tk
     
     def received
