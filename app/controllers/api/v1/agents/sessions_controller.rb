@@ -7,7 +7,7 @@ module Api::V1::Agents
     def create
       if @user&.valid_password?(params[:agent][:password])
         if @user.acquire_access_token!
-          set_response(200, 'Signed in successfully!', serialize_agent(@user))
+          set_response(200, 'Ingreso exitosamente!', serialize_agent(@user))
         else
           # :nocov:
           set_response(422, 'Could not get or '\
