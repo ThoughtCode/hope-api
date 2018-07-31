@@ -53,6 +53,8 @@
         get 'current', to: 'customers#current'
         put 'change_password', to: 'customers#change_password'
         get '/agent/:agent_id/reviews', to: 'reviews#agent_reviews'
+        post '/payments_received', to: 'payments#received'
+        post '/payments_update', to: 'payments#update'
         resources :properties, except: [:new, :edit]
         resources :jobs, except: [:new, :edit] do
           get 'cancelled', to: 'jobs#cancelled'
