@@ -8,6 +8,7 @@ class Job < ApplicationRecord
   has_many :agents, through: :proposals
   has_many :reviews, dependent: :destroy
   has_many :penalties
+  has_many :notifications
 
   before_create :check_dates
   after_save :calculate_price
@@ -26,6 +27,7 @@ class Job < ApplicationRecord
 
   def send_email_to_agent
     AgentMailer.job_cancelled_email(agent).deliver
+    Notification.create(agent: agent)
   end
 
   def cancel_booking
