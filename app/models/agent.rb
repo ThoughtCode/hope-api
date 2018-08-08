@@ -9,6 +9,7 @@ class Agent < ApplicationRecord
   has_many :jobs
   has_many :proposals
   has_many :reviews, as: :owner
+  has_many :notifications
 
   enum status: %i[pending accepted refused]
   mount_uploader :avatar, AvatarUploader
