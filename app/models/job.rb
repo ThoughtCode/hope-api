@@ -26,6 +26,7 @@ class Job < ApplicationRecord
 
   def send_email_to_agent
     AgentMailer.job_cancelled_email(agent).deliver
+    Notification.create('Han cancelado un trabjo', agent: agent)
   end
 
   def cancel_booking
