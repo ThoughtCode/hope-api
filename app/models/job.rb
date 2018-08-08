@@ -22,15 +22,19 @@ class Job < ApplicationRecord
     cancel_booking
     self.status = 'cancelled'
     send_email_to_agent if agent
+    agent = self.agent
+
+    if !agent.nil?
+      Notification.create(text: 'Han cancelado un trabajo', agent: agent)
+    end
   end
 
   def send_email_to_agent
     AgentMailer.job_cancelled_email(agent).deliver
-    Notification.create('Han cancelado un trabjo', agent: agent)
   end
 
   def cancel_booking
-    amount = if Config.fetch('cancelation_penalty_amount')
+    amount = if Config.fetch('cancelation_penalty_key')
                Config.fetch('cancelation_penalty_amount')
              else
                0
