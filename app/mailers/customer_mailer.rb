@@ -17,10 +17,8 @@ class CustomerMailer < ApplicationMailer
 
   def send_proposal_received(job, customer, url)
     @url = url + '/cliente/trabajo/' + job.hashed_id
-    text = 'Propuesta recibida'
     mail(to: customer.email,
-         subject: text)
-    Notification.create(info: text, customer: customer, job: job)
+         subject: 'Propuesta recibida')
   end
 
   def send_job_recursivity(job, customer, url)
@@ -38,10 +36,8 @@ class CustomerMailer < ApplicationMailer
 
   def send_email_review(job_id, customer, url)
     @url = url + '/cliente/trabajo/' + job_id.to_s
-    text = 'Te han calificado'
     mail(to: customer.email,
-         subject: text)
-    Notification.create(info: text, customer: customer, job: job)
+         subject: 'Te han calificado')
   end
 
   def send_email_create_job(job, customer, url)

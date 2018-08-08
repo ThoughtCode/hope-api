@@ -10,25 +10,19 @@ class AgentMailer < ApplicationMailer
 
   def send_email_to_agent(agent, job_id, url)
     @url = url + '/agente/trabajo/' + job_id.to_s
-    text = 'Hay un nuevo trabajo disponible'
     mail(to: agent.email,
-         subject: text)
-    Notification.create(info: text, agent: agent, job_id: job_id)
+         subject: 'Hay un nuevo trabajo disponible')
   end
 
   def job_cancelled_email(agent)
-    text = 'Han cancelado un trabajo'
     mail(to: agent.email,
-         subject: text)
-    Notification.create(info: text, agent: agent)
+         subject: 'Han cancelado un trabajo')
   end
 
   def send_proposal_accepted(agent, job_id, url)
     @url = url + '/agente/trabajo/' + job_id.to_s
-    text = 'Te han aceptado una propuesta para un trabajo'
     mail(to: agent.email,
-         subject: text)
-    Notification.create(info: text, agent: agent, job_id: job_id)
+         subject: 'Te han aceptado una propuesta para un trabajo')
   end
 
   def send_job_completed(agent, job_id, url)
@@ -39,10 +33,8 @@ class AgentMailer < ApplicationMailer
 
   def send_email_review(job_id, agent, url)
     @url = url + '/agente/trabajo/' + job_id.to_s
-    text = 'Te han calificado'
     mail(to: agent.email,
-         subject: text)
-    Notification.create(info: text, agent: agent, job_id: job_id)
+         subject: 'Te han calificado')
   end
 
   def send_welcome_email(user)
