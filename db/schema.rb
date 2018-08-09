@@ -10,11 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-<<<<<<< HEAD
-ActiveRecord::Schema.define(version: 20180808173610) do
-=======
 ActiveRecord::Schema.define(version: 20180808200304) do
->>>>>>> 5a5532fd46699f2cc10f9d2f03b129250954065d
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -132,11 +128,7 @@ ActiveRecord::Schema.define(version: 20180808200304) do
 
   create_table "notifications", force: :cascade do |t|
     t.string "text"
-<<<<<<< HEAD
     t.integer "status", default: 1
-=======
-    t.integer "status"
->>>>>>> 5a5532fd46699f2cc10f9d2f03b129250954065d
     t.bigint "customer_id"
     t.bigint "agent_id"
     t.bigint "job_id"

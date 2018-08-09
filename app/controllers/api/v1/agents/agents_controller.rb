@@ -44,7 +44,7 @@ module Api::V1::Agents
     end
 
     def get_notifications
-      notifications = Notification.filter_by_status(Notification.statuses[:created])
+      notifications = current_user.notifications.filter_by_status(Notification.statuses[:created])
       set_response(
         200,
         'Notificaciones Enviadas exitosamente',
