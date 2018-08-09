@@ -26,13 +26,12 @@ class Job < ApplicationRecord
     agent = self.agent
 
     if !agent.nil?
-      Notification.create(text: 'Han cancelado un trabajo', agent: agent)
+      Notification.create(text: 'Han cancelado un trabajo', agent: agent, job: self)
     end
   end
 
   def send_email_to_agent
     AgentMailer.job_cancelled_email(agent).deliver
-    Notification.create('Han cancelado un trabjo', agent: agent)
   end
 
   def cancel_booking
