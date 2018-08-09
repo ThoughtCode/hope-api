@@ -12,6 +12,7 @@ class Customer < ApplicationRecord
   has_many :jobs, through: :properties
   has_many :reviews, as: :owner
   has_many :penalties
+  has_many :notifications
   mount_uploader :avatar, AvatarUploader
   after_create :send_welcome_email
 

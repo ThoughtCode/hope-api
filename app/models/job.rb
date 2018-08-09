@@ -4,6 +4,7 @@ class Job < ApplicationRecord
   belongs_to :property
   has_many :job_details, dependent: :destroy
   has_many :services, through: :job_details
+  has_many :notifications
   has_many :proposals
   has_many :agents, through: :proposals
   has_many :reviews, dependent: :destroy
@@ -22,6 +23,11 @@ class Job < ApplicationRecord
     cancel_booking
     self.status = 'cancelled'
     send_email_to_agent if agent
+    agent = self.agent
+
+    if !agent.nil?
+      Notification.create(text: 'Han cancelado un trabajo', agent: agent, job: self)
+    end
   end
 
   def send_email_to_agent
@@ -29,7 +35,7 @@ class Job < ApplicationRecord
   end
 
   def cancel_booking
-    amount = if Config.fetch('cancelation_penalty_amount')
+    amount = if Config.fetch('cancelation_penalty_key')
                Config.fetch('cancelation_penalty_amount')
              else
                0
