@@ -128,15 +128,7 @@ ActiveRecord::Schema.define(version: 20180808200304) do
 
   create_table "notifications", force: :cascade do |t|
     t.string "text"
-<<<<<<< HEAD
     t.integer "status", default: 1
-=======
-<<<<<<< HEAD
-    t.integer "status"
-=======
-    t.integer "status", default: 1
->>>>>>> Add final changes
->>>>>>> Add final changes
     t.bigint "customer_id"
     t.bigint "agent_id"
     t.bigint "job_id"
