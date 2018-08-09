@@ -52,4 +52,8 @@ module Serializable
   def serialize_job_calendar(job)
     Api::V1::JobCalendarSerializer.new(job)
   end
+
+  def serialize_notifications(notification)
+    Api::V1::NotificationSerializer.new(notification)
+  end
 end

@@ -41,6 +41,15 @@ module Api::V1::Customers
       end
     end
 
+    def get_notifications
+      notifications = current_user.notifications.filter_by_status(Notification.statuses[:created])
+      set_response(
+        200,
+        'Notificaciones Enviadas exitosamente',
+        serialize_notifications(notifications)
+      )
+    end
+
     private
 
     def customer_params

@@ -8,6 +8,7 @@ class Agent < ApplicationRecord
          :recoverable, :rememberable, :trackable, :validatable
   has_many :jobs
   has_many :proposals
+  has_many :notifications
   has_many :reviews, as: :owner
 
   enum status: %i[pending accepted refused]

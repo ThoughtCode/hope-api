@@ -43,6 +43,15 @@ module Api::V1::Agents
       end
     end
 
+    def get_notifications
+      notifications = Notification.filter_by_status(Notification.statuses[:created])
+      set_response(
+        200,
+        'Notificaciones Enviadas exitosamente',
+        serialize_notifications(notifications)
+      )
+    end
+
     private
 
     def agent_params
