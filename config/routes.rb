@@ -24,6 +24,7 @@
         get '/jobs/postulated', to: 'jobs#postulated'
         get '/jobs/calendar', to: 'jobs#calendar'
         get '/customer/:customer_id/reviews', to: 'reviews#customer_reviews'
+        post 'read_notifications/:id', to: 'agents#read_notifications'
         resources :jobs, only: [:index, :show] do
           post 'review', to: 'reviews#create'
           get 'can_review', to: 'jobs#can_review'
@@ -57,6 +58,7 @@
         get '/agent/:agent_id/reviews', to: 'reviews#agent_reviews'
         post '/payments_received', to: 'payments#received'
         post '/payments_update', to: 'payments#update'
+        post 'read_notifications/:id', to: 'customers#read_notifications'
         resources :properties, except: [:new, :edit]
         resources :jobs, except: [:new, :edit] do
           get 'cancelled', to: 'jobs#cancelled'

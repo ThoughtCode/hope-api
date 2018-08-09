@@ -50,6 +50,20 @@ module Api::V1::Customers
       )
     end
 
+    def read_notifications
+      byebug
+      notification = Notification.find(params[:id])
+      notification.status = 'opened'
+
+      if notification.save
+        set_response(
+          200,
+          'Se ha recuperado las notificacion con exito',
+          serialize_notifications(notification)
+        )
+      end
+    end
+
     private
 
     def customer_params
