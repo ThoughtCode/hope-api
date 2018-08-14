@@ -51,7 +51,6 @@ module Api::V1::Customers
     end
 
     def read_notifications
-      byebug
       notification = Notification.find(params[:id])
       notification.status = 'opened'
 
