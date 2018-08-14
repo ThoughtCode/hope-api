@@ -245,6 +245,28 @@ URI: `/api/v1/agents/jobs/completed?date_from=<datetime>&date_to=<datetime>&min_
 
 ```
 
+## Postulated
+
+Method: `GET`
+
+Header: `[HTTP_AUTHORIZATION]` = `Token token=XXXXXXXXXXXXXX`
+
+URI: `/api/v1/agents/jobs/postulated`
+
+### Return example on success for completed, 200
+
+```json
+{
+  "message": "Trabajos listados exitosamente",
+  "job": {
+    "data": [
+      Array of object job example
+    ]
+  }
+}
+
+```
+
 ## Show
 
 Method: `GET`

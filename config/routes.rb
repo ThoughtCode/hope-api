@@ -13,16 +13,18 @@
         constraints: { method: 'OPTIONS' }, via: [:options]
         get '/ping' => 'api#ping'
       post '/contact' => 'api#contact'
-      
+
       # Devise Mapping
       namespace :agents do
         get 'current', to: 'agents#current'
+        get 'notifications', to: 'agents#get_notifications'
         put 'change_password', to: 'agents#change_password'
         get '/jobs/accepted', to: 'jobs#accepted'
         get '/jobs/completed', to: 'jobs#completed'
         get '/jobs/postulated', to: 'jobs#postulated'
         get '/jobs/calendar', to: 'jobs#calendar'
         get '/customer/:customer_id/reviews', to: 'reviews#customer_reviews'
+        post 'read_notifications/:id', to: 'agents#read_notifications'
         resources :jobs, only: [:index, :show] do
           post 'review', to: 'reviews#create'
           get 'can_review', to: 'jobs#can_review'
@@ -37,7 +39,7 @@
           # Passwords
           post 'forgot_password', to: 'passwords#create', as: :forgot_password
           post 'update_password', to: 'passwords#update', as: :update_password
-          
+
           # Recover password for the app
           post 'recover_password', to: 'passwords#app_recover_password', as: :app_recover_password
           post 'app_update_password', to: 'passwords#app_update_password', as: :app_update_password
@@ -45,16 +47,18 @@
           put 'update', to: 'agents#update'
         end
         resources :reviews, only: [:index, :show, :create]
-        
+
       end
 
-      
+
       namespace :customers do
         get 'current', to: 'customers#current'
+        get 'notifications', to: 'customers#get_notifications'
         put 'change_password', to: 'customers#change_password'
         get '/agent/:agent_id/reviews', to: 'reviews#agent_reviews'
         post '/payments_received', to: 'payments#received'
         post '/payments_update', to: 'payments#update'
+        post 'read_notifications/:id', to: 'customers#read_notifications'
         resources :properties, except: [:new, :edit]
         resources :jobs, except: [:new, :edit] do
           get 'cancelled', to: 'jobs#cancelled'

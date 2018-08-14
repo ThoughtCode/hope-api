@@ -32,6 +32,7 @@ class Proposal < ApplicationRecord
   def send_mailer_to_agent_accepted
     url = ENV['FRONTEND_URL']
     AgentMailer.send_proposal_accepted(agent, job.hashed_id, url).deliver
+    Notification.create(text: 'Te han aceptado una propuesta para un trabajo', agent: agent, job: job)
   end
 
   def set_to_refused

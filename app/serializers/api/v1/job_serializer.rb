@@ -37,6 +37,10 @@ class Api::V1::JobSerializer
   attribute :proposals do |j|
     Api::V1::ProposalSerializer.new(j.proposals)
   end
+  
+  attribute :config do |j|
+    Config.all.as_json
+  end
 
   attribute :can_cancel, &:can_cancel_booking?
 end
