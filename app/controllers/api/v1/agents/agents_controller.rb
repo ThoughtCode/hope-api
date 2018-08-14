@@ -52,6 +52,19 @@ module Api::V1::Agents
       )
     end
 
+    def read_notifications
+      notification = Notification.find(params[:id])
+      notification.status = 'opened'
+
+      if notification.save
+        set_response(
+          200,
+          'Se ha recuperado las notificacion con exito',
+          serialize_notifications(notification)
+        )
+      end
+    end
+
     private
 
     def agent_params
