@@ -51,12 +51,40 @@ Header: `[HTTP_AUTHORIZATION]` = `Token XXXXXXXXXXXXXX`
 
 body:
 ```json
+{  
+   "payment":{  
+      "holder_name":"Henry Remache", 
+      "card_type":"vi",
+      "number":"1111",
+      "token":"9209405777683805561",
+      "status":"valid", 
+      "expiry_month":"1", 
+      "expiry_year":"2019"
+   }
+}
+```
+
+
+### Return example on success, 200
+
+```json
 {
-  "id": "1",
-  "type": "neightborhood",
-  "attributes": {
-    "name": "Monteserrin"
-  }
+    "message": "Tarjeta creada exitosamente",
+    "payment": {
+        "data": {
+            "id": "15",
+            "type": "payment",
+            "attributes": {
+                "holder_name": "Henry Remache",
+                "card_type": "vi",
+                "number": "1111",
+                "token": "9209405777683805561",
+                "status": "valid",
+                "expiry_month": "1",
+                "expiry_year": "2019"
+            }
+        }
+    }
 }
 ```
 
@@ -71,7 +99,10 @@ Header: `[HTTP_AUTHORIZATION]` = `Token XXXXXXXXXXXXXX`
 
 On Success
 
-body:
+
+
+### Return example on success, 200
+
 ```json
 {
     "message": "Tarjeta borrada exitosamente",
@@ -93,7 +124,8 @@ body:
 }
 ```
 
-On failure
+### Return example on failure, 404
+
 
 body:
 ```json
