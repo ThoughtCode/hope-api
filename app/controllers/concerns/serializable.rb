@@ -49,6 +49,10 @@ module Serializable
     Api::V1::ReviewSerializer.new(review)
   end
 
+  def serialize_payment(payment)
+    Api::V1::PaymentSerializer.new(payment)
+  end
+
   def serialize_job_calendar(job)
     Api::V1::JobCalendarSerializer.new(job)
   end

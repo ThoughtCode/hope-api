@@ -47,6 +47,7 @@ gem 'sidekiq', '~> 5.1', '>= 5.1.3'
 
 # Paginate
 gem 'kaminari', '~> 1.1', '>= 1.1.1'
+gem 'faraday', '~> 0.15.2'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to

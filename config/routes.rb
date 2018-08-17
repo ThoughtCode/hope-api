@@ -47,9 +47,7 @@
           put 'update', to: 'agents#update'
         end
         resources :reviews, only: [:index, :show, :create]
-
       end
-
 
       namespace :customers do
         get 'current', to: 'customers#current'
@@ -58,7 +56,10 @@
         get '/agent/:agent_id/reviews', to: 'reviews#agent_reviews'
         post '/payments_received', to: 'payments#received'
         post '/payments_update', to: 'payments#update'
+        post '/add_card', to: 'payments#add_card'
+        delete '/delete_card/:id', to: 'payments#destroy'
         post 'read_notifications/:id', to: 'customers#read_notifications'
+        get 'credit_cards', to: 'payments#index'
         resources :properties, except: [:new, :edit]
         resources :jobs, except: [:new, :edit] do
           get 'cancelled', to: 'jobs#cancelled'

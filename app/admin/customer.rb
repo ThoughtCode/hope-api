@@ -43,6 +43,19 @@ ActiveAdmin.register Customer do
         column :phone
       end
     end
+    panel "Tarjetas" do
+      cards = customer.credit_cards
+      table_for cards do
+        column :holder_name
+        column :card_type
+        column :number
+        column :customer_id
+        column :token
+        column :status
+        column :expiry_month
+        column :expiry_year
+      end
+    end
   end
 
   form do |f|
