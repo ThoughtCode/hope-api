@@ -26,13 +26,21 @@ module Api::V1
       end
     end
 
-
     def received
       Rails.logger.info(request.raw_post)
+      payment = Payment.find(params[:transaction]['dev_reference'])
+      payment.payment_date = params[:transaction][:paid_date]
+      payment.authorization_code = params[:transaction][:authorization_code]
+      payment.message = params[:transaction][:message]
+      payment.carrier_code = params[:transaction][:carrier_code]
+      payment.status_detail = set_status_details(params[:transaction][:status_detail])
+      payment.status = set_status(params[:transaction][:status])
+      payment.save
       set_response(
-        200, 'OK'
+        200, 'Payment Saved'
       )
     end
+
     def update
       Rails.logger.info(request.raw_post)
       set_response(
@@ -40,8 +48,83 @@ module Api::V1
       )
     end
 
-
     private
+
+    def set_status(status)
+      case status.to_s
+      when '0'
+        return 'Pending'
+      when '1'
+        return 'Approved'
+      when '2'
+        return 'Cancelled'
+      when '4'
+        return 'Rejected'
+      else
+        return 'Other'
+      end
+    end
+
+    def set_status_details(status)
+      case status.to_s
+      when '0'
+        return 'Waiting for Payment.'
+      when '1'
+        return 'Verification required, please see Verification section.'
+      when '3'
+        return 'Paid'
+      when '6'
+        return 'Fraud'
+      when '7'
+        return 'Refund'
+      when '6'
+        return 'Fraud'
+      when '8'
+        return 'Chargeback'
+      when '9'
+        return 'Rejected by carrier.'
+      when '10'
+        return 'System error'
+      when '11'
+        return 'Paymentez fraud'
+      when '12'
+        return 'Paymentez blacklist.'
+      when '13'
+        return 'Time tolerance.'
+      when '19'
+        return 'Invalid Authorization Code.'
+      when '20'
+        return 'Authorization code expired.'
+      when '21'
+        return 'Paymentez Fraud - Pending refund.'
+      when '22'
+        return 'Invalid AuthCode - Pending refund.'
+      when '23'
+        return 'AuthCode expired - Pending refund.'
+      when '24'
+        return 'Paymentez Fraud - Refund requested.'
+      when '25'
+        return 'Invalid AuthCode - Refund requested.'
+      when '26'
+        return 'AuthCode expired - Refund requested.'
+      when '27'
+        return 'Merchant - Pending refund.'
+      when '28'
+        return 'Merchant - Refund requested.'
+      when '30'
+        return 'Transaction seated (only Datafast).'
+      when '31'
+        return 'Waiting for OTP.'
+      when '32'
+        return 'OTP successfully validated.'
+      when '33'
+        return 'OTP not validated.'
+      when '34'
+        return 'Partial refund.'
+      else
+        return 'Other'
+      end
+    end
 
     def payment_params
       params.require(:payment)
