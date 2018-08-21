@@ -9,6 +9,8 @@ class Job < ApplicationRecord
   has_many :agents, through: :proposals
   has_many :reviews, dependent: :destroy
   has_many :penalties
+  has_many :credit_cards
+  has_one :payment
 
   before_create :check_dates
   after_save :calculate_price
@@ -99,10 +101,19 @@ class Job < ApplicationRecord
 
   def calculate_price
     duration = job_details.pluck(:time).compact.sum
-    total = job_details.pluck(:price_total).compact.sum
-    total += (total * 0.12)
+    total = job_details.pluck(:price_total).compact.sum.round(2)
+    total += (total * 0.12).round(2)
     finished_at = started_at + duration.hour
     update_columns(duration: duration, total: total, finished_at: finished_at)
+    # Add VAT And Trasaction Fee
+    create_payment
+  end
+
+  def create_payment
+    payment = Payment.create_with(credit_card_id: 16, amount: self.total, vat: self.total, status: 'Pending', 
+      installments: 1, customer: self.property.customer).find_or_create_by(job_id: self.id)
+    payment.description = "Trabajo de limpieza NocNoc Payment_id:#{payment.id}"
+    payment.save
   end
 
   def send_email_create_job

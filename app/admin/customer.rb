@@ -54,6 +54,25 @@ ActiveAdmin.register Customer do
         column :status
         column :expiry_month
         column :expiry_year
+        column 'borrar' do |card|
+          link_to 'borrar', delete_card_admin_customers_path(card.id)
+        end
+      end
+    end
+    panel "Pagos" do
+      cards = customer.payments
+      table_for cards do
+        column :credit_card
+        column :job
+        column :amount
+        column :description
+        column :vat
+        column :status
+        column :payment_date
+        column :installments
+        column 'Acciones' do |card|
+          link_to 'Procesar Pago', process_payment_admin_customers_path(card.id)
+        end
       end
     end
   end
@@ -71,6 +90,25 @@ ActiveAdmin.register Customer do
       f.input :avatar
     end
     f.actions
+  end
+
+
+  collection_action :delete_card, method: :get do
+    cc = CreditCard.find(params[:format])
+    if cc.destroy
+      flash[:notice] = "Tarjeta Borrada Exitosamente."
+      redirect_to admin_customers_path
+    else
+      flash[:error] = "Error al borrar la tarjeta"
+      redirect_to admin_customers_path
+    end
+  end
+
+  collection_action :process_payment, method: :get do
+    payment = Payment.find(params[:format])
+    payment.send_payment_request
+    flash[:notice] = "El pago ha sido enviado para su procesamiento"
+    redirect_to admin_customers_path()
   end
 
   controller do   

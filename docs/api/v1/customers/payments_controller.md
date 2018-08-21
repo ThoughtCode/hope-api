@@ -140,30 +140,6 @@ body:
 ```
 
 
-### Return example on success, 200
-
-```json
-{
-    "message": "Tarjeta creada exitosamente",
-    "payment": {
-        "data": {
-            "id": "2",
-            "type": "payment",
-            "attributes": {
-                "holder_name": "Henry Remache",
-                "card_type": "vi",
-                "number": "1111",
-                "token": "9209405777683805561",
-                "status": "valid",
-                "expiry_month": "1",
-                "expiry_year": "2019"
-            }
-        }
-    }
-}
-
-```
-
 ### Return example on failure, 401
 
 ```

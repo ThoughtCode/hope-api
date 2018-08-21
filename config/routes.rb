@@ -57,6 +57,7 @@
         post '/payments_received', to: 'payments#received'
         post '/payments_update', to: 'payments#update'
         post '/add_card', to: 'payments#add_card'
+        post '/add_transaction', to: 'payments#add_transaction'
         delete '/delete_card/:id', to: 'payments#destroy'
         post 'read_notifications/:id', to: 'customers#read_notifications'
         get 'credit_cards', to: 'payments#index'

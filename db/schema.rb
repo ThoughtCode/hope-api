@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180815031933) do
+ActiveRecord::Schema.define(version: 20180821041612) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -115,6 +115,10 @@ ActiveRecord::Schema.define(version: 20180815031933) do
     t.integer "frequency", default: 0
     t.text "details"
     t.datetime "finished_recurrency_at"
+    t.string "card_id"
+    t.integer "installments"
+    t.float "vat"
+    t.float "service_fee"
   end
 
   create_table "managers", force: :cascade do |t|
@@ -150,6 +154,24 @@ ActiveRecord::Schema.define(version: 20180815031933) do
     t.index ["agent_id"], name: "index_notifications_on_agent_id"
     t.index ["customer_id"], name: "index_notifications_on_customer_id"
     t.index ["job_id"], name: "index_notifications_on_job_id"
+  end
+
+  create_table "payments", force: :cascade do |t|
+    t.integer "job_id"
+    t.integer "credit_card_id"
+    t.string "amount"
+    t.string "description"
+    t.string "vat"
+    t.datetime "payment_date"
+    t.string "authorization_code"
+    t.string "installments"
+    t.string "message"
+    t.string "carrier_code"
+    t.integer "status_detail"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer "customer_id"
+    t.string "status"
   end
 
   create_table "penalties", force: :cascade do |t|

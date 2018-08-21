@@ -1,7 +1,8 @@
 class CreditCard < ApplicationRecord
   belongs_to :customer
+  belongs_to :job
+  has_one :payment
   before_destroy :erase_from_paymentez
-
 
   def erase_from_paymentez
     connection = Faraday.new
@@ -19,3 +20,4 @@ class CreditCard < ApplicationRecord
     end
   end
 end
+
