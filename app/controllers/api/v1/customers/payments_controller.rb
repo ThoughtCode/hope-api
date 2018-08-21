@@ -28,13 +28,13 @@ module Api::V1
 
 
     def received
-      # Rails.logger.info(request.raw_post)
+      Rails.logger.info(request.raw_post)
       set_response(
         200, 'OK'
       )
     end
     def update
-      # Rails.logger.info(request.raw_post)
+      Rails.logger.info(request.raw_post)
       set_response(
         200, 'OK'
       )
