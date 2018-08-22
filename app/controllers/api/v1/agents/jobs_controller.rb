@@ -52,11 +52,7 @@ module Api::V1::Agents
 
     def completed
       jobs = current_user.jobs.completed.order(id: :desc)
-      if params[:start_date] && params[:end_date]
-        start_date = params[:start_date]
-        end_date = params[:end_date]
-        jobs = jobs.where(:started_at => start_date..end_date)
-      end
+      jobs = filter(params, jobs)
       jobs = jobs.page(params[:current_page]).per(10)
       set_response(
         200,
