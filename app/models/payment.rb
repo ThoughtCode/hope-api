@@ -26,6 +26,7 @@ class Payment < ApplicationRecord
       req.body = body
     end
     # byebug
+    Rails.logger.info(response.body)
     response = response.status
   end
 end
