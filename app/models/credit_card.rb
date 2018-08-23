@@ -1,6 +1,6 @@
 class CreditCard < ApplicationRecord
   belongs_to :customer
-  belongs_to :job
+  belongs_to :job, optional: true
   has_one :payment
   before_destroy :erase_from_paymentez
 
