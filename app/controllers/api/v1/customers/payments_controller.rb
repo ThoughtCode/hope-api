@@ -35,6 +35,7 @@ module Api::V1
       payment.carrier_code = params[:transaction][:carrier_code]
       payment.status_detail = set_status_details(params[:transaction][:status_detail])
       payment.status = set_status(params[:transaction][:status])
+      payment.transaction_identifier = params[:transaction][:id]
       payment.save
       set_response(
         200, 'Payment Saved'

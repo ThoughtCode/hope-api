@@ -29,4 +29,21 @@ class Payment < ApplicationRecord
     Rails.logger.info(response.body)
     response = response.status
   end
+
+  def refund
+    connection = Faraday.new
+    customer = self.customer
+    body = '{ "transaction": {
+        "id": "'+ "#{self.transaction_identifier}" +'"
+    }}'
+    response = connection.post do |req|
+      req.headers['Content-Type'] = 'application/json'
+      req.headers['Auth-Token'] = (PaymentToken.authorize)
+      req.url ENV['PAYMENTEZ_URL'] + '/v2/transaction/refund/'
+      req.body = body
+    end
+    # byebug
+    Rails.logger.info(response.body)
+    response = response.status
+  end
 end

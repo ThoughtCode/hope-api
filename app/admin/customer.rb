@@ -60,8 +60,8 @@ ActiveAdmin.register Customer do
       end
     end
     panel "Pagos" do
-      cards = customer.payments
-      table_for cards do
+      payments = customer.payments
+      table_for payments do
         column :credit_card
         column :job
         column :amount
@@ -70,8 +70,14 @@ ActiveAdmin.register Customer do
         column :status
         column :payment_date
         column :installments
-        column 'Acciones' do |card|
-          link_to 'Procesar Pago', process_payment_admin_customers_path(card.id)
+        column 'Acciones' do |payment|
+          if payment.status == 'Pending'
+            link_to 'Procesar Pago', process_payment_admin_customers_path(payment.id)
+          elsif payment.status_detail == 'Paid'
+            link_to('Reembolsar', refund_admin_payments_path(payment.id))
+          else
+            'Sin Acción'
+          end
         end
       end
     end
