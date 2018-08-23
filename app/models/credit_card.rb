@@ -13,8 +13,9 @@ class CreditCard < ApplicationRecord
       req.url ENV['PAYMENTEZ_URL'] + '/v2/card/delete/'
       req.body = body
     end
-    response = response.status
+    
     Rails.logger.info(response.body)
+    response = response.status
     unless response == 200
       errors.add(:base, "Error al borrar tarjeta")
       throw(:abort)
