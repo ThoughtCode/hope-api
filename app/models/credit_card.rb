@@ -14,6 +14,7 @@ class CreditCard < ApplicationRecord
       req.body = body
     end
     response = response.status
+    Rails.logger.info(response.body)
     unless response == 200
       errors.add(:base, "Error al borrar tarjeta")
       throw(:abort)
