@@ -110,7 +110,7 @@ class Job < ApplicationRecord
   end
 
   def create_payment
-    payment = Payment.create_with(credit_card_id: 16, amount: self.total, vat: self.total, status: 'Pending', 
+    payment = Payment.create_with(credit_card_id: 1, amount: self.total, vat: self.total, status: 'Pending', 
       installments: 1, customer: self.property.customer).find_or_create_by(job_id: self.id)
     payment.description = "Trabajo de limpieza NocNoc Payment_id:#{payment.id}"
     payment.save
