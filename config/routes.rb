@@ -22,6 +22,7 @@
         get '/jobs/accepted', to: 'jobs#accepted'
         get '/jobs/completed', to: 'jobs#completed'
         get '/jobs/postulated', to: 'jobs#postulated'
+        get '/jobs/reports', to: 'jobs#reports'
         get '/jobs/calendar', to: 'jobs#calendar'
         get '/customer/:customer_id/reviews', to: 'reviews#customer_reviews'
         post 'read_notifications/:id', to: 'agents#read_notifications'

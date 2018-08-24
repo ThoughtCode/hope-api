@@ -52,8 +52,19 @@ module Api::V1::Agents
 
     def completed
       jobs = current_user.jobs.completed.order(id: :desc)
-      jobs = filter(params, jobs)
       jobs = jobs.page(params[:current_page]).per(10)
+      set_response(
+        200,
+        'Trabajos listados exitosamente',
+        serialize_job(jobs),
+        jobs.page(1).total_pages
+      )
+    end
+
+    def reports
+      jobs = current_user.jobs.completed.order(id: :desc)
+      jobs = filter(params, jobs)
+      jobs = jobs.page(params[:current_page]).per(20)
       set_response(
         200,
         'Trabajos listados exitosamente',

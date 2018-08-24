@@ -20,7 +20,7 @@ class Api::V1::PropertySerializer
     n.neightborhood.city.name
   end
 
-  attribute :customer do |p|
-    Api::V1::CustomerSerializer.new(p.customer)
-  end
+  # attribute :customer do |p|
+  #   Api::V1::CustomerSerializer.new(p.customer)
+  # end
 end
