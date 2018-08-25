@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180823043151) do
+ActiveRecord::Schema.define(version: 20180825172028) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -100,14 +100,13 @@ ActiveRecord::Schema.define(version: 20180823043151) do
     t.integer "service_id"
     t.integer "value"
     t.float "time"
-    t.float "price_total"
+    t.decimal "price_total", precision: 8, scale: 2
   end
 
   create_table "jobs", force: :cascade do |t|
     t.integer "property_id"
     t.float "duration"
     t.integer "agent_id"
-    t.float "total"
     t.string "hashed_id"
     t.datetime "started_at"
     t.datetime "finished_at"
@@ -117,8 +116,10 @@ ActiveRecord::Schema.define(version: 20180823043151) do
     t.datetime "finished_recurrency_at"
     t.string "card_id"
     t.integer "installments"
-    t.float "vat"
-    t.float "service_fee"
+    t.decimal "total", precision: 8, scale: 2
+    t.decimal "vat", precision: 8, scale: 2
+    t.decimal "service_fee", precision: 8, scale: 2
+    t.decimal "subtotal", precision: 8, scale: 2
   end
 
   create_table "managers", force: :cascade do |t|

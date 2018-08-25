@@ -53,7 +53,6 @@ module Api::V1::Customers
     def read_notifications
       notification = Notification.find(params[:id])
       notification.status = 'opened'
-
       if notification.save
         set_response(
           200,

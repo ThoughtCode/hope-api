@@ -102,10 +102,13 @@ class Job < ApplicationRecord
   def calculate_price
     duration = job_details.pluck(:time).compact.sum
     total = job_details.pluck(:price_total).compact.sum.round(2)
-    total += (total * 0.12).round(2)
+    service_fee = total * (Config.fetch('noc_noc_service_fee').to_f / 100)
+    sub_total = total - service_fee
+    vat = (total * 0.12).round(2)
+    total += total + vat
     finished_at = started_at + duration.hour
-    update_columns(duration: duration, total: total, finished_at: finished_at)
-    # Add VAT And Trasaction Fee
+    update_columns(duration: duration, total: total, finished_at: finished_at, vat: vat, 
+      service_fee: service_fee, subtotal: sub_total)
     create_payment
   end
 
