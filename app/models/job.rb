@@ -27,7 +27,7 @@ class Job < ApplicationRecord
     send_email_to_agent if agent
     agent = self.agent
 
-    if !agent.nil?
+    if !agent.nil?app/serializers/api/v1/job_serializer.rb
       Notification.create(text: 'Han cancelado un trabajo', agent: agent, job: self)
     end
   end
@@ -105,7 +105,7 @@ class Job < ApplicationRecord
     service_fee = total * (Config.fetch('noc_noc_service_fee').to_f / 100)
     sub_total = total - service_fee
     vat = (total * 0.12).round(2)
-    total += total + vat
+    total = total + vat
     finished_at = started_at + duration.hour
     update_columns(duration: duration, total: total, finished_at: finished_at, vat: vat, 
       service_fee: service_fee, subtotal: sub_total)
