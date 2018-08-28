@@ -62,7 +62,7 @@ class Api::V1::JobSerializer
           neightborhood_id: j.property.neightborhood_id,
           neightborhood: j.property.neightborhood,
           city_id: j.property.neightborhood.city_id,
-          city: j.property.neightborhood.city.name,
+          city: j.property.neightborhood.name,
           # customer: {
           #   data: {
           #     id: j.property.customer.id, 
