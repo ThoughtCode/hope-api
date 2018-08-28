@@ -63,26 +63,26 @@ class Api::V1::JobSerializer
           neightborhood: j.property.neightborhood,
           city_id: j.property.neightborhood.city_id,
           city: j.property.neightborhood.name,
-          # customer: {
-          #   data: {
-          #     id: j.property.customer.id, 
-          #     type: 'customer',
-          #     attributes: {
-          #       first_name: j.property.customer.first_name,
-          #       last_name: j.property.customer.last_name,
-          #       email: j.property.customer.email,
-          #       access_token: j.property.customer.access_token,
-          #       avatar: {
-          #         url: j.property.customer.avatar.url,
-          #       },
-          #       national_id: j.property.customer.national_id,
-          #       cell_phone: j.property.customer.cell_phone,
-          #       hashed_id: j.property.customer.hashed_id,
-          #       rewiews_count: j.property.customer.my_qualifications.count,
-          #       rewiews_average: j.property.customer.reviews_average,
-          #     }
-          #   }
-          # }
+          customer: {
+            data: {
+              id: j.property.customer.id, 
+              type: 'customer',
+              attributes: {
+                first_name: j.property.customer.first_name,
+                last_name: j.property.customer.last_name,
+                email: j.property.customer.email,
+                access_token: j.property.customer.access_token,
+                avatar: {
+                  url: j.property.customer.avatar.url,
+                },
+                national_id: j.property.customer.national_id,
+                cell_phone: j.property.customer.cell_phone,
+                hashed_id: j.property.customer.hashed_id,
+                rewiews_count: j.property.customer.my_qualifications.count,
+                rewiews_average: j.property.customer.reviews_average,
+              }
+            }
+          }
         }
       }
     }
