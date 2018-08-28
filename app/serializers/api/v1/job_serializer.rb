@@ -1,8 +1,24 @@
 class Api::V1::JobSerializer
   include FastJsonapi::ObjectSerializer
   set_id :hashed_id
-  attributes :property_id, :started_at, :finished_at, :duration, :total, :vat, :subtotal,
-             :status, :frequency, :property, :agent, :details, :finished_recurrency_at, :service_fee
+  attributes :property_id, :started_at, :finished_at, :duration,
+             :status, :frequency, :property, :agent, :details, :finished_recurrency_at
+
+  attribute :total do |object|
+    object.total.to_f
+  end
+
+  attribute :vat do |object|
+    object.vat.to_f
+  end
+
+  attribute :subtotal do |object|
+    object.subtotal.to_f
+  end
+
+  attribute :service_fee do |object|
+    object.service_fee.to_f
+  end
 
   attribute :agent_rewiews_count do |j|
     j.agent&.my_qualifications&.count
@@ -70,7 +86,6 @@ class Api::V1::JobSerializer
       }
     }
   end
-
 
   attribute :proposals do |j|
     Api::V1::ProposalSerializer.new(j.proposals)
