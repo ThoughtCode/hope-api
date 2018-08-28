@@ -55,6 +55,7 @@ class Api::V1::JobSerializer
           id: j.property.id,
           name: j.property.name,
           p_street: j.property.p_street,
+          s_street: j.property.s_street,
           number: j.property.number,
           additional_reference: j.property.additional_reference,
           phone: j.property.phone,
