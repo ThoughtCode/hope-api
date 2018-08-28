@@ -101,19 +101,19 @@ class Job < ApplicationRecord
 
   def calculate_price
     duration = job_details.pluck(:time).compact.sum
-    total = job_details.pluck(:price_total).compact.sum.round(2)
+    total = job_details.pluck(:price_total).compact.sum
     service_fee = total * (Config.fetch('noc_noc_service_fee').to_f / 100)
-    sub_total = total - service_fee
     vat = (total * 0.12).round(2)
+    sub_total = total
+    agent_earnings = sub_total - service_fee
     total = total + vat
-    finished_at = started_at + duration.hour
     update_columns(duration: duration, total: total, finished_at: finished_at, vat: vat, 
-      service_fee: service_fee, subtotal: sub_total)
+      service_fee: service_fee, subtotal: sub_total, service_fee: service_fee, agent_earnings: agent_earnings)
     create_payment
   end
 
   def create_payment
-    payment = Payment.create_with(credit_card_id: 1, amount: self.total, vat: self.total, status: 'Pending', 
+    payment = Payment.create_with(credit_card_id: self.credit_card_id, amount: self.total, vat: self.total, status: 'Pending', 
       installments: 1, customer: self.property.customer).find_or_create_by(job_id: self.id)
     payment.description = "Trabajo de limpieza NocNoc Payment_id:#{payment.id}"
     payment.save

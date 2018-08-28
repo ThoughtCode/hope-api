@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180825172028) do
+ActiveRecord::Schema.define(version: 20180828203859) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -120,6 +120,7 @@ ActiveRecord::Schema.define(version: 20180825172028) do
     t.decimal "vat", precision: 8, scale: 2
     t.decimal "service_fee", precision: 8, scale: 2
     t.decimal "subtotal", precision: 8, scale: 2
+    t.decimal "agent_earnings", precision: 8, scale: 2
   end
 
   create_table "managers", force: :cascade do |t|

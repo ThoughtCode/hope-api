@@ -20,6 +20,10 @@ class Api::V1::JobSerializer
     object.service_fee.to_f
   end
 
+  attribute :agent_earnings do |object|
+    object.agent_earnings.to_f
+  end
+
   attribute :agent_rewiews_count do |j|
     j.agent&.my_qualifications&.count
   end
