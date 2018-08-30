@@ -16,8 +16,8 @@ module Api::V1::Customers
 
     def create
       job = Job.new(job_params)
-      cc = CreditCard.find(params[:job][:credit_card_id])
-      job.credit_card = cc
+      # cc = CreditCard.find(params[:job][:credit_card_id])
+      # job.credit_card = cc
       if job.save
         set_response(200, 'Trabajo creado exitosamente', serialize_job(job))
       else

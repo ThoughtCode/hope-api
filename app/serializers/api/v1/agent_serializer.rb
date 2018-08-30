@@ -4,6 +4,7 @@ class Api::V1::AgentSerializer
   set_id :id # optional
   attributes :first_name, :last_name, :email, :access_token, :avatar,
              :national_id, :cell_phone
+  
   attribute :rewiews_count do |a|
     a.my_qualifications.count
   end

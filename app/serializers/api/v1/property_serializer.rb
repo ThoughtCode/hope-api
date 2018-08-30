@@ -20,7 +20,26 @@ class Api::V1::PropertySerializer
     n.neightborhood.city.name
   end
 
-  attribute :customer do |p|
-    Api::V1::CustomerSerializer.new(p.customer)
+  attribute :customer do |j|
+    {
+      data: {
+        id: j.customer.id, 
+        type: 'customer',
+        attributes: {
+          first_name: j.customer.first_name,
+          last_name: j.customer.last_name,
+          email: j.customer.email,
+          access_token: j.customer.access_token,
+          avatar: {
+            url: j.customer.avatar.url,
+          },
+          national_id: j.customer.national_id,
+          cell_phone: j.customer.cell_phone,
+          hashed_id: j.customer.hashed_id,
+          rewiews_count: j.customer.my_qualifications.count,
+          rewiews_average: j.customer.reviews_average,
+        }
+      }
+    }
   end
 end
