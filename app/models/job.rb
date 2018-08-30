@@ -9,7 +9,7 @@ class Job < ApplicationRecord
   has_many :agents, through: :proposals
   has_many :reviews, dependent: :destroy
   has_many :penalties
-  has_many :credit_cards
+  has_one :credit_card
   has_one :payment
 
   before_create :check_dates
@@ -108,7 +108,7 @@ class Job < ApplicationRecord
     agent_earnings = sub_total - service_fee
     total = total + vat
     update_columns(duration: duration, total: total, finished_at: finished_at, vat: vat, 
-      service_fee: service_fee, subtotal: sub_total, service_fee: service_fee, agent_earnings: agent_earnings)
+      subtotal: sub_total, service_fee: service_fee, agent_earnings: agent_earnings)
     create_payment
   end
 
