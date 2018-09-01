@@ -28,6 +28,7 @@
         post 'read_notifications/:id', to: 'agents#read_notifications'
         resources :jobs, only: [:index, :show] do
           post 'review', to: 'reviews#create'
+          post 'confirm_payment', to: 'jobs#confirm_payment'
           get 'can_review', to: 'jobs#can_review'
           get 'can_apply', to: 'jobs#can_apply'
           resources :proposals, only: [:create, :destroy]

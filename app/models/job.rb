@@ -13,6 +13,7 @@ class Job < ApplicationRecord
   has_one :payment
 
   before_create :check_dates
+  before_save :should_release_payment
   after_save :calculate_price
   after_create_commit :send_email_create_job
 
@@ -117,6 +118,14 @@ class Job < ApplicationRecord
       installments: self.installments, customer: self.property.customer).find_or_create_by(job_id: self.id)
     payment.description = "Trabajo de limpieza NocNoc Payment_id:#{payment.id}"
     payment.save
+  end
+
+  def should_release_payment
+    if self.closed_by_agent
+      self.payment.send_payment_request
+    else
+      self.update_columns(status: 'cancelled')
+    end
   end
 
   def send_email_create_job

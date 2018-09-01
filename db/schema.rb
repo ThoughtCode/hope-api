@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180829162549) do
+ActiveRecord::Schema.define(version: 20180831213031) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -122,6 +122,7 @@ ActiveRecord::Schema.define(version: 20180829162549) do
     t.decimal "service_fee", precision: 8, scale: 2
     t.decimal "subtotal", precision: 8, scale: 2
     t.decimal "agent_earnings", precision: 8, scale: 2
+    t.boolean "closed_by_agent", default: false
   end
 
   create_table "managers", force: :cascade do |t|

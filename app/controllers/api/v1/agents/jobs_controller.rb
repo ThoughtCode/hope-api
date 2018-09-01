@@ -1,7 +1,7 @@
 module Api::V1::Agents
   class JobsController < AgentUsersController
     include Serializable
-    before_action :set_job, only: %i[show can_review can_apply]
+    before_action :set_job, only: %i[show can_review can_apply confirm_payment]
 
     def index
       proposals = current_user.proposals.pluck(:job_id)
@@ -15,6 +15,18 @@ module Api::V1::Agents
         serialize_job(jobs),
         jobs.total_pages
       )
+    end
+
+    def confirm_payment
+      closed = params[:job][:closed]
+      @job.closed_by_agent = closed
+      if @job.save
+          set_response(200,
+                       'Se ha actualizado sastifactoriamente',
+                       serialize_job(@job))
+      else
+        set_response(422, @job.errors)
+      end
     end
 
     def postulated
