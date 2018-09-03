@@ -12,13 +12,13 @@ class CustomerMailer < ApplicationMailer
     @user = user
     @pin = user.mobile_token
     mail(to: @user.email,
-         subject: 'Recupera la contraseña')
+         subject: 'Recuperar contraseña')
   end
 
   def send_proposal_received(job, customer, url)
     @url = url + '/cliente/trabajo/' + job.hashed_id
     mail(to: customer.email,
-         subject: 'Propuesta recibida')
+         subject: 'Propuesta de trabajo')
   end
 
   def send_job_recursivity(job, customer, url)
@@ -31,13 +31,13 @@ class CustomerMailer < ApplicationMailer
   def send_job_completed(customer, job_id, url)
     @url = url + '/cliente/trabajo/' + job_id.to_s
     mail(to: customer.email,
-         subject: 'Se ha completado un trabajo con exito')
+         subject: 'Trabajo completado exitosamente')
   end
 
   def send_email_review(job_id, customer, url)
     @url = url + '/cliente/trabajo/' + job_id.to_s
     mail(to: customer.email,
-         subject: 'Te han calificado')
+         subject: 'Calificación registrada')
   end
 
   def send_email_create_job(job, customer, url)
@@ -50,6 +50,6 @@ class CustomerMailer < ApplicationMailer
     @iva = job.job_details.map(&:price_total).sum * 0.12
     @total = job.job_details.map(&:price_total).sum + @iva
     mail(to: customer.email,
-         subject: 'Creaste un trabajo')
+         subject: 'Creación de trabajo')
   end
 end

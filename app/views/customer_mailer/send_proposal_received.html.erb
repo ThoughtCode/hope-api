@@ -7,12 +7,9 @@
     <div class="mail-header" style="text-align: center; background: #eeee; padding: 20px;">
       <%= image_tag("https://s3.amazonaws.com/noc-noc/logo/LogoNocNoc.png", alt: 'logo', width: '120')%>
     </div>
-    <h1>Has recibido una propuesta!</h1>
-    <p>Mirala aqui: <a href="<%= @url %>"><%= @url %></a></p>
-    <br>
-    <p><strong>Saludos,</strong></p>
-    <p><strong>Noc Noc</strong></p>
-    <%= image_tag("https://s3.amazonaws.com/noc-noc/logo/LogoNocNoc.png", width: '120')%>
-    <div class="mail-footer" style="background: #0069a7; height: 100px;"></div>
+    <h1><%= @user.first_name %> recibiste una propuesta de trabajo.</h1>
+    <p>Para conocerla da click aqui: <a href="<%= @url %>"><%= @url %></a></p>
+    <%= render "partials/hero" %>
+    <%= render "partials/footer" %>
   </body>
 </html>
