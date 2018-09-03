@@ -123,8 +123,10 @@ class Job < ApplicationRecord
   def should_release_payment
     if self.closed_by_agent
       self.payment.send_payment_request
-    else
+    elsif self.closed_by_agent == false
       self.update_columns(status: 'cancelled')
+    else
+      # Do nothing
     end
   end
 
