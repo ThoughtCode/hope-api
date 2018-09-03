@@ -10,4 +10,8 @@ class Api::V1::ServiceTypeSerializer
   attribute :services_addons do |s|
     s.services.where(type_service: 'addon')
   end
+
+  attribute :services_parameters do |s|
+    s.services.where(type_service: 'parameter')
+  end
 end
