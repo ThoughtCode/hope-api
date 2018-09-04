@@ -4,9 +4,7 @@
     <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
   </head>
   <body>
-    <div class="mail-header" style="text-align: center; background: #eeee; padding: 20px;">
-      <%= image_tag("https://s3.amazonaws.com/noc-noc/logo/LogoNocNoc.png", alt: 'logo', width: '120')%>
-    </div>
+    <%= render "partials/header" %>
     <h1><%= @user.first_name %> recibiste una propuesta de trabajo.</h1>
     <p>Para conocerla da click aqui: <a href="<%= @url %>"><%= @url %></a></p>
     <%= render "partials/hero" %>

@@ -4,9 +4,7 @@
     <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
   </head>
   <body>
-    <div class="mail-header" style="text-align: center; background: #eeee; padding: 20px;">
-      <%= image_tag("https://s3.amazonaws.com/noc-noc/logo/LogoNocNoc.png", alt: 'logo', width: '120')%>
-    </div>
+    <%= render "partials/header" %>
     <h1>Lo sentimos <%= @user.first_name%> el trabajo al que postulaste fue cancelado</h1>
     <p>¡No te preocupes el próximo trabajo seguro se realizará!</p>
     <%= render "partials/footer" %>

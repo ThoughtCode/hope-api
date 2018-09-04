@@ -9,10 +9,8 @@
     </style>
   </head>
   <body>
-    <div class="mail-header" style="text-align: center; background: #eeee; padding: 20px;">
-      <%= image_tag("https://s3.amazonaws.com/noc-noc/logo/LogoNocNoc.png", alt: 'logo', width: '120')%>
-    </div>
-    <h1>¡Bienvenido <%= @user.first_name %></h1>
+    <%= render "partials/header" %>
+    <h1>¡Bienvenido <%= @user.first_name %>!</h1>
     <p>Gracias por registrarte en noc-noc. Ahora podrás contratar los mejores servicios para tú comodidad con las garantías que solamente nuestra plataforma te puede dar</p>
     <br>
     <%= render "partials/hero" %>
