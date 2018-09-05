@@ -114,14 +114,26 @@ class Job < ApplicationRecord
   end
 
   def create_payment
-    payment = Payment.create_with(credit_card_id: self.credit_card_id, amount: self.total, vat: self.total, status: 'Pending', 
+    payment = Payment.create_with(credit_card_id: self.credit_card_id, amount: self.total, vat: self.vat, status: 'Pending', 
       installments: self.installments, customer: self.property.customer).find_or_create_by(job_id: self.id)
     payment.description = "Trabajo de limpieza NocNoc Payment_id:#{payment.id}"
     payment.save
   end
 
   def should_release_payment
-    if self.closed_by_agent
+
+    if self.closed_by_agent && self.payment_started == false
+      Rails.logger.info('*********************************************************************************************************************************************')
+      Rails.logger.info('*********************************************************************************************************************************************') 
+      Rails.logger.info('*********************************************************************************************************************************************')
+
+      Rails.logger.info('Pago procesado')
+      Rails.logger.info(self)
+
+      Rails.logger.info('*********************************************************************************************************************************************')
+      Rails.logger.info('*********************************************************************************************************************************************')
+      Rails.logger.info('*********************************************************************************************************************************************')
+      self.update_columns(payment_started: true)
       self.payment.send_payment_request
     elsif self.closed_by_agent == false
       self.update_columns(status: 'cancelled')

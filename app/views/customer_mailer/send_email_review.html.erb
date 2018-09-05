@@ -4,16 +4,11 @@
     <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
   </head>
   <body>
-    <div class="mail-header" style="text-align: center; background: #eeee; padding: 20px;">
-      <%= image_tag("https://s3.amazonaws.com/noc-noc/logo/LogoNocNoc.png", alt: 'logo', width: '120')%>
-    </div>
-    <h1>Te han calificado por un trabajo</h1>
-    <p>Ingresa en la siguiente url para verlo: <a href="<%= @url %>"><%= @url %></a></p>
-    <p>Recomendamos calificar al agente si aun no lo has hecho</p>
-    <br>
-    <p><strong>Saludos,</strong></p>
-    <p><strong>Noc Noc</strong></p>
-    <%= image_tag("https://s3.amazonaws.com/noc-noc/logo/LogoNocNoc.png", width: '120')%>
-    <div class="mail-footer" style="background: #0069a7; height: 100px;"></div>
+    <%= render "partials/header" %>
+    <h1><%= @user.first_name %> tú calificación fue realizada</h1>
+    <p>Ingresa en la siguiente url para verla: <a href="<%= @url %>"><%= @url %></a></p>
+    <p>Te recomendamos calificar a nuestro profesional si aún no lo hiciste.</p>
+    <%= render "partials/hero" %>
+    <%= render "partials/footer" %>
   </body>
 </html>
