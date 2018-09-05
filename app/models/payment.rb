@@ -14,7 +14,8 @@ class Payment < ApplicationRecord
          "amount": '+ self.job.total.to_s + ',
          "description": "' + "#{self.description} " +'",
          "dev_reference": "'+ self.id.to_s + '",
-         "vat": '+"#{self.vat.to_s}"+'
+         "vat": '+"#{self.vat.to_s}"+',
+         "installments:' +"#{self.vat.to_s}"+'
      },
      "card": {
          "token": "' + "#{self.credit_card.token }"+ '"
