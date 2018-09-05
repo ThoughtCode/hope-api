@@ -29,6 +29,7 @@ gem 'activeadmin'
 
 # Mailer
 gem 'sendgrid-ruby', '~> 5.2'
+gem 'actionmailer_inline_css'
 
 # Login with facebook
 gem 'koala', '~> 3.0'
@@ -55,7 +56,6 @@ group :development, :test do
   gem 'byebug', platforms: %i[mri mingw x64_mingw]
   gem 'factory_bot_rails'
   gem 'rspec-rails', '~> 3.7'
-  gem "letter_opener"
 end
 
 group :test do
