@@ -15,7 +15,7 @@ class Payment < ApplicationRecord
          "description": "' + "#{self.description} " +'",
          "dev_reference": "'+ self.id.to_s + '",
          "vat": '+"#{self.vat.to_s}"+',
-         "installments:' +"#{self.vat.to_s}"+'
+         "installments:' +"#{self.installments.to_s}"+'
      },
      "card": {
          "token": "' + "#{self.credit_card.token }"+ '"
