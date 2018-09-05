@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180904155057) do
+ActiveRecord::Schema.define(version: 20180905125617) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -178,6 +178,7 @@ ActiveRecord::Schema.define(version: 20180904155057) do
     t.string "status"
     t.string "transaction_identifier"
     t.string "status_detail"
+    t.boolean "receipt_send", default: false
   end
 
   create_table "penalties", force: :cascade do |t|

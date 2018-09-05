@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
+  </head>
+  <body>
+    <%= render "partials/header" %>
+    <h1>Hola <%= @user.first_name %> gracias por usar los servicios de NocNoc</h1>
+
+    <div>
+      <p>Este es tu recibo</p>
+      <ul> Servicios contratados:
+        <li><%= @service_base_name %> : $<%= @service_base_price %></li>
+        <% @services_addon.each do |j|%>
+          <li><%= j.service.name %> : $<%= j.price_total %></li>
+        <% end %>
+        <% @services_parameters.each do |j|%>
+          <li><%= j.service.name %> : $<%= j.price_total %></li>
+        <% end %>
+        <li>IVA: $<%= @iva %></li>
+        <li>Total: $<%= @total %></li>
+      </ul>
+      <p>Identificador de la transacción: <%= @payment.transaction_identifier %> </p>
+      <p>Código de autorización: <%= @payment.authorization_code %></p>
+
+      <p>Muchas gracias por nuestros servicios.</p>
+    </div>
+    <%= render "partials/hero" %>
+    <%= render "partials/footer" %>
+  </body>
+</html>

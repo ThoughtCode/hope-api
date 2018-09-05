@@ -37,6 +37,7 @@ module Api::V1
       payment.status = set_status(params[:transaction][:status])
       payment.transaction_identifier = params[:transaction][:id]
       payment.save
+      payment.check_receipt_send
       set_response(
         200, 'Payment Saved'
       )
