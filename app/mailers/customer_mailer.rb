@@ -43,6 +43,7 @@ class CustomerMailer < ApplicationMailer
   def send_email_create_job(job, customer, url)
     @url = url + '/cliente/trabajo/' + job.hashed_id.to_s
     @job = job
+    @user = customer
     service_base = job.job_details.select { |j| j.service.type_service == 'base' }
     @service_base_name = service_base.map { |j| j.service.name }.first
     @service_base_price = service_base.map(&:price_total).first
