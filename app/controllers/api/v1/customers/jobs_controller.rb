@@ -16,6 +16,8 @@ module Api::V1::Customers
 
     def create
       job = Job.new(job_params)
+      job_details = job.job_details.select {|j| j.value != 0}
+      job.job_details = job_details
       cc = CreditCard.find(params[:job][:credit_card_id])
       job.credit_card = cc
       if job.save
