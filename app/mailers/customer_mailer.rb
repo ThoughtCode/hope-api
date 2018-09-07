@@ -16,6 +16,7 @@ class CustomerMailer < ApplicationMailer
   end
 
   def send_proposal_received(job, customer, url)
+    @user = customer
     @url = url + '/cliente/trabajo/' + job.hashed_id
     mail(to: customer.email,
          subject: 'Propuesta de trabajo')
