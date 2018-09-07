@@ -64,20 +64,3 @@ class Payment < ApplicationRecord
     end 
   end
 end
-
-
-{ "user": {
-  "id":"112",
-  "email": "osalas@paymentez.com"
-,
-"order": {
-  "amount": 29.4,
-  "description": "Trabajo de limpieza NocNoc Payment_id:26 ",
-  "dev_reference": "26",
-  "vat": 3.15,
-  "installments": 0, 
-  "installments_type":0
-},
-"card": {
-  "token": "3027574355610588062"
-}}
