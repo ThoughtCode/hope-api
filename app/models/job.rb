@@ -41,7 +41,7 @@ class Job < ApplicationRecord
     customer = property.customer
     unless can_cancel_booking?
       Penalty.create!(amount: penalty_amount, customer: customer)
-      # self.payment.destroy
+      self.payment.destroy
       vat = ((penalty_amount.to_f * 12) / 100).round(2)
       payment = Payment.create(credit_card_id: self.credit_card_id, amount: penalty_amount, vat: vat, status: 'Pending', 
         installments: 1, customer: self.property.customer, is_receipt_cancel: true, job: self)
