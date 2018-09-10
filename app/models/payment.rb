@@ -13,12 +13,6 @@ class Payment < ApplicationRecord
       installments_type = 3
     end 
 
-    installments = self.installments
-
-    if installments == 0 
-      installments = 1
-    end
-
     customer = self.customer
     body = '{ "user": {
          "id":"'+ customer.id.to_s + '",
@@ -30,7 +24,7 @@ class Payment < ApplicationRecord
          "dev_reference": "'+ self.id.to_s + '",
          "vat": '+"#{self.vat.to_s}"+',
          "installments_type": '+ installments_type.to_s + ', 
-         "installments": '+"#{installments}"+'
+         "installments": '+"#{self.installments}"+'
      },
      "card": {
          "token": "' + "#{self.credit_card.token }"+ '"
