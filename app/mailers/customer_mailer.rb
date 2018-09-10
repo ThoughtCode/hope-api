@@ -55,6 +55,20 @@ class CustomerMailer < ApplicationMailer
          subject: 'Creación de trabajo')
   end
 
+  def send_receipt_cancelled(job, customer, payment)
+    @user = customer
+    @job = job
+    service_base = job.job_details.select { |j| j.service.type_service == 'base' }
+    @service_base_name = service_base.map { |j| j.service.name }.first
+    @service_base_price = service_base.map(&:price_total).first
+    @services_addon = job.job_details.select { |j| j.service.type_service == 'addon' }
+    @services_parameters = job.job_details.select { |j| j.service.type_service == 'parameter' }
+    @iva = job.vat.to_f
+    @total = job.job_details.map(&:price_total).sum + @iva
+    @payment = payment
+    mail(to: customer.email,
+         subject: 'Nocnoc - Recibo de pago')
+  end
 
   def send_receipt(job, customer, payment)
     @user = customer

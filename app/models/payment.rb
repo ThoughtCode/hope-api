@@ -13,6 +13,12 @@ class Payment < ApplicationRecord
       installments_type = 3
     end 
 
+    installments = self.installments
+
+    if installments == 0 
+      installments = 1
+    end
+
     customer = self.customer
     body = '{ "user": {
          "id":"'+ customer.id.to_s + '",
@@ -22,7 +28,9 @@ class Payment < ApplicationRecord
          "amount": '+ self.job.total.to_s + ',
          "description": "' + "#{self.description} " +'",
          "dev_reference": "'+ self.id.to_s + '",
-         "vat": '+"#{self.vat.to_s}"+'
+         "vat": '+"#{self.vat.to_s}"+',
+         "installments_type": '+ installments_type.to_s + ', 
+         "installments": '+"#{installments}"+'
      },
      "card": {
          "token": "' + "#{self.credit_card.token }"+ '"
@@ -57,7 +65,11 @@ class Payment < ApplicationRecord
 
   def check_receipt_send
     if self.receipt_send == false
-      CustomerMailer.send_receipt(self.job, self.customer, self).deliver
+      if is_receipt_cancel
+        CustomerMailer.send_receipt_cancelled(self.job, self.customer, self).deliver
+      else
+        CustomerMailer.send_receipt(self.job, self.customer, self).deliver
+      end
       self.update_columns(receipt_send: true)
     end 
   end

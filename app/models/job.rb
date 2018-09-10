@@ -27,8 +27,7 @@ class Job < ApplicationRecord
     self.status = 'cancelled'
     send_email_to_agent if agent
     agent = self.agent
-
-    if !agent.nil?app/serializers/api/v1/job_serializer.rb
+    if !agent.nil?
       Notification.create(text: 'Han cancelado un trabajo', agent: agent, job: self)
     end
   end
@@ -38,13 +37,18 @@ class Job < ApplicationRecord
   end
 
   def cancel_booking
-    amount = if Config.fetch('cancelation_penalty_key')
-               Config.fetch('cancelation_penalty_amount')
-             else
-               0
-             end
+    penalty_amount = Config.fetch('cancelation_penalty_amount')
     customer = property.customer
-    Penalty.create!(amount: amount, customer: customer) unless can_cancel_booking?
+    unless can_cancel_booking?
+      Penalty.create!(amount: penalty_amount, customer: customer)
+      # self.payment.destroy
+      vat = ((penalty_amount.to_f * 12) / 100).round(2)
+      payment = Payment.create(credit_card_id: self.credit_card_id, amount: penalty_amount, vat: vat, status: 'Pending', 
+        installments: 1, customer: self.property.customer, is_receipt_cancel: true, job: self)
+      payment.description = "Multa de cancelación NocNoc Job Id:#{self.id}"
+      payment.save
+      payment.send_payment_request
+    end
   end
 
   def can_cancel_booking?
@@ -121,7 +125,6 @@ class Job < ApplicationRecord
   end
 
   def should_release_payment
-
     if self.closed_by_agent && self.payment_started == false
       Rails.logger.info('*********************************************************************************************************************************************')
       Rails.logger.info('*********************************************************************************************************************************************') 
