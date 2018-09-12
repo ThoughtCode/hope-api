@@ -23,6 +23,7 @@ class CustomerMailer < ApplicationMailer
   end
 
   def send_job_recursivity(job, customer, url)
+    @user = customer
     @url = url + '/cliente/trabajo/' + job.hashed_id
     @url_cancel = url + '/cliente/trabajo/' + job.hashed_id + '/cancelar'
     mail(to: customer.email,
