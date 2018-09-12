@@ -21,6 +21,7 @@ module Api::V1::Agents
       closed = params[:job][:closed]
       @job.closed_by_agent = closed
       if @job.save
+        @job.job_recurrency if @job.frequency != 'one_time'    
           set_response(200,
                        'Se ha actualizado sastifactoriamente',
                        serialize_job(@job))

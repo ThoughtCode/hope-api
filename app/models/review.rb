@@ -33,7 +33,6 @@ class Review < ApplicationRecord
   def complete_job
     return nil if owner.class.name == 'Customer' || job.reviews.none?
     job.completed!
-    job.job_recurrency if job.frequency != 'one_time'
     url = ENV['FRONTEND_URL']
     SendEmailCompletedJob.perform_later(owner, job, url)
   end

@@ -62,6 +62,7 @@ class Job < ApplicationRecord
 
   def job_recurrency
     new_job = dup
+    new_job.credit_card = credit_card 
     new_job.status = 'accepted'
     job_details.each do |d|
       new_job.job_details << d.dup
@@ -76,7 +77,6 @@ class Job < ApplicationRecord
     end
     return nil if new_job.started_at > finished_recurrency_at
     new_job.save!
-    create_payment
     send_email_autocreated_job(new_job)
   end
 
@@ -122,7 +122,7 @@ class Job < ApplicationRecord
     payment = Payment.create_with(credit_card_id: self.credit_card_id, amount: self.total, vat: self.vat, status: 'Pending', 
       installments: self.installments, customer: self.property.customer).find_or_create_by(job_id: self.id)
     payment.description = "Trabajo de limpieza NocNoc Payment_id:#{payment.id}"
-    payment.save
+    payment.save!
   end
 
   def should_release_payment
