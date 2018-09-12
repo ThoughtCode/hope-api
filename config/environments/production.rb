@@ -98,6 +98,13 @@ Rails.application.configure do
     :enable_starttls_auto => true
   }
 
+  config.middleware.use ExceptionNotification::Rack,
+    slack: {
+      webhook_url: "https://hooks.slack.com/services/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",
+      channel: "#exceptions",
+      username: "Error notifier" # ENV based username to distinguish Production Exceptions in channel
+    }
+
   # Do not dump schema after migrations.
   config.active_record.dump_schema_after_migration = false
 end
