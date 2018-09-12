@@ -65,6 +65,8 @@
         get 'credit_cards', to: 'payments#index'
         resources :properties, except: [:new, :edit]
         resources :jobs, except: [:new, :edit] do
+          get 'completed', to: 'jobs#completed', on: :collection
+          get 'current', to: 'jobs#current', on: :collection
           get 'cancelled', to: 'jobs#cancelled'
           post 'review', to: 'reviews#create'
           get 'can_review', to: 'jobs#can_review'

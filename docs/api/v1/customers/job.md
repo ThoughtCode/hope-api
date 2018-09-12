@@ -8,6 +8,7 @@ Table of Contents:
 - [Update](#update)
 - [Destroy](#destroy)
 - [Show](#show)
+- [Completed](#completed)
 
 ## Object example
 
@@ -352,6 +353,60 @@ Header: `[HTTP_AUTHORIZATION]` = `Token token=XXXXXXXXXXXXXX`
 {
   "message": "Job found successfully.",
   "job": Job object
+}
+
+```
+
+### Return example on failure, 404
+
+```json
+{
+  "message": "Job does not exists.",
+  "data": []
+}
+```
+
+## Completed
+
+Method: `GET`
+
+URI: `/api/v1/customers/jobs/completed`
+
+Header: `[HTTP_AUTHORIZATION]` = `Token token=XXXXXXXXXXXXXX`
+
+### Return example on success, 200
+
+```json
+{
+  "message": "Trabajos listados exitosamente",
+  "data": Job object
+}
+
+```
+
+### Return example on failure, 404
+
+```json
+{
+  "message": "Job does not exists.",
+  "data": []
+}
+```
+
+## Current
+
+Method: `GET`
+
+URI: `/api/v1/customers/jobs/current`
+
+Header: `[HTTP_AUTHORIZATION]` = `Token token=XXXXXXXXXXXXXX`
+
+### Return example on success, 200
+
+```json
+{
+  "message": "Trabajos listados exitosamente",
+  "data": Job object
 }
 
 ```

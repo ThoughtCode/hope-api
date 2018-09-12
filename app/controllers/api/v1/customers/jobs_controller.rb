@@ -14,6 +14,28 @@ module Api::V1::Customers
       )
     end
 
+    def completed
+      jobs = current_user.jobs.where(status: 'completed')
+      jobs = jobs.page(params[:current_page]).per(10)
+      set_response(
+        200,
+        'Trabajos listados exitosamente',
+        serialize_job(jobs),
+        jobs.total_pages
+      )
+    end
+
+    def current
+      jobs = current_user.jobs.where(status: ['pending', 'accepted'])
+      jobs = jobs.page(params[:current_page]).per(10)
+      set_response(
+        200,
+        'Trabajos listados exitosamente',
+        serialize_job(jobs),
+        jobs.total_pages
+      )
+    end
+
     def create
       job = Job.new(job_params)
       job_details = job.job_details.select {|j| j.value != 0}
