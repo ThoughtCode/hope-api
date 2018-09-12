@@ -76,6 +76,7 @@ class Job < ApplicationRecord
     end
     return nil if new_job.started_at > finished_recurrency_at
     new_job.save!
+    create_payment
     send_email_autocreated_job(new_job)
   end
 
