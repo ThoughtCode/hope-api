@@ -1,4 +1,4 @@
-source 'https://rubygems.org'
+ source 'https://rubygems.org'
 
 git_source(:github) do |repo_name|
   repo_name = "#{repo_name}/#{repo_name}" unless repo_name.include?('/')
@@ -51,7 +51,7 @@ gem 'kaminari', '~> 1.1', '>= 1.1.1'
 gem 'faraday', '~> 0.15.2'
 
 # Slack notifications
-gem 'slack-notifier', '~> 2.3', '>= 2.3.2'
+gem 'exception_notification', '~> 4.2', '>= 4.2.2'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to
@@ -61,7 +61,7 @@ group :development, :test do
   gem 'rspec-rails', '~> 3.7'
 end
 
-group :test do
+ group :test do
   gem 'database_cleaner'
   gem 'faker', '~> 1.8', '>= 1.8.7'
   gem 'rails-controller-testing'
