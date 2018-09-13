@@ -5,7 +5,7 @@ module Api::V1::Agents
 
     def index
       jobs_accepted = current_user.jobs.pluck(:id)
-      jobs = Job.all.where('started_at >= ?', DateTime.current).pending.order(started_at: :asc)
+      jobs = Job.all.where('started_at >= ?', DateTime.current - 5.hours).pending.order(started_at: :asc)
       jobs = filter(params, jobs)
       jobs = jobs.where.not(id: jobs_accepted)
       jobs = jobs.page(params[:current_page]).per(10)
@@ -32,7 +32,7 @@ module Api::V1::Agents
 
     def postulated
       proposals = current_user.proposals.pluck(:job_id)
-      jobs = Job.all.where('started_at > ?', DateTime.current).pending.order(started_at: :asc)
+      jobs = Job.all.where('started_at > ?', DateTime.current - 5.hours).pending.order(started_at: :asc)
       jobs = jobs.where(id: proposals)
       jobs = jobs.page(params[:current_page]).per(10)
       set_response(
