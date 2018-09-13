@@ -50,6 +50,9 @@ gem 'sidekiq', '~> 5.1', '>= 5.1.3'
 gem 'kaminari', '~> 1.1', '>= 1.1.1'
 gem 'faraday', '~> 0.15.2'
 
+# Slack notifications
+gem 'slack-notifier', '~> 2.3', '>= 2.3.2'
+
 group :development, :test do
   # Call 'byebug' anywhere in the code to
   # stop execution and get a debugger console
