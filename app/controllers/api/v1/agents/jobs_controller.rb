@@ -4,10 +4,10 @@ module Api::V1::Agents
     before_action :set_job, only: %i[show can_review can_apply confirm_payment]
 
     def index
-      proposals = current_user.proposals.pluck(:job_id)
-      jobs = Job.all.where('started_at > ?', DateTime.current).pending.order(started_at: :asc)
+      jobs_accepted = current_user.jobs.pluck(:id)
+      jobs = Job.all.where('started_at >= ?', DateTime.current).pending.order(started_at: :asc)
       jobs = filter(params, jobs)
-      jobs = jobs.where.not(id: proposals)
+      jobs = jobs.where.not(id: jobs_accepted)
       jobs = jobs.page(params[:current_page]).per(10)
       set_response(
         200,
