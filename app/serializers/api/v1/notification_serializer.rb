@@ -2,10 +2,10 @@ class Api::V1::NotificationSerializer
   include FastJsonapi::ObjectSerializer
   attributes :text, :customer_id, :status, :agent_id
 
-  attribute :job do |n|
+  attribute :job do |notification|
     {
       data: {
-        id: n.job.hashed_id
+        id: notification.job.hashed_id
       }
     }
   end

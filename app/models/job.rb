@@ -149,5 +149,11 @@ class Job < ApplicationRecord
   def send_email_create_job
     SendEmailJobCreateJob.perform_later(self, property.customer, ENV['FRONTEND_URL'])
     SendEmailToAgentsJob.perform_later(hashed_id, ENV['FRONTEND_URL']) unless agent
+    agents = Agent.filter_by_availability(self)
+    
+    agents.each do |agent|
+      Notification.create(text: 'Hay un nuevo trabajo disponible', agent: agent, job: self)
+    end
+
   end
 end
