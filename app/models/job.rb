@@ -113,6 +113,7 @@ class Job < ApplicationRecord
     sub_total = total
     agent_earnings = sub_total - service_fee
     total = total + vat
+    finished_at = started_at + duration.hours
     update_columns(duration: duration, total: total, finished_at: finished_at, vat: vat, 
       subtotal: sub_total, service_fee: service_fee, agent_earnings: agent_earnings)
     create_payment
