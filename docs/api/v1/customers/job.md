@@ -9,6 +9,7 @@ Table of Contents:
 - [Destroy](#destroy)
 - [Show](#show)
 - [Completed](#completed)
+- [Cancelled](#cancelled)
 
 ## Object example
 
@@ -417,5 +418,22 @@ Header: `[HTTP_AUTHORIZATION]` = `Token token=XXXXXXXXXXXXXX`
 {
   "message": "Job does not exists.",
   "data": []
+}
+```
+
+## Cancelled
+
+Method: `GET`
+
+URI: `/api/v1/customers/jobs/job_id/cancelled`
+
+Header: `[HTTP_AUTHORIZATION]` = `Token token=XXXXXXXXXXXXXX`
+
+### Return example on success, 200
+
+```json
+{
+    "message": "Trabajo cancelado exitosamente",
+    "data": []
 }
 ```
