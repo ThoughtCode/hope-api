@@ -8,7 +8,7 @@ module Api::V1::Agents
       jobs = Job.all.where('started_at >= ?', DateTime.current - 5.hours).pending.order(started_at: :asc)
       jobs = filter(params, jobs)
       jobs = jobs.where.not(id: jobs_accepted)
-      jobs = jobs.page(params[:current_page]).per(10)
+      jobs = jobs.order(:started_at).page(params[:current_page]).per(10)
       set_response(
         200,
         'Trabajos listados exitosamente',
@@ -34,7 +34,7 @@ module Api::V1::Agents
       proposals = current_user.proposals.pluck(:job_id)
       jobs = Job.all.where('started_at > ?', DateTime.current - 5.hours).pending.order(started_at: :asc)
       jobs = jobs.where(id: proposals)
-      jobs = jobs.page(params[:current_page]).per(10)
+      jobs = jobs.order(:started_at).page(params[:current_page]).per(10)
       set_response(
         200,
         'Trabajos listados exitosamente',
@@ -45,7 +45,7 @@ module Api::V1::Agents
 
     def accepted
       jobs = current_user.jobs.accepted.order(id: :desc)
-      jobs = jobs.page(params[:current_page]).per(10)
+      jobs = jobs.order(:started_at).page(params[:current_page]).per(10)
       set_response(
         200,
         'Trabajos listados exitosamente',
@@ -55,8 +55,8 @@ module Api::V1::Agents
     end
 
     def calendar
-      jobs = current_user.jobs.completed.order(id: :desc)
-      # jobs = current_user.jobs.where(status: %i[accepted completed pending]).order(id: :desc)
+      # jobs = current_user.jobs.completed.order(id: :desc)
+      jobs = current_user.jobs.where(status: %i[accepted completed]).order(id: :desc)
       set_response(
         200,
         'Trabajos listados exitosamente',
@@ -66,7 +66,7 @@ module Api::V1::Agents
 
     def completed
       jobs = current_user.jobs.completed.order(id: :desc)
-      jobs = jobs.page(params[:current_page]).per(10)
+      jobs = jobs.order(:started_at).page(params[:current_page]).per(10)
       set_response(
         200,
         'Trabajos listados exitosamente',
@@ -78,12 +78,11 @@ module Api::V1::Agents
     def reports
       jobs = current_user.jobs.completed.order(id: :desc)
       jobs = filter(params, jobs)
-      jobs = jobs.page(params[:current_page]).per(20)
+      jobs = jobs
       set_response(
         200,
         'Trabajos listados exitosamente',
-        serialize_job(jobs),
-        jobs.page(1).total_pages
+        serialize_job(jobs)
       )
     end
 

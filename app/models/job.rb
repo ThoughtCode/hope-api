@@ -4,11 +4,11 @@ class Job < ApplicationRecord
   belongs_to :property
   has_many :job_details, dependent: :destroy
   has_many :services, through: :job_details
-  has_many :notifications
-  has_many :proposals
+  has_many :notifications, dependent: :destroy
+  has_many :proposals, dependent: :destroy
   has_many :agents, through: :proposals
   has_many :reviews, dependent: :destroy
-  has_many :penalties
+  has_many :penalties, dependent: :destroy
   has_one :credit_card
   has_one :payment
 

@@ -5,7 +5,7 @@ module Api::V1::Customers
     def index
       jobs = current_user.jobs.all
       jobs = check_status(jobs)
-      jobs = jobs.page(params[:current_page]).per(params[:limit])
+      jobs = jobs.order(:started_at).page(params[:current_page]).per(params[:limit])
       set_response(
         200,
         'Trabajos listados exitosamente',
@@ -16,7 +16,7 @@ module Api::V1::Customers
 
     def completed
       jobs = current_user.jobs.where(status: 'completed')
-      jobs = jobs.page(params[:current_page]).per(10)
+      jobs = jobs.order(:started_at).page(params[:current_page]).per(10)
       set_response(
         200,
         'Trabajos listados exitosamente',
@@ -26,8 +26,10 @@ module Api::V1::Customers
     end
 
     def current
-      jobs = current_user.jobs.where(status: ['pending', 'accepted'])
-      jobs = jobs.page(params[:current_page]).per(10)
+      jobs = current_user.jobs.where(status: ['pending', 'accepted']).where(
+        'started_at > ?', DateTime.current - 5.hours
+      )
+      jobs = jobs.order(:started_at).page(params[:current_page]).per(10)
       set_response(
         200,
         'Trabajos listados exitosamente',
@@ -149,11 +151,11 @@ module Api::V1::Customers
     def check_status(jobs)
       if params[:status] == 'nextjobs'
         jobs = jobs.where(
-          'started_at > ? AND (status = ? OR status = ?)', DateTime.current, 0, 1
+          'started_at > ? AND (status = ? OR status = ?)', DateTime.current - 5.hours, 0, 1
         )
       elsif params[:status] == 'history'
         jobs = jobs.where(
-          'started_at < ? AND (status = ? )', DateTime.current, 3
+          'started_at < ? AND (status = ? )', DateTime.current - 5.hours, 3
         )
       end
       jobs
