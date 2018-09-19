@@ -44,7 +44,7 @@ module Api::V1::Customers
       job.job_details = job_details
       cc = CreditCard.find(params[:job][:credit_card_id])
       job.credit_card = cc
-      if job.save
+      if job.save!
         set_response(200, 'Trabajo creado exitosamente', serialize_job(job))
       else
         set_response(422, job.errors.full_messages)
