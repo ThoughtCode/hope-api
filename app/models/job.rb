@@ -8,7 +8,7 @@ class Job < ApplicationRecord
   has_many :proposals, dependent: :destroy
   has_many :agents, through: :proposals
   has_many :reviews, dependent: :destroy
-  has_many :penalties, dependent: :destroy
+  has_many :penalties
   has_one :credit_card
   has_one :payment
 
