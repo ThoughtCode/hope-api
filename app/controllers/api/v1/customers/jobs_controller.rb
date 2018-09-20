@@ -2,6 +2,7 @@ module Api::V1::Customers
   class JobsController < CustomerUsersController
     include Serializable
     before_action :set_job, only: %i[show update destroy cancelled can_review]
+    
     def index
       jobs = current_user.jobs.all
       jobs = check_status(jobs)

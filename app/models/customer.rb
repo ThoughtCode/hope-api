@@ -11,6 +11,7 @@ class Customer < ApplicationRecord
   has_many :properties
   has_many :jobs, through: :properties
   has_many :reviews, as: :owner
+  has_many :reviews, as: :reviewee
   has_many :penalties
   has_many :notifications
   has_many :credit_cards

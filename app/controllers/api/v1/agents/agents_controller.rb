@@ -44,7 +44,7 @@ module Api::V1::Agents
     end
 
     def get_notifications
-      notifications = current_user.notifications.filter_by_status(Notification.statuses[:created])
+      notifications = current_user.notifications.filter_by_status(Notification.statuses[:created]).limit(10)
       set_response(
         200,
         'Notificaciones Enviadas exitosamente',
@@ -55,7 +55,6 @@ module Api::V1::Agents
     def read_notifications
       notification = Notification.find(params[:id])
       notification.status = 'opened'
-
       if notification.save
         set_response(
           200,

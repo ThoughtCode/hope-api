@@ -4,24 +4,25 @@ class Api::V1::ReviewSerializer
   set_id :hashed_id # optional
   attributes :id, :comment, :qualification
 
-  attribute :owner do |j|
+  attribute :my_reviews do |j|
     {
-      data: {
-      id: 3,
-      type: "customer",
-      attributes: {
-        first_name: j.owner.first_name,
-        last_name: j.owner.last_name,
-        email: j.owner.email,
-        access_token: j.owner.email,
-        avatar: {
-            url: j.owner.avatar.url,
-        },
-        national_id: j.owner.national_id,
-        cell_phone: j.owner.cell_phone,
-        hashed_id: j.owner.hashed_id,
-        rewiews_count: j.owner.my_qualifications.count,
-        rewiews_average: j.owner&.reviews_average
+      data: 
+      {
+        id: j.id,
+        type: "review",
+        attributes: {
+          owner_first_name: j.owner.first_name,
+          owner_last_name: j.owner.last_name,
+          owner_email: j.owner.email,
+          owner_avatar: {
+              url: j.owner.avatar.url,
+          },
+          reviewee_first_name: j.reviewee.first_name,
+          reviewee_last_name: j.reviewee.last_name,
+          reviewee_email: j.reviewee.email,
+          reviewee_avatar: {
+              url: j.reviewee.avatar.url,
+          },
         }
       }
     }

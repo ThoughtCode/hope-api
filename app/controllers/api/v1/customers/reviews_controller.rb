@@ -16,6 +16,7 @@ module Api::V1::Customers
 
     def create
       review = @job.reviews.new(@review_params)
+      review.reviewee = @job.agent
       if review.save
         set_response(
           200, 'Calificación creada exitosamente', serialize_review(review)

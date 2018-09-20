@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180909230720) do
+ActiveRecord::Schema.define(version: 20180920062023) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -124,6 +124,7 @@ ActiveRecord::Schema.define(version: 20180909230720) do
     t.decimal "agent_earnings", precision: 8, scale: 2
     t.boolean "closed_by_agent"
     t.boolean "payment_started", default: false
+    t.boolean "review_notification_send", default: false
   end
 
   create_table "managers", force: :cascade do |t|
@@ -214,6 +215,8 @@ ActiveRecord::Schema.define(version: 20180909230720) do
     t.bigint "owner_id"
     t.text "comment"
     t.integer "qualification", default: 0
+    t.integer "reviewee_id"
+    t.string "reviewee_type"
     t.index ["job_id"], name: "index_reviews_on_job_id"
     t.index ["owner_type", "owner_id"], name: "index_reviews_on_owner_type_and_owner_id"
   end

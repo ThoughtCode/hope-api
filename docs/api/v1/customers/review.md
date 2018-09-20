@@ -12,44 +12,40 @@ Table of Contents:
 
 ```json
 {
-  "id": "5b490001dd135a50d9f9a22d",
-  "type": "review",
-  "attributes": {
-    "id": 41,
-    "comment": "adsasdasd",
-    "qualification": 5,
-    "owner": {
-      "data": {
-        "id": "1",
-        "type": "customer",
-        "attributes": {
-          "first_name": "Rainiero",
-          "last_name": "Romero",
-          "email": "rainieromadrid@gmail.com",
-          "access_token": "70925c27142314a4d8b850cf8c4a46ab",
-          "avatar": {
-            "url": "https://noc-noc.s3.amazonaws.com/uploads/agent/avatar/1/apartment-blinds-cabinets-349749__1_.jpg"
-          },
-          "national_id": "22399185",
-          "cell_phone": "1234556789",
-          "hashed_id": null,
-          "rewiews_count": 2,
-          "rewiews_average": 5,
-          "rewiews": [
+    "message": "Calificaciones listadas exitosamente",
+    "review": {
+        "data": [
             {
-              "id": 42,
-              "hashed_id": "5b49006edd135a50d9f9a22e",
-              "job_id": 70,
-              "owner_type": "Customer",
-              "owner_id": 1,
-              "comment": "Muy bueno",
-              "qualification": 5
-            },
-          ]
-        }
-      }
+                "id": "5ba32f28ae18d043bfa55ff0",
+                "type": "review",
+                "attributes": {
+                    "id": 8,
+                    "comment": "Buen cliente",
+                    "qualification": 5,
+                    "my_reviews": {
+                        "data": {
+                            "id": 8,
+                            "type": "review",
+                            "attributes": {
+                                "owner_first_name": "Henry",
+                                "owner_last_name": "Remache",
+                                "owner_email": "henry2992@gmail.com",
+                                "owner_avatar": {
+                                    "url": null
+                                },
+                                "reviewee_first_name": "henry",
+                                "reviewee_last_name": "remache",
+                                "reviewee_email": "henry@donorbox.org",
+                                "reviewee_avatar": {
+                                    "url": null
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        ]
     }
-  }
 }
 ```
 

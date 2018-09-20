@@ -2,6 +2,9 @@ class Review < ApplicationRecord
   include Hashable
   belongs_to :job
   belongs_to :owner, polymorphic: true
+  belongs_to :reviewee, polymorphic: true
+
+
   after_create :complete_job
   after_create :send_counterpart_email
 
