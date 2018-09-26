@@ -5,7 +5,7 @@ class CustomerMailer < ApplicationMailer
     @user = user
     @url = 'https://www.nocnoc.com.ec/'
     mail(to: @user.email,
-         subject: 'Gracias por registrarte a nuestra fantastica app')
+         subject: 'Gracias por registrarte a nuestra fantástica app')
   end
 
   def send_recover_password_app_email(user)
