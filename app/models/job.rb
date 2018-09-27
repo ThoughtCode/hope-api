@@ -90,14 +90,13 @@ class Job < ApplicationRecord
   end
 
   def self.should_be_reviewed
-    jobs = Job.where('finished_at >= ? and review_notification_send = ?', Time.current - 5.hours, false)
+    jobs = Job.where('finished_at <= ? and review_notification_send = ? and status != ?', Time.current - 5.hours, false, 3)
     jobs.each do |j|
       # Enviar a agentes
       if j.agent
         Notification.create(text: 'Un trabajo a terminado por favor califícalo', agent: j.agent, job: j)
       # Enviar a clientes
         Notification.create(text: 'Un trabajo a terminado por favor califícalo', customer: j.property.customer, job: j)
-
         j.update_columns(review_notification_send: true)
       end
     end
