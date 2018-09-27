@@ -13,7 +13,11 @@ class Api::V1::CustomerSerializer
     c.reviews_average
   end
 
+  # attribute :rewiews do |c|
+  #   c.my_qualifications
+  # end
+
   attribute :rewiews do |c|
-    c.my_qualifications
+    Api::V1::ReviewSerializer.new(c.my_qualifications)
   end
 end
