@@ -95,7 +95,6 @@ class Job < ApplicationRecord
     jobs.each do |j|
       # Enviar a agentes
       if j.agent
-        byebug
         Notification.create(text: 'Un trabajo a terminado por favor califícalo', agent: j.agent, job: j)
         AgentMailer.send_review_reminder(j.agent, j.hashed_id, url).deliver
 
