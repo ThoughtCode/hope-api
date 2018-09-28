@@ -5,8 +5,8 @@
   </head>
   <body>
     <%= render "partials/header" %>
-    <h1><%= @user.first_name %> tú calificación fue realizada por el cliente</h1>
-    <p>Para conocerla ingresa en la siguiente url: <a href="<%= @url %>"><%= @url %></a></p>
+    <h1>Hola, <%= @user.first_name %> un cliente te ha calificado</h1>
+    <p>Para conocer tú calificación ingresa en la siguiente url: <a href="<%= @url %>"><%= @url %></a></p>
     <p>Recuerda que para concluir con tú trabajo debes calificar al cliente</p>
     <%= render "partials/footer" %>
   </body>

@@ -25,7 +25,7 @@ gem 'fast_jsonapi', '~> 1.1', '>= 1.1.1'
 gem 'devise', '~> 4.4', '>= 4.4.3'
 
 # Admin System
-gem 'activeadmin'
+gem 'activeadmin', '~> 1.0.0.pre4'
 
 # Mailer
 gem 'sendgrid-ruby', '~> 5.2'

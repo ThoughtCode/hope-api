@@ -26,10 +26,12 @@ class Review < ApplicationRecord
     url = ENV['FRONTEND_URL']
     if owner.class.name == 'Agent'
       customer = job.property.customer
-      SendEmailToCounterpartCustomerJob.perform_later(job, customer, url)
+      CustomerMailer.send_email_review(job.hashed_id, customer, url).deliver
+      Notification.create(text: 'Te han calificado!', customer: customer, job: job)
     else
       agent = job.agent
-      SendEmailToCounterpartAgentJob.perform_later(job, agent, url)
+      AgentMailer.send_email_review(job.hashed_id, agent, url).deliver
+      Notification.create(text: 'Te han calificado!', agent: agent, job: job)
     end
   end
 

@@ -1,10 +1,26 @@
 ActiveAdmin.register Job do
-  permit_params :property_id, :started_at, :status, :frequency, job_details_attributes: [ :service_id, :value ]
+  permit_params :property_id, :started_at, :status, :frequency, job_details_attributes: [:id, :service_id, :value, :_destroy ]
+
 
   show do
     attributes_table do
       row :property
       row :started_at
+      row :finished_at
+      row :finished_recurrency_at
+      row :duration
+      row :status
+      row :frequency
+      row :details
+      row :card
+      row :installments
+      row :total
+      row :vat
+      row :service_fee
+      row :subtotal
+      row :agent_earnings
+      row :agent
+      row :payment
     end
     panel "Detalles" do
       job_details = Job.find(params['id']).job_details
@@ -44,11 +60,20 @@ ActiveAdmin.register Job do
       f.input :started_at
       f.input :status
       f.input :frequency
-      f.has_many :job_details, heading: 'Detalles' , new_record: "Añadir un nuevo detalle" do |d|
+      f.has_many :job_details, allow_destroy: true, heading: 'Detalles' do |d|
         d.input :service
         d.input :value
       end
     end
     f.actions
   end
+
+  controller do
+    def update
+      @job = Job.find(params[:id])
+
+      super
+    end
+  end
+
 end

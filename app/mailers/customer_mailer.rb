@@ -31,15 +31,24 @@ class CustomerMailer < ApplicationMailer
   end
 
   def send_job_completed(customer, job_id, url)
+    @user = customer
     @url = url + '/cliente/trabajo/' + job_id.to_s
     mail(to: customer.email,
          subject: 'Trabajo completado exitosamente')
   end
 
   def send_email_review(job_id, customer, url)
+    @user = customer
     @url = url + '/cliente/trabajo/' + job_id.to_s
     mail(to: customer.email,
          subject: 'Calificación registrada')
+  end
+
+  def send_review_reminder(job_id, customer, url)
+    @user = customer
+    @url = url + '/cliente/trabajo/' + job_id.to_s
+    mail(to: customer.email,
+         subject: 'Un trabajo a terminado no olvides calificarlo')
   end
 
   def send_email_create_job(job, customer, url)

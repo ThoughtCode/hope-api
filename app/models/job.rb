@@ -20,7 +20,7 @@ class Job < ApplicationRecord
   enum status: %i[pending accepted cancelled completed]
   enum frequency: %i[one_time weekly fortnightly monthly]
 
-  accepts_nested_attributes_for :job_details
+  accepts_nested_attributes_for :job_details, allow_destroy: true
 
   def set_job_to_cancelled
     cancel_booking
@@ -91,12 +91,17 @@ class Job < ApplicationRecord
 
   def self.should_be_reviewed
     jobs = Job.where('finished_at <= ? and review_notification_send = ? and status != ?', Time.current - 5.hours, false, 3)
+    url = ENV['FRONTEND_URL']
     jobs.each do |j|
       # Enviar a agentes
       if j.agent
+        byebug
         Notification.create(text: 'Un trabajo a terminado por favor califícalo', agent: j.agent, job: j)
+        AgentMailer.send_review_reminder(j.agent, j.hashed_id, url).deliver
+
       # Enviar a clientes
         Notification.create(text: 'Un trabajo a terminado por favor califícalo', customer: j.property.customer, job: j)
+        CustomerMailer.send_review_reminder(j.hashed_id, j.property.customer, url).deliver
         j.update_columns(review_notification_send: true)
       end
     end
@@ -135,6 +140,9 @@ class Job < ApplicationRecord
   def create_payment
     payment = Payment.create_with(credit_card_id: self.credit_card_id, amount: self.total, vat: self.vat, status: 'Pending', 
       installments: self.installments, customer: self.property.customer).find_or_create_by(job_id: self.id)
+    payment.amount = self.total
+    payment.vat = self.vat
+    payment.installments = self.installments
     payment.description = "Trabajo de limpieza NocNoc Payment_id:#{payment.id}"
     payment.save!
   end

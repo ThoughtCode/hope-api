@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
+  </head>
+  <body>
+    <%= render "partials/header" %>
+    <h1>Hola, <%= @user.first_name %> un trabajo a terminado</h1>
+    <p>Por favor no olvides calificarlo en la siguiente url: <a href="<%= @url %>"><%= @url %></a></p>
+    <%= render "partials/footer" %>
+  </body>
+</html>

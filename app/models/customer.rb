@@ -8,7 +8,7 @@ class Customer < ApplicationRecord
   # :confirmable, :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable
-  has_many :properties
+  has_many :properties, dependent: :destroy
   has_many :jobs, through: :properties
   has_many :reviews, as: :owner
   has_many :reviews, as: :reviewee

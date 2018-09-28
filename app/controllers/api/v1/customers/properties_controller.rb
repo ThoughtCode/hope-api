@@ -4,7 +4,7 @@ module Api::V1::Customers
     before_action :set_property, only: %i[show update destroy]
 
     def index
-      properties = current_user.properties.all
+      properties = current_user.properties.where(deleted: false)
       set_response(
         200,
         'Propiedades listadas',
@@ -42,7 +42,7 @@ module Api::V1::Customers
     def destroy
       if @property
         if !check_ownership
-          @property.destroy
+          @property.update_columns(deleted: true)
           set_response(200, 'La propiedad fue eliminada exitosamente')
         else
           set_response(404, 'La propiedad no existe')
