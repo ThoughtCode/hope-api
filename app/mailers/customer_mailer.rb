@@ -59,6 +59,7 @@ class CustomerMailer < ApplicationMailer
     @service_base_name = service_base.map { |j| j.service.name }.first
     @service_base_price = service_base.map(&:price_total).first
     @services_addon = job.job_details.select { |j| j.service.type_service == 'addon' }
+    @services_params = job.job_details.select { |j| j.service.type_service == 'parameter' }
     @iva = job.job_details.map(&:price_total).sum * 0.12
     @total = job.job_details.map(&:price_total).sum + @iva
     mail(to: customer.email,
