@@ -55,5 +55,9 @@ class AgentMailer < ApplicationMailer
          subject: 'Un trabajo a terminado no olvides calificarlo')
   end
 
-
+  def send_reset_password_notification(agent)
+    @user = agent
+    mail(to: agent.email,
+         subject: 'Nocnoc - Tu contraseña ha sido actualizada')
+  end
 end

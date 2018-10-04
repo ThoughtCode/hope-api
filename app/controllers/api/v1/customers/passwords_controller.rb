@@ -19,6 +19,7 @@ module Api::V1::Customers
     def update
       user = Customer.reset_password_by_token(params)
       if user.errors.empty?
+        CustomerMailer.send_reset_password_notification(user).deliver
         set_response(200, 'Reset password successfully')
       else
         set_response(422, user.errors)
@@ -39,6 +40,7 @@ module Api::V1::Customers
         if !@customer.check_token_expiration_date
           if @customer.update(password_params.except(:mobile_token))
             @customer.unset_reset_password_pin!
+            CustomerMailer.send_reset_password_notification(@customer).deliver
             set_response(200, 'Contraseña reseteada exitosamente')
           else
             set_response(404, @customer.errors)

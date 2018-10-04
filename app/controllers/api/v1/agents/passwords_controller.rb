@@ -19,6 +19,7 @@ module Api::V1::Agents
     def update
       user = Agent.reset_password_by_token(params)
       if user.errors.empty?
+        AgentMailer.send_reset_password_notification(user).deliver
         set_response(200, 'Contraseña reseteada exitosamente')
       else
         set_response(404, user.errors)
@@ -39,6 +40,7 @@ module Api::V1::Agents
         if !@agent.check_token_expiration_date
           if @agent.update(password_params.except(:email, :mobile_token))
             @agent.unset_reset_password_pin!
+            AgentMailer.send_reset_password_notification(user).deliver
             set_response(200, 'Contraseña reseteada exitosamente')
           else
             set_response(404, @agent.errors)
