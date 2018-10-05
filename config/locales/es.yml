@@ -45,7 +45,7 @@ es:
     errors:
       messages:
         blank: "Los campos no pueden estar vacios"
-        taken: "ya ha sido tomado"
+        taken: "El correo ya ha sido tomado"
         record_invalid: "Registro inválido"
       models:
         job_detail:
