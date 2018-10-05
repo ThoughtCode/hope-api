@@ -18,7 +18,7 @@ module Api::V1::Customers
       if property.save
         set_response(200, 'Propiedad creada exitosamente', serialize_property(property))
       else
-        set_response(422, property.errors)
+        set_response(422, property.errors.messages.values.join(', '))
       end
     end
 
@@ -29,7 +29,7 @@ module Api::V1::Customers
             set_response(200, 'Propiedad actualizada exitosamente',
                          serialize_property(@property))
           else
-            set_response(422, @property.errors)
+            set_response(422, @property.errors.messages.values.join(', '))
           end
         else
           set_response(404, 'La propiedad no existe')

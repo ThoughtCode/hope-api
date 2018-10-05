@@ -10,7 +10,7 @@ module Api::V1::Agents
                        'Se ha actualizado sastifactoriamente',
                        serialize_agent(@agent))
         else
-          set_response(422, @agent.errors)
+          set_response(422, @agent.errors.messages.values.join(', '))
         end
       else
         set_response(404, 'Agent not found.')

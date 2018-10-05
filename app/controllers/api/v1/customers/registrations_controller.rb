@@ -13,7 +13,7 @@ module Api::V1
                      'Ingresado exitosamente',
                      serialize_customer(customer))
       else
-        set_response(422, customer.errors)
+        set_response(422, customer.errors.messages.values.join(', '))
       end
     end
 

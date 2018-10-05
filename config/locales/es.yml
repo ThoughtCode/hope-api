@@ -48,6 +48,17 @@ es:
         taken: "El correo ya ha sido tomado"
         record_invalid: "Registro inválido"
       models:
+        agent:
+          attributes:
+            reset_password_token:
+              invalid: 'El token es invalido'
+            password:
+              too_short: "La contraseña debe ser mayor a %{count} caracteres"
+            password_confirmation:
+              confirmation: "Las contraseñas no coinciden"
+            email:
+              taken: "El correo ya ha sido tomado"
+              invalid: "El correo es invalido"
         job_detail:
           attributes:
             service:

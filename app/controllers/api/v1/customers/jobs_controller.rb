@@ -48,7 +48,7 @@ module Api::V1::Customers
       if job.save!
         set_response(200, 'Trabajo creado exitosamente', serialize_job(job))
       else
-        set_response(422, job.errors.full_messages)
+        set_response(422, job.errors.messages.values.join(', '))
       end
     end
 
@@ -59,7 +59,7 @@ module Api::V1::Customers
             set_response(200, 'Trabajo actualizado exitosamente',
                          serialize_job(@job))
           else
-            set_response(422, @job.errors)
+            set_response(422, @job.errors.messages.values.join(', '))
           end
         else
           set_response(404, 'El trabajo no existe.')

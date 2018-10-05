@@ -12,7 +12,7 @@ module Api::V1
         agent.acquire_access_token!
         set_response(200, 'Ingresado exitosamente', serialize_agent(agent))
       else
-        set_response(422, agent.errors)
+        set_response(422, agent.errors.messages.values.join(', '))
       end
     end
 

@@ -13,7 +13,7 @@ module Api::V1
       if card.save
         set_response(200, 'Tarjeta creada exitosamente', serialize_payment(card))
       else
-        set_response(422, card.errors)
+        set_response(422, card.errors.messages.values.join(', '))
       end
     end
 
@@ -22,7 +22,7 @@ module Api::V1
       if cc.destroy
         set_response(200, 'Tarjeta borrada exitosamente', serialize_payment(cc))
       else
-        set_response(422, cc.errors)
+        set_response(422, cc.errors.messages.values.join(', '))
       end
     end
 

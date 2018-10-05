@@ -22,7 +22,7 @@ module Api::V1::Customers
         CustomerMailer.send_reset_password_notification(user).deliver
         set_response(200, 'Reset password successfully')
       else
-        set_response(422, user.errors)
+        set_response(422, user.errors.messages.values.join(', '))
       end
     end
 
@@ -43,7 +43,7 @@ module Api::V1::Customers
             CustomerMailer.send_reset_password_notification(@customer).deliver
             set_response(200, 'Contraseña reseteada exitosamente')
           else
-            set_response(404, @customer.errors)
+            set_response(404, @customer.errors.messages.values.join(', '))
           end
         else
           set_response(401, 'El pin ha expirado')

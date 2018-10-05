@@ -22,7 +22,7 @@ module Api::V1::Agents
         AgentMailer.send_reset_password_notification(user).deliver
         set_response(200, 'Contraseña reseteada exitosamente')
       else
-        set_response(404, user.errors)
+        set_response(404, user.errors.messages.values.join(', '))
       end
     end
 
@@ -43,7 +43,7 @@ module Api::V1::Agents
             AgentMailer.send_reset_password_notification(user).deliver
             set_response(200, 'Contraseña reseteada exitosamente')
           else
-            set_response(404, @agent.errors)
+            set_response(404, @agent.errors.messages.values.join(', '))
           end
         else
           set_response(401, 'El pin ha expirado')

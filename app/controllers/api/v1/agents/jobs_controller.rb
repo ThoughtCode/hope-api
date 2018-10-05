@@ -26,7 +26,7 @@ module Api::V1::Agents
                        'Se ha actualizado sastifactoriamente',
                        serialize_job(@job))
       else
-        set_response(422, @job.errors)
+        set_response(422, @job.errors.messages.values.join(', '))
       end
     end
 

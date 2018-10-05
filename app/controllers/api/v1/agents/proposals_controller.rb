@@ -23,7 +23,7 @@ module Api::V1::Agents
           if proposal.save
             set_response(200, 'Se ha postulado exitosamente')
           else
-            set_response(422, proposal.errors)
+            set_response(422, proposal.errors.messages.values.join(', '))
           end
         end
       else

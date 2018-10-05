@@ -23,7 +23,7 @@ module Api::V1::Agents
             200, 'Calificación creada exitosamente', serialize_review(review)
           )
         else
-          set_response(422, review.errors.full_messages)
+          set_response(422, review.errors.messages.values.join(', '))
         end
       else
         set_response(

@@ -11,7 +11,7 @@ module Api::V1::Customers
           serialize_customer(@customer)
         )
       else
-        set_response(422, @customer.errors)
+        set_response(422, @customer.errors.messages.values.join(', '))
       end
     end
 
