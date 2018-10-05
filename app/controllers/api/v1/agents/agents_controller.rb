@@ -28,6 +28,7 @@ module Api::V1::Agents
     def change_password
       if @agent.valid_password?(params[:agent][:current_password])
         if @agent.update(agent_params)
+          AgentMailer.send_reset_password_notification(@agent).deliver
           set_response(
             200,
             'Contraseña actualizada exitosamente',

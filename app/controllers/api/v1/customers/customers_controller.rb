@@ -26,6 +26,7 @@ module Api::V1::Customers
     def change_password
       if @customer.valid_password?(params[:customer][:current_password])
         if @customer.update(customer_params)
+          CustomerMailer.send_reset_password_notification(@customer).deliver
           set_response(
             200,
             'Contraseña actualizada exitosamente',
