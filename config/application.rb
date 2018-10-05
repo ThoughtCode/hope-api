@@ -35,15 +35,10 @@ module HopeApi
     config.middleware.insert_before 0, Rack::Cors do
       allow do
         origins '*'
-        resource '*', 
-          :headers => :any, 
-          :methods => [:get, :post, :options, :delete, :put, :head], 
-          expose: ['x-total-pages'],
-          max_age: 600
+        resource '*', :headers => :any, :methods => [:get, :post, :options, :delete, :put], expose: ['x-total-pages']
       end
     end
 
     config.active_job.queue_adapter = :sidekiq
   end
 end
- 
