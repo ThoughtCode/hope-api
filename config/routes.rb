@@ -25,7 +25,7 @@
         get '/jobs/reports', to: 'jobs#reports'
         get '/jobs/calendar', to: 'jobs#calendar'
         get '/customer/:customer_id/reviews', to: 'reviews#customer_reviews'
-        post 'read_notifications/:id', to: 'agents#read_notifications'
+        put 'read_notifications/:id', to: 'agents#read_notifications'
         resources :jobs, only: [:index, :show] do
           post 'review', to: 'reviews#create'
           post 'confirm_payment', to: 'jobs#confirm_payment'
@@ -61,7 +61,7 @@
         post '/add_card', to: 'payments#add_card'
         post '/add_transaction', to: 'payments#add_transaction'
         delete '/delete_card/:id', to: 'payments#destroy'
-        post 'read_notifications/:id', to: 'customers#read_notifications'
+        put 'read_notifications/:id', to: 'customers#read_notifications'
         get 'credit_cards', to: 'payments#index'
         resources :properties, except: [:new, :edit]
         resources :jobs, except: [:new, :edit] do
