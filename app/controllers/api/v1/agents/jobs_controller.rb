@@ -129,7 +129,7 @@ module Api::V1::Agents
       jobs = jobs.where('started_at <= ?', flt[:date_to]) if flt[:date_to] != 'null' && !flt[:date_to].nil?
       jobs = jobs.where('total >= ?', flt[:min_price]) if flt[:min_price] != '' && !flt[:min_price].nil?
       jobs = jobs.where('total <= ?', flt[:max_price]) if flt[:max_price] != '' && !flt[:max_price].nil?
-      jobs = jobs.where(frequency: flt[:frequency]) if flt[:frequency] != 'null' && !flt[:frequency].nil?
+      jobs = jobs.where(frequency: flt[:frequency]) if flt[:frequency] != 'null' && !flt[:frequency].nil? unless flt[:frequency] == "4" 
       jobs
     end
   end
