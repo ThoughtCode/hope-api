@@ -5,9 +5,15 @@ ActiveAdmin.register Job do
   show do
     attributes_table do
       row :property
-      row :started_at
-      row :finished_at
-      row :finished_recurrency_at
+      row :started_at do |j|
+        j.started_at.localtime
+      end
+      row :finished_at do |j|
+        j.finished_at.localtime
+      end
+      row :finished_recurrency_at do |j|
+        j.finished_recurrency_at.localtime
+      end
       row :duration
       row :status
       row :frequency
@@ -49,7 +55,9 @@ ActiveAdmin.register Job do
     column :agent
     column :total
     column :status
-    column :started_at
+    column :started_at do |j|
+      j.started_at.localtime
+    end
     column :frequency
     actions
   end
