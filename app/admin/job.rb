@@ -12,7 +12,7 @@ ActiveAdmin.register Job do
         j.finished_at.localtime
       end
       row :finished_recurrency_at do |j|
-        j.finished_recurrency_at.localtime
+        j.finished_recurrency_at.localtime if j.finished_recurrency_at
       end
       row :duration
       row :status
