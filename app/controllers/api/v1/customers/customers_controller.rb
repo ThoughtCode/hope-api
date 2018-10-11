@@ -2,6 +2,7 @@ module Api::V1::Customers
   class CustomersController < CustomerUsersController
     include Serializable
     before_action :set_customer, only: %i[update current_user change_password]
+    skip_before_action :disable_access_by_tk, only: [:read_notifications]
 
     def update
       if @customer.update(customer_params)
