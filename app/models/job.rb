@@ -37,18 +37,25 @@ class Job < ApplicationRecord
   end
 
   def cancel_booking
+    unless can_cancel_booking?
+      penalty_amount = Config.fetch('cancelation_penalty_amount')
+      customer = property.customer
+      Penalty.create!(amount: penalty_amount, customer: customer)
+      payment.status = 'Cancelled'
+      payment.save
+      payment_cancelation_fee(payment.credit_card)      
+    end
+  end
+
+  def payment_cancelation_fee(credit_card)
     penalty_amount = Config.fetch('cancelation_penalty_amount')
     customer = property.customer
-    unless can_cancel_booking?
-      Penalty.create!(amount: penalty_amount, customer: customer)
-      self.payment.destroy
-      vat = ((penalty_amount.to_f * 12) / 100).round(2)
-      payment = Payment.create(credit_card_id: self.credit_card_id, amount: penalty_amount, vat: vat, status: 'Pending', 
-        installments: 1, customer: self.property.customer, is_receipt_cancel: true, job: self)
-      payment.description = "Multa de cancelación NocNoc Job Id:#{self.id}"
-      payment.save
-      payment.send_payment_request
-    end
+    vat = ((penalty_amount.to_f * 12) / 100).round(2)
+    payment = Payment.create(credit_card_id: self.credit_card_id, amount: penalty_amount, vat: vat, status: 'Pending', 
+      installments: 1, customer: self.property.customer, is_receipt_cancel: true, job: self)
+    payment.description = "Multa de cancelación NocNoc Job Id:#{self.id}"
+    payment.save
+    SendPaymentRequest.perform_later(payment)
   end
 
   def can_cancel_booking?
@@ -171,10 +178,8 @@ class Job < ApplicationRecord
     SendEmailJobCreateJob.perform_later(self, property.customer, ENV['FRONTEND_URL'])
     SendEmailToAgentsJob.perform_later(hashed_id, ENV['FRONTEND_URL']) unless agent
     agents = Agent.filter_by_availability(self)
-    
     agents.each do |agent|
       Notification.create(text: 'Hay un nuevo trabajo disponible', agent: agent, job: self)
     end
-
   end
 end
