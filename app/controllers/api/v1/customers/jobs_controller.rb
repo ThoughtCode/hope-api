@@ -16,9 +16,7 @@ module Api::V1::Customers
     end
 
     def completed
-      jobs = current_user.jobs.where(status: ['completed', 'pending', 'accepted']).where(
-        'started_at < ?', DateTime.current - 5.hours
-      )
+      jobs = current_user.jobs.where(status: ['completed', 'pending', 'accepted', 'cancelled']).where( 'started_at <= ?', DateTime.current - 5.hours)
       jobs = jobs.order(:started_at).page(params[:current_page]).per(10)
       set_response(
         200,
@@ -154,11 +152,11 @@ module Api::V1::Customers
     def check_status(jobs)
       if params[:status] == 'nextjobs'
         jobs = jobs.where(
-          'started_at > ? AND (status = ? OR status = ?)', DateTime.current - 5.hours, 0, 1
+          'started_at >= ? AND (status = ? OR status = ?)', DateTime.current - 5.hours, 0, 1
         )
       elsif params[:status] == 'history'
         jobs = jobs.where(
-          'started_at < ? AND (status = ? )', DateTime.current - 5.hours, 3
+          'started_at <= ? AND (status = ? OR status = ?)', DateTime.current - 5.hours, 3, 1
         )
       end
       jobs
