@@ -25,7 +25,7 @@
         get '/jobs/reports', to: 'jobs#reports'
         get '/jobs/calendar', to: 'jobs#calendar'
         get '/customer/:customer_id/reviews', to: 'reviews#customer_reviews'
-        get 'read_notifications/:id', to: 'agents#read_notifications'
+        get '/read_notifications/:id', to: 'agents#read_notifications'
         resources :jobs, only: [:index, :show] do
           post 'review', to: 'reviews#create'
           post 'confirm_payment', to: 'jobs#confirm_payment'

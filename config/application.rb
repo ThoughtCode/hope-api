@@ -35,7 +35,11 @@ module HopeApi
     config.middleware.insert_before 0, Rack::Cors do
       allow do
         origins '*'
-        resource '*', :headers => :any, :methods => [:get, :post, :delete, :put], expose: ['x-total-pages']
+        resource '*', 
+          :headers => :any, 
+          :methods => [:get, :post, :options, :delete, :put], 
+          expose: ['x-total-pages'],
+          max_age: 0
       end
     end
 
