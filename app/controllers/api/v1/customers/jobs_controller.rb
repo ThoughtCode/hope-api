@@ -16,7 +16,9 @@ module Api::V1::Customers
     end
 
     def completed
-      jobs = current_user.jobs.where(status: 'completed')
+      jobs = current_user.jobs.where(status: ['completed', 'pending', 'accepted']).where(
+        'started_at < ?', DateTime.current - 5.hours
+      )
       jobs = jobs.order(:started_at).page(params[:current_page]).per(10)
       set_response(
         200,
