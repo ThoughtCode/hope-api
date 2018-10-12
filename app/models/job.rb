@@ -175,11 +175,13 @@ class Job < ApplicationRecord
   end
 
   def send_email_create_job
-    SendEmailJobCreateJob.perform_later(self, property.customer, ENV['FRONTEND_URL'])
-    SendEmailToAgentsJob.perform_later(hashed_id, ENV['FRONTEND_URL']) unless agent
-    agents = Agent.filter_by_availability(self)
-    agents.each do |agent|
-      Notification.create(text: 'Hay un nuevo trabajo disponible', agent: agent, job: self)
+    CustomerMailer.send_email_create_job(self, property.customer, ENV['FRONTEND_URL']).deliver
+    unless agent
+      agents = Agent.filter_by_availability(self)
+      agents.map do |agent|
+        AgentMailer.send_email_to_agent(agent, self.hashed_id, ENV['FRONTEND_URL']).deliver
+        Notification.create(text: 'Hay un nuevo trabajo disponible', agent: agent, job_id: self.id)
+      end
     end
   end
 end
