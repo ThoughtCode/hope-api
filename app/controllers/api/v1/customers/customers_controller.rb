@@ -53,6 +53,9 @@ module Api::V1::Customers
     end
 
     def read_notifications
+      Rails.logger.info('*************************************')
+      Rails.logger.info('Read notification')
+      Rails.logger.info('*************************************')
       notification = Notification.find(params[:id])
       notification.status = 'opened'
       if notification.save
