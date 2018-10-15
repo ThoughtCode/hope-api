@@ -97,7 +97,7 @@ class CustomerMailer < ApplicationMailer
   end
 
   def send_reset_password_notification(customer)
-    @user = custumer
+    @user = customer
     mail(to: customer.email,
          subject: 'Nocnoc - Tu contraseña ha sido actualizada')
   end
