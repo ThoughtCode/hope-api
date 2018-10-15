@@ -60,4 +60,8 @@ module Serializable
   def serialize_notifications(notification)
     Api::V1::NotificationSerializer.new(notification)
   end
+
+  def serialize_holiday(holiday)
+    Api::V1::HolidaySerializer.new(holiday)
+  end
 end

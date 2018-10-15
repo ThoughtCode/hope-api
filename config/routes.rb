@@ -52,6 +52,7 @@
       end
 
       namespace :customers do
+        get 'holidays', to: 'holidays#index'
         get 'current', to: 'customers#current'
         get 'notifications', to: 'customers#get_notifications'
         put 'change_password', to: 'customers#change_password'
