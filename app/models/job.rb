@@ -11,6 +11,7 @@ class Job < ApplicationRecord
   has_many :penalties
   has_one :credit_card
   has_one :payment
+  has_one :invoice
 
   before_create :check_dates
   before_save :should_release_payment

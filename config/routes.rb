@@ -64,6 +64,8 @@
         delete '/delete_card/:id', to: 'payments#destroy'
         get 'read_notifications/:id', to: 'customers#read_notifications'
         get 'credit_cards', to: 'payments#index'
+        
+        resources :invoice_details
         resources :properties, except: [:new, :edit]
         resources :jobs, except: [:new, :edit] do
           get 'completed', to: 'jobs#completed', on: :collection

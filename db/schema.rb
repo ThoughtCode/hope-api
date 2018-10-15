@@ -98,6 +98,23 @@ ActiveRecord::Schema.define(version: 20181012214333) do
 
   create_table "holidays", force: :cascade do |t|
     t.date "holiday_date"
+  end 
+
+  create_table "invoice_details", force: :cascade do |t|
+    t.string "email"
+    t.string "identification"
+    t.integer "identification_type"
+    t.string "social_reason"
+    t.string "address"
+    t.string "telephone"
+    t.integer "customer_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "invoices", force: :cascade do |t|
+    t.integer "customer_id"
+    t.integer "job_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
