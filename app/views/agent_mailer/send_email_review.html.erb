@@ -5,7 +5,7 @@
   </head>
   <body>
     <%= render "partials/header" %>
-    <h1>Hola, <%= @user.first_name %> un cliente te ha calificado</h1>
+    <h1 style="line-height: 1.5">Hola, <%= @user.first_name %> un cliente te ha calificado</h1>
     <p>Para conocer tú calificación ingresa en la siguiente url: <a href="<%= @url %>"><%= @url %></a></p>
     <p>Recuerda que para concluir con tú trabajo debes calificar al cliente</p>
     <%= render "partials/footer" %>

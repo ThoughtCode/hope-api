@@ -5,7 +5,7 @@
   </head>
   <body>
     <%= render "partials/header" %>
-    <h1>¡Felicitaciones <%= @user.first_name %>! Por tú magnifico servicio un nuevo trabajo se creó automáticamente</h1>
+    <h1 style="line-height: 1.5">¡Felicitaciones <%= @user.first_name %>! Por tú magnifico servicio un nuevo trabajo se creó automáticamente</h1>
     <p>Para conocerlo da click aqui: <a href="<%= @url %>"><%= @url %></a></p>
     <p>Si deseas cancelar el trabajo y que no se generen otros, da click aqui: <a href="<%= @url_cancel %>">Cancelar trabajo</a></p>
     <%= render "partials/hero" %>

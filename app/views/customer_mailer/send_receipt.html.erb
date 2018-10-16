@@ -5,21 +5,52 @@
   </head>
   <body>
     <%= render "partials/header" %>
-    <h1>Hola <%= @user.first_name %> gracias por usar los servicios de NocNoc</h1>
+    <h1 style="line-height: 1.5">Hola <%= @user.first_name %> gracias por usar los servicios de NocNoc</h1>
 
     <div>
       <p>Este es tu recibo</p>
-      <ul> Servicios contratados:
-        <li><%= @service_base_name %> : $<%= @service_base_price %></li>
+      <table width="100%">
+        <tr>
+          <td><b>Servicio Base</b></td>
+          <td align="right"><b>Precio</b></td>
+        </tr>
+        <tr>
+          <td><%= @service_base_name %></td>
+          <td align="right">$ <%= @service_base_price %></td>
+        </tr>
+        <tr>
+          <td colspan="2"><b>Servicios Principales</b></td>
+        </tr>
+        <% @services_params.each do |j|%>
+          <tr>
+            <td><%= j.service.name %></td>
+            <td align="right">$ <%= j.price_total %></td>
+          </tr>
+        <% end %>
+        <tr>
+          <td colspan="2"><hr/></td>
+        </tr>
+        <tr>
+          <td colspan="2"><b>Servicios Adicionales</b></td>
+        </tr>
         <% @services_addon.each do |j|%>
-          <li><%= j.service.name %> : $<%= j.price_total %></li>
+          <tr>
+            <td><%= j.service.name %></td>
+            <td align="right">$ <%= j.price_total %></td>
+          </tr>
         <% end %>
-        <% @services_parameters.each do |j|%>
-          <li><%= j.service.name %> : $<%= j.price_total %></li>
-        <% end %>
-        <li>IVA: $<%= @iva %></li>
-        <li>Total: $<%= @total %></li>
-      </ul>
+        <tr>
+          <td colspan="2"><hr/></td>
+        </tr>
+        <tr>
+          <td>&nbsp;</td>
+          <td align="right"><h4>IVA: <b>$ <%= @iva %></b></h4></td>
+        </tr>
+        <tr>
+          <td>&nbsp;</td>
+          <td align="right"><h4>Total: <b>$ <%= @total %></b></h4></td>
+        </tr>
+      </table>
       <p>Identificador de la transacción: <%= @payment.transaction_identifier %> </p>
       <p>Código de autorización: <%= @payment.authorization_code %></p>
 
