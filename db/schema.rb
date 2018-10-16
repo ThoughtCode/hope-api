@@ -117,6 +117,7 @@ ActiveRecord::Schema.define(version: 20181012214333) do
     t.integer "job_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "invoice_detail_id"
   end
 
   create_table "job_details", force: :cascade do |t|
