@@ -58,7 +58,7 @@ class Payment < ApplicationRecord
   end
 
   def check_receipt_send
-    if self.receipt_send == false
+    if self.receipt_send == false  && self.status == 'Approved'
       if is_receipt_cancel
         CustomerMailer.send_receipt_cancelled(self.job, self.customer, self).deliver
       else

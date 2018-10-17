@@ -1,5 +1,5 @@
 ActiveAdmin.register Job do
-  permit_params :property_id, :started_at, :status, :frequency, job_details_attributes: [:id, :service_id, :value, :_destroy ]
+  permit_params :property_id, :started_at, :status, :frequency, :agent_id, job_details_attributes: [:id, :service_id, :value, :_destroy ]
 
 
   show do
@@ -72,6 +72,7 @@ ActiveAdmin.register Job do
         d.input :service
         d.input :value
       end
+      f.input :agent, as: :select, collection: Agent.all.map{|a| ["#{a.first_name} #{a.last_name}" , a.id] }
     end
     f.actions
   end
