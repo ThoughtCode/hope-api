@@ -14,4 +14,8 @@ class Api::V1::ServiceTypeSerializer
   attribute :services_parameters do |s|
     s.services.where(type_service: 'parameter')
   end
+
+  attribute :extra_service_fee_holiday do |j|
+    Config.find_by(key: 'extra_service_fee_holiday').as_json
+  end
 end

@@ -129,18 +129,6 @@ class Api::V1::JobSerializer
 
   attribute :proposals do |j|
     Api::V1::ProposalSerializer.new(j.proposals)
-    # proposals = j.proposals.map do |p|
-    #   {
-    #     id: p.hashed_id,
-    #     type: "proposal",
-    #     attributes: {
-    #       id: p.id,
-    #     }
-    #   }
-    # end
-    # {
-    #   data: proposals
-    # }
   end
   
   attribute :config do |j|
