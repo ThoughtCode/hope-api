@@ -130,8 +130,10 @@ class Job < ApplicationRecord
   end
 
   def calculate_price
+    # Check if it is holiday or weekend
+    overcharge = is_holiday?(started_at) ? 1.25 : 1
     duration = job_details.pluck(:time).compact.sum
-    total = job_details.pluck(:price_total).compact.sum
+    total = (job_details.pluck(:price_total).compact.sum * overcharge).round(2)
     service_fee = total * (Config.fetch('noc_noc_service_fee').to_f / 100)
     vat = (total * 0.12).round(2)
     sub_total = total
@@ -183,5 +185,14 @@ class Job < ApplicationRecord
         Notification.create(text: 'Hay un nuevo trabajo disponible', agent: agent, job_id: self.id)
       end
     end
+  end
+
+  def is_holiday?(date)
+    return true if date.to_date.saturday?
+    return true if date.to_date.sunday?
+    Holiday.all.each do |holiday|
+      return true if date.to_date == holiday.holiday_date.to_date
+    end
+    return false
   end
 end
