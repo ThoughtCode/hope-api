@@ -113,6 +113,15 @@ class Job < ApplicationRecord
     end
   end
 
+  def is_holiday?(date)
+    return true if date.to_date.saturday?
+    return true if date.to_date.sunday?
+    Holiday.all.each do |holiday|
+      return true if date.to_date == holiday.holiday_date.to_date
+    end
+    return false
+  end
+
   private
 
   def send_email_autocreated_job(job)
@@ -185,14 +194,5 @@ class Job < ApplicationRecord
         Notification.create(text: 'Hay un nuevo trabajo disponible', agent: agent, job_id: self.id)
       end
     end
-  end
-
-  def is_holiday?(date)
-    return true if date.to_date.saturday?
-    return true if date.to_date.sunday?
-    Holiday.all.each do |holiday|
-      return true if date.to_date == holiday.holiday_date.to_date
-    end
-    return false
   end
 end

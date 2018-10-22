@@ -41,13 +41,19 @@
         <tr>
           <td colspan="2"><hr/></td>
         </tr>
+        <%if @job.is_holiday?(@job.started_at) %>
+          <tr>
+            <td><b>Recargo fin de semana o feriados</b></td>
+            <td align="right"><b>$ <%= (@extra)  %></b></td>
+          </tr>
+        <% end %>
         <tr>
           <td>&nbsp;</td>
-          <td align="right"><h4>IVA: <b>$ <%= @iva %></b></h4></td>
+          <td align="right"><h4>IVA: <b>$ <%= @job.vat.to_s %></b></h4></td>
         </tr>
         <tr>
           <td>&nbsp;</td>
-          <td align="right"><h4>Total: <b>$ <%= @total %></b></h4></td>
+          <td align="right"><h4>Total: <b>$ <%= @job.total.to_s %></b></h4></td>
         </tr>
       </table>
     
