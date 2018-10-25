@@ -44,7 +44,8 @@ class Job < ApplicationRecord
       Penalty.create!(amount: penalty_amount, customer: customer)
       payment.status = 'Cancelled'
       payment.save
-      payment_cancelation_fee(payment.credit_card)      
+      payment_cancelation_fee(payment.credit_card)
+      Invoices.generate_for_penalty(self.invoice, payment, self)
     end
   end
 
