@@ -19,7 +19,7 @@ class Payment < ApplicationRecord
          "email": "'+ "#{customer.email}" +'"
      },
      "order": {
-         "amount": '+ self.job.total.to_s + ',
+         "amount": '+ self.amount.to_s + ',
          "description": "' + "#{self.description} " +'",
          "dev_reference": "'+ self.id.to_s + '",
          "vat": '+"#{self.vat.to_s}"+',
