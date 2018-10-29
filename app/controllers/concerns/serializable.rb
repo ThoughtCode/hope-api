@@ -63,6 +63,7 @@ module Serializable
 
   def serialize_holiday(holiday)
     Api::V1::HolidaySerializer.new(holiday)
+  end
 
   def serialize_invoices(invoices)
     Api::V1::InvoiceDetailSerializer.new(invoices)
