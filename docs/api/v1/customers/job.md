@@ -260,7 +260,8 @@ body:
         "service_id": 5,
         "value": 1
       }
-    ]
+    ],
+    "invoice_detail_id"
   }
 }
 ```

@@ -16,6 +16,8 @@ class Customer < ApplicationRecord
   has_many :notifications
   has_many :credit_cards
   has_many :payments
+  has_many :invoices
+  has_many :invoice_details
   mount_uploader :avatar, AvatarUploader
   after_create :send_welcome_email
 

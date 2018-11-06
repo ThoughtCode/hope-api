@@ -11,6 +11,7 @@ class Job < ApplicationRecord
   has_many :penalties
   has_one :credit_card
   has_one :payment
+  has_one :invoice
 
   before_create :check_dates
   before_save :should_release_payment
@@ -43,7 +44,8 @@ class Job < ApplicationRecord
       Penalty.create!(amount: penalty_amount, customer: customer)
       payment.status = 'Cancelled'
       payment.save
-      payment_cancelation_fee(payment.credit_card)      
+      payment_cancelation_fee(payment.credit_card)
+      Invoices.generate_for_penalty(self.invoice, payment, self)
     end
   end
 
