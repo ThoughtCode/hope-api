@@ -81,20 +81,13 @@ body:
 
 ```json
 {
-  "message": "Detalles de facturacion creados exitosamente",
   "invoice_detail": {
-    "data": {
-      "id": "4",
-      "type": "invoice_detail",
-      "attributes": {
-        "email": "henry2992@hotmail.com",
-        "identification": "0604354050",
-        "identification_type": "cedula",
-        "social_reason": "Henry Remache",
-        "address": "Vos Andes y Mariano Echeverria",
-        "telephone": "0996779124"
-      }
-    }
+    "email": "henry2992@hotmail.com",
+    "identification": "0604354050",
+    "identification_type": "cedula",
+    "social_reason": "Henry Remache",
+    "address": "Vos Andes y Mariano Echeverria",
+    "telephone": "0996779124"
   }
 }
 ```
