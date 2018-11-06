@@ -1,8 +1,9 @@
 class Invoices
   def self.generate_for_job(invoice, payment, job)
     id_type = set_id_type(invoice.invoice_detail.identification_type)
+    ambiente = ENV['DATIL_ENVIROMENT']
     body = '{
-      "ambiente":1,
+      "ambiente":'+ ambiente+ ',
       "tipo_emision":1,
       "secuencial":'+ "#{invoice.id}" +',
       "fecha_emision":"'+ Time.now.strftime('%Y-%m-%dT%H:%M:%S.%L%z') + '",
@@ -85,8 +86,9 @@ class Invoices
 
   def self.generate_for_penalty(invoice, payment, job)
     id_type = set_id_type(invoice.invoice_detail.identification_type)
+    ambiente = ENV['DATIL_ENVIROMENT']
     body = '{
-      "ambiente":1,
+      "ambiente":'+ ambiente+ ',
       "tipo_emision":1,
       "secuencial":'+ "#{invoice.id}" +',
       "fecha_emision":"'+ Time.now.strftime('%Y-%m-%dT%H:%M:%S.%L%z') + '",
