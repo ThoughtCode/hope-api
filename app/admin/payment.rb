@@ -46,5 +46,4 @@ ActiveAdmin.register Payment do
     flash[:notice] = "Se ha iniciado el proceso de reembolso"
     redirect_to admin_payments_path()
   end
-
 end
