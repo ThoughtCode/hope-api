@@ -179,6 +179,7 @@ class Job < ApplicationRecord
       Rails.logger.info('*********************************************************************************************************************************************')
       self.update_columns(payment_started: true)
       self.payment.send_payment_request
+      Invoices.generate_for_job(self.invoice, self.payment, self)
     elsif self.closed_by_agent == false
       self.update_columns(status: 'cancelled')
     else

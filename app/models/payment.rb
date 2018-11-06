@@ -38,7 +38,6 @@ class Payment < ApplicationRecord
     end
     Rails.logger.info(response.body)
     response = response.status
-    Invoices.generate_for_job(self.job.invoice, self, self.job)
   end
 
   def refund

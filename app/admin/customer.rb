@@ -113,6 +113,7 @@ ActiveAdmin.register Customer do
   collection_action :process_payment, method: :get do
     payment = Payment.find(params[:format])
     payment.send_payment_request
+    Invoices.generate_for_job(payment.job.invoice, payment, payment.job)
     flash[:notice] = "El pago ha sido enviado para su procesamiento"
     redirect_to admin_customers_path()
   end

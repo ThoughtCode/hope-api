@@ -88,7 +88,7 @@ class Invoices
     body = '{
       "ambiente":1,
       "tipo_emision":1,
-      "secuencial":'+ "#{payment.id}" +',
+      "secuencial":'+ "#{invoice.id}" +',
       "fecha_emision":"'+ Time.now.strftime('%Y-%m-%dT%H:%M:%S.%L%z') + '",
       "emisor":{
         "ruc":"1792851300001",
