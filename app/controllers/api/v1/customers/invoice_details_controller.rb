@@ -4,7 +4,7 @@ module Api::V1::Customers
     before_action :set_invoice_details, only: %i[destroy]
 
     def index
-      invoices = current_user.invoice_details
+      invoices = current_user.invoice_details.where(deleted: false)
       set_response(
         200,
         'Detalles de facturacion listados exitosamente',
