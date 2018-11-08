@@ -23,7 +23,8 @@ module Api::V1::Customers
     end
 
     def destroy
-      if @invoice_details.destroy
+      @invoice_details.deleted = true
+      if @invoice_details.save
         set_response(200, 'Los detalles de facturacion fueron eliminados exitosamente')
       else
         set_response(404, 'Error borrando detalles de facturacion')
