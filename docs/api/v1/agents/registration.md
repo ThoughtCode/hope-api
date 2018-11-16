@@ -3,6 +3,7 @@
 Table of Contents:
 
 - [Register Agent](#register-agent)
+- [Register Mobile Token](#register-mobile-token)
 
 # Register Agent
 
@@ -68,3 +69,29 @@ After sign up, it should login
   }
 }
 ```
+
+
+# Register Mobile Token
+
+Method: `POST`
+
+URI: `/api/v1/agents/add_mobile_token`
+
+Body:
+
+```json
+{
+  "agent": {
+    "mobile_push_token": "xxxxxx",
+  }
+}
+```
+
+## Return example on success, 200
+
+```json
+{
+  "message": "Mobile Token saved"
+}
+```
+

@@ -3,6 +3,7 @@
 Table of Contents:
 
 - [Register Customer](#register-customer)
+- [Register Mobile Token](#register-mobile-token)
 
 # Register Customer
 
@@ -65,3 +66,30 @@ After sign up, it should login
   }
 }
 ```
+
+
+# Register Mobile Token
+
+Method: `POST`
+
+URI: `/api/v1/customers/add_mobile_token`
+
+Body:
+
+```json
+{
+  "customer": {
+    "mobile_push_token": "xxxxxx",
+  }
+}
+```
+
+## Return example on success, 200
+
+```json
+{
+  "message": "Mobile Token saved"
+}
+```
+
+

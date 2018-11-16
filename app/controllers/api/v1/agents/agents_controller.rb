@@ -66,6 +66,19 @@ module Api::V1::Agents
       end
     end
 
+    def add_mobile_token
+      @agent.mobile_push_token = params[:agent][:mobile_push_token]
+      if @agent.save
+        set_response(
+          200,
+          'Mobile Token saved',
+          serialize_customer(@agent)
+        )
+      else
+        set_response(422, @agent.errors.messages.values.join(', '))
+      end
+    end
+
     private
 
     def agent_params

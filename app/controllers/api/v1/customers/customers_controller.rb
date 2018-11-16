@@ -1,7 +1,7 @@
 module Api::V1::Customers
   class CustomersController < CustomerUsersController
     include Serializable
-    before_action :set_customer, only: %i[update current_user change_password]
+    before_action :set_customer, only: %i[update current_user change_password add_mobile_token]
     skip_before_action :disable_access_by_tk, only: [:read_notifications]
 
     def update
@@ -64,6 +64,19 @@ module Api::V1::Customers
           'Se ha recuperado las notificacion con exito',
           serialize_notifications(notification)
         )
+      end
+    end
+
+    def add_mobile_token
+      @customer.mobile_push_token = params[:customer][:mobile_push_token]
+      if @customer.save
+        set_response(
+          200,
+          'Mobile Token saved',
+          serialize_customer(@customer)
+        )
+      else
+        set_response(422, @customer.errors.messages.values.join(', '))
       end
     end
 

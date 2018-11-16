@@ -49,6 +49,7 @@
           put 'update', to: 'agents#update'
         end
         resources :reviews, only: [:index, :show, :create]
+        post 'add_mobile_token', to: 'agents#add_mobile_token'
       end
 
       namespace :customers do
@@ -100,8 +101,8 @@
 
           put 'update', to: 'customers#update'
         end
-
         resources :reviews, only: [:index, :show, :create]
+        post 'add_mobile_token', to: 'customers#add_mobile_token'
       end
     end
   end
