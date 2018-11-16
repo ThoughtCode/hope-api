@@ -3,7 +3,7 @@ class Api::V1::CustomerSerializer
   set_type :customer # optional
   set_id :id # optional
   attributes :first_name, :last_name, :email, :access_token, :avatar,
-             :national_id, :cell_phone, :birthday, :hashed_id, :mobile_token
+             :national_id, :cell_phone, :birthday, :hashed_id, :mobile_push_token
 
   attribute :rewiews_count do |c|
     c.my_qualifications.count
