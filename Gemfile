@@ -53,6 +53,9 @@ gem 'faraday', '~> 0.15.2'
 # Slack notifications
 gem 'exception_notification', '~> 4.2', '>= 4.2.2'
 
+# Expo Server SDK Ruby
+gem 'exponent-server-sdk', '~> 0.0.5'
+
 group :development, :test do
   # Call 'byebug' anywhere in the code to
   # stop execution and get a debugger console
