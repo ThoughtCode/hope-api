@@ -141,7 +141,7 @@ class Job < ApplicationRecord
 
   def calculate_price
     # Check if it is holiday or weekend
-    overcharge = is_holiday?(started_at) ? 1.25 : 1
+    overcharge = is_holiday?(started_at) ? (Config.fetch('extra_service_fee_holiday').to_f/100) : 1
     duration = job_details.pluck(:time).compact.sum
     total = (job_details.pluck(:price_total).compact.sum * overcharge).round(2)
     service_fee = total * (Config.fetch('noc_noc_service_fee').to_f / 100)
