@@ -60,7 +60,7 @@ class CustomerMailer < ApplicationMailer
     @service_base_price = service_base.map(&:price_total).first
     @services_addon = job.job_details.select { |j| j.service.type_service == 'addon' }
     @services_params = job.job_details.select { |j| j.service.type_service == 'parameter' }   
-    @overcharge = job.is_holiday?(job.started_at) ? 1.25 : 1
+    @overcharge = job.is_holiday?(job.started_at) ? (1 + (Config.fetch('extra_service_fee_holiday').to_f/100)) : 1
     @extra = (((job.job_details.map(&:price_total).sum ) * @overcharge) - job.job_details.map(&:price_total).sum).round(2)
     mail(to: customer.email,
          subject: 'Creación de trabajo')
@@ -91,7 +91,7 @@ class CustomerMailer < ApplicationMailer
     @services_parameters = job.job_details.select { |j| j.service.type_service == 'parameter' }
     @iva = job.vat.to_f
     @total = job.job_details.map(&:price_total).sum + @iva
-    @overcharge = job.is_holiday?(job.started_at) ? 1.25 : 1
+    @overcharge = job.is_holiday?(job.started_at) ? (1 + (Config.fetch('extra_service_fee_holiday').to_f/100)) : 1
     @extra = (((job.job_details.map(&:price_total).sum ) * @overcharge) - job.job_details.map(&:price_total).sum).round(2)
     @payment = payment
     mail(to: customer.email,
