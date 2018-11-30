@@ -1,5 +1,5 @@
 ActiveAdmin.register City do
-  permit_params :name, neightborhoods_attributes: [ :name ]
+  permit_params :name, neightborhoods_attributes: [:name, :id, :_destroy ]
 
   show do
     attributes_table do
@@ -16,7 +16,7 @@ ActiveAdmin.register City do
   form do |f|
     f.inputs 'Ciudades' do
       f.input :name
-      f.has_many :neightborhoods, heading: 'Barrios' , new_record: "Añadir un nuevo barrio" do |nb|
+      f.has_many :neightborhoods, allow_destroy: true, heading: 'Barrios' , new_record: "Añadir un nuevo barrio" do |nb|
         nb.input :name
       end
     end
