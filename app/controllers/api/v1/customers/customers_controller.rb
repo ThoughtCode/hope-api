@@ -68,15 +68,17 @@ module Api::V1::Customers
     end
 
     def add_mobile_token
-      @customer.mobile_push_token = params[:customer][:mobile_push_token]
-      if @customer.save
-        set_response(
-          200,
-          'Mobile Token saved',
-          serialize_customer(@customer)
-        )
-      else
-        set_response(422, @customer.errors.messages.values.join(', '))
+      if params[:customer][:mobile_push_token]
+        @customer.mobile_push_token = params[:customer][:mobile_push_token]
+        if @customer.save
+          set_response(
+            200,
+            'Mobile Token saved',
+            serialize_customer(@customer)
+          )
+        else
+          set_response(422, @customer.errors.messages.values.join(', '))
+        end
       end
     end
 
