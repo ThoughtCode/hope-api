@@ -30,6 +30,15 @@ class Job < ApplicationRecord
     agent = self.agent
     if !agent.nil?
       Notification.create(text: 'Han cancelado un trabajo', agent: agent, job: self)
+      if agent.mobile_push_token
+        client = Exponent::Push::Client.new
+        messages = [{
+          to: "#{agent.mobile_push_token}",
+          sound: "default",
+          body: "Han cancelado un trabajo"
+        }]
+        client.publish messages
+      end
     end
   end
 
@@ -106,10 +115,29 @@ class Job < ApplicationRecord
         Notification.create(text: 'Un trabajo a terminado por favor califícalo', agent: j.agent, job: j)
         AgentMailer.send_review_reminder(j.agent, j.hashed_id, url).deliver
 
+        if j.agent.mobile_push_token
+          client = Exponent::Push::Client.new
+          messages = [{
+            to: "#{j.agent.mobile_push_token}",
+            sound: "default",
+            body: "Un trabajo a terminado por favor califícalo"
+          }]
+          client.publish messages
+        end
+
       # Enviar a clientes
         Notification.create(text: 'Un trabajo a terminado por favor califícalo', customer: j.property.customer, job: j)
         CustomerMailer.send_review_reminder(j.hashed_id, j.property.customer, url).deliver
         j.update_columns(review_notification_send: true)
+        if j.property.customer.mobile_push_token
+          client = Exponent::Push::Client.new
+          messages = [{
+            to: "#{j.property.customer.mobile_push_token}",
+            sound: "default",
+            body: "Un trabajo a terminado por favor califícalo"
+          }]
+          client.publish messages
+        end
       end
     end
   end
@@ -194,6 +222,15 @@ class Job < ApplicationRecord
       agents.map do |agent|
         AgentMailer.send_email_to_agent(agent, self.hashed_id, ENV['FRONTEND_URL']).deliver
         Notification.create(text: 'Hay un nuevo trabajo disponible', agent: agent, job_id: self.id)
+        if agent.mobile_push_token
+          client = Exponent::Push::Client.new
+          messages = [{
+            to: "#{agent.mobile_push_token}",
+            sound: "default",
+            body: "Hay un nuevo trabajo disponible"
+          }]
+          client.publish messages
+        end
       end
     end
   end
