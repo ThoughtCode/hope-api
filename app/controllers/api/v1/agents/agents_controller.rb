@@ -72,7 +72,7 @@ module Api::V1::Agents
         set_response(
           200,
           'Mobile Token saved',
-          serialize_customer(@agent)
+          serialize_agent(@agent)
         )
       else
         set_response(422, @agent.errors.messages.values.join(', '))
