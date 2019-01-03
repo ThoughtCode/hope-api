@@ -25,28 +25,28 @@ class Review < ApplicationRecord
       customer = job.property.customer
       CustomerMailer.send_email_review(job.hashed_id, customer, url).deliver
       Notification.create(text: 'Te han calificado!', customer: customer, job: job)
-      if customer.mobile_push_token
-        client = Exponent::Push::Client.new
-        messages = [{
-          to: "#{customer.mobile_push_token}",
-          sound: "default",
-          body: "Te han calificado!"
-        }]
-        client.publish messages
-      end
+      # if customer.mobile_push_token
+      #   client = Exponent::Push::Client.new
+      #   messages = [{
+      #     to: "#{customer.mobile_push_token}",
+      #     sound: "default",
+      #     body: "Te han calificado!"
+      #   }]
+      #   client.publish messages
+      # end
     else
       agent = job.agent
       AgentMailer.send_email_review(job.hashed_id, agent, url).deliver
       Notification.create(text: 'Te han calificado!', agent: agent, job: job)
-      if agent.mobile_push_token
-        client = Exponent::Push::Client.new
-        messages = [{
-          to: "#{agent.mobile_push_token}",
-          sound: "default",
-          body: "Te han calificado!"
-        }]
-        client.publish messages
-      end
+      # if agent.mobile_push_token
+      #   client = Exponent::Push::Client.new
+      #   messages = [{
+      #     to: "#{agent.mobile_push_token}",
+      #     sound: "default",
+      #     body: "Te han calificado!"
+      #   }]
+      #   client.publish messages
+      # end
     end
   end
 
