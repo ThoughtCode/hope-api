@@ -1,7 +1,7 @@
 module Api::V1
   class Customers::PaymentsController < ApiController
     include Serializable
-    skip_before_action :disable_access_by_tk, only: [:received, :update]
+    skip_before_action :disable_access_by_tk, only: [:received, :update, :add_card_mobile]
 
     def index
       ccs = current_user.credit_cards
@@ -10,6 +10,17 @@ module Api::V1
 
     def add_card
       card = current_user.credit_cards.build(payment_params)
+      if card.save
+        set_response(200, 'Tarjeta creada exitosamente', serialize_payment(card))
+      else
+        set_response(422, card.errors.messages.values.join(', '))
+      end
+    end
+
+    def add_card_mobile
+      Rails.logger.info(params)
+      user = Customer.find_by(email: params[:payment][:email])
+      card = user.credit_cards.build(payment_params)
       if card.save
         set_response(200, 'Tarjeta creada exitosamente', serialize_payment(card))
       else
