@@ -3,13 +3,9 @@ class Api::V1::ReviewSerializer
   set_type :review # optional
   set_id :hashed_id # optional
   attributes :id, :comment, :qualification
-
-  attribute :rewiews_count do |a|
-    a.my_qualifications.count
-  end
-
-  attribute :rewiews_average, &:reviews_average
-
+  belongs_to :owner
+  belongs_to :reviewee
+ 
   attribute :my_reviews do |j|
     {
       data: 
