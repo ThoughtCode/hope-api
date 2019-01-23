@@ -125,8 +125,8 @@ module Api::V1::Agents
     end
 
     def filter(flt, jobs)
-      jobs = jobs.where('started_at >= ?', flt[:date_from]) if flt[:date_from] != 'null' && !flt[:date_from].nil?
-      jobs = jobs.where('started_at <= ?', flt[:date_to]) if flt[:date_to] != 'null' && !flt[:date_to].nil?
+      jobs = jobs.where('started_at >= ?', Date.parse(flt[:date_from]).beginning_of_day) if flt[:date_from] != 'null' && !flt[:date_from].nil?
+      jobs = jobs.where('started_at <= ?', Date.parse(flt[:date_to]).end_of_day) if flt[:date_to] != 'null' && !flt[:date_to].nil?
       jobs = jobs.where('total >= ?', flt[:min_price]) if flt[:min_price] != '' && !flt[:min_price].nil?
       jobs = jobs.where('total <= ?', flt[:max_price]) if flt[:max_price] != '' && !flt[:max_price].nil?
       jobs = jobs.where(frequency: flt[:frequency]) if flt[:frequency] != 'null' && !flt[:frequency].nil? unless flt[:frequency] == "4" 
