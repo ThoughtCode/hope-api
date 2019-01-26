@@ -33,15 +33,19 @@ class Proposal < ApplicationRecord
     url = ENV['FRONTEND_URL']
     AgentMailer.send_proposal_accepted(agent, job.hashed_id, url).deliver
     Notification.create(text: 'Te han aceptado una propuesta para un trabajo', agent: agent, job: job)
-    # if agent.mobile_push_token
-    #   client = Exponent::Push::Client.new
-    #   messages = [{
-    #     to: "#{agent.mobile_push_token}",
-    #     sound: "default",
-    #     body: "Te han aceptado una propuesta para un trabajo"
-    #   }]
-    #   client.publish messages
-    # end
+    if agent.mobile_push_token
+      begin
+        client = Exponent::Push::Client.new
+        messages = [{
+          to: "#{agent.mobile_push_token}",
+          sound: "default",
+          body: "Te han aceptado una propuesta para un trabajo"
+        }]
+        client.publish messages
+      rescue StandardError => e
+        Rails.logger.info("Rescued: #{e.inspect}")
+      end
+    end
   end
 
   def set_to_refused
