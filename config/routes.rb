@@ -4,6 +4,9 @@
     devise_for :managers, ActiveAdmin::Devise.config
     devise_for :customers
     devise_for :agents
+
+    get 'add_credit_card', to: 'pages#add_card'
+
     ActiveAdmin.routes(self)
     root 'pages#home'
     namespace :api, defaults: { format: :json } do
