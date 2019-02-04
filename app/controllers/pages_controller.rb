@@ -5,7 +5,7 @@ class PagesController < ApplicationController
   	puts '\n\n\n\n\n\n\n\n\n\n\n\n'
   	puts params[:id]
   	puts '\n\n\n\n\n\n\n\n\n\n\n\n'
-  	puts params
+  	puts params[:email]
   	puts '\n\n\n\n\n\n\n\n\n\n\n\n'
   end
 end
