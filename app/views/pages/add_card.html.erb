@@ -6,6 +6,8 @@
       display: block;
       width: 80%;
       border-radius: 6px;
+      background: white !important;
+      box-shadow: none !important;
     }
     .btn {
       background: rgb(140,197,65); /* Old browsers */
@@ -30,148 +32,171 @@
     }
     .btn:hover {
       cursor: pointer;
+      background-color: rgb(140,197,65) !important; 
     }
   </style>
 
 <body>
   <div class="panel">
     <div class="paymentez-form" id="my-card" data-capture-name="true">
-      <input class="card-number" name="card-number" placeholder="Card number">
-      <input class="name" id="the-card-name-id" placeholder="Card Holders Name">
-      <input class="expiry-month" name="expiry-month">
+      <input class="card-number" name="card-number" placeholder="Número de Tarjeta">
+      <input class="name" id="the-card-name-id" placeholder="Nombre del Titulas">
+      <input class="expiry-month" name="expiry-month" >
       <input class="expiry-year" name="expiry-year">
       <input class="cvc" name="cvc">
     </div>
     <input class="user_id" id='user_id' name="user_id" hidden>
     <input class="email" id='email' name="email" hidden>
-    <button class="btn submit-payment">Save</button>
+    <button class="btn submit-payment">Añadir Tarjeta</button>
     <div id="messages"></div>
-    
   </div>
 </body>
 <script>
-$(function() {
-  Paymentez.init('stg', 'NOC-EC-CLIENT', 'Owo41X6qbItrAcEy7Pz9DAL7wl8gAo');
-  var submitInitialText = $('.submit-payment').text();
-  var email = ''
-  var uid = ''
-  var cardNumber = '';
-  var cardType = '';
-  var name = '';
-  var expiryMonth = '';
-  var expiryYear = '';
-  var cvc = '';
-  var uid = "";
-  var email = "";
-  $('.submit-payment').click(function (e) {
-    e.preventDefault();
-    var myCard = $('#my-card');
-    cardNumber = myCard.PaymentezForm('cardNumber');
-    cardType = get_card_type(myCard.PaymentezForm('cardType'));
-    name = myCard.PaymentezForm('name');
-    expiryMonth = myCard.PaymentezForm('expiryMonth');
-    expiryYear = myCard.PaymentezForm('expiryYear');
-    cvc = $('.cvc').val();
-    uid = $('.user_id').val();
-    email = $('.email').val();
-    // Validar los cambios antes de enviar
-    console.log(cardType)
-    if (validate_data(name, cardNumber, expiryMonth, cvc) == true){
-      $('.submit-payment').attr("disabled", "disabled").text("Card Processing..."); 
-      // Mandar campos una vez validados
-      var cardToSave = {
-        "card": {
-          "number": cardNumber,
-          "holder_name": name,
-          "expiry_month": parseInt(expiryMonth, 10),
-          "expiry_year": parseInt('20'+expiryYear, 10),
-          "cvc": cvc,
-          "type": "vi"
+
+  var getUrlParameter = function getUrlParameter(sParam) {
+    var sPageURL = window.location.search.substring(1),
+        sURLVariables = sPageURL.split('&'),
+        sParameterName,
+        i;
+
+    for (i = 0; i < sURLVariables.length; i++) {
+        sParameterName = sURLVariables[i].split('=');
+
+        if (sParameterName[0] === sParam) {
+            return sParameterName[1] === undefined ? true : decodeURIComponent(sParameterName[1]);
         }
-      };
-      // Antes de anadir la tarjeta necesitamos validar el email
-      Paymentez.addCard(uid, email, cardToSave, successHandler, errorHandler)
     }
-  })
-  var successHandler = function(cardResponse) {
-    console.log(cardResponse.card);
-    if(cardResponse.card.status === 'valid'){
-      $('#messages').html('Tarjeta añadida exitosamente.<br>'+
-        'status: ' + cardResponse.card.status + '<br>' +
-        "Card Token: " + cardResponse.card.token + "<br>" +
-        "transaction_reference: " + cardResponse.card.transaction_reference
-      );
-      $.ajax({
-        url: "https://hopeec-staging.herokuapp.com/api/v1/customers/add_card_mobile",
-        cache: false,
-        type: "POST",
-        data: {
-          payment: {
-            email: email,
-            id : uid,
-            holder_name: name,
-            card_type: cardResponse.card.type, 
-            number: cardResponse.card.number, 
-            token: cardResponse.card.token , 
-            status: cardResponse.card.valid , 
-            expiry_month: cardResponse.card.expiry_month, 
-            expiry_year: cardResponse.card.expiry_year
+  };
+
+  const email = getUrlParameter('email');
+  const uid = getUrlParameter('id');
+
+  $(function() {
+    Paymentez.init('stg', 'NOC-EC-CLIENT', 'Owo41X6qbItrAcEy7Pz9DAL7wl8gAo');
+    var submitInitialText = $('.submit-payment').text();
+    var cardNumber = '';
+    var cardType = '';
+    var name = '';
+    var expiryMonth = '';
+    var expiryYear = '';
+    var cvc = '';
+    $('.submit-payment').click(function (e) {
+      e.preventDefault();
+      var myCard = $('#my-card');
+      cardNumber = myCard.PaymentezForm('cardNumber');
+      cardType = get_card_type(myCard.PaymentezForm('cardType'));
+      name = myCard.PaymentezForm('name');
+      expiryMonth = myCard.PaymentezForm('expiryMonth');
+      expiryYear = myCard.PaymentezForm('expiryYear');
+      cvc = $('.cvc').val();
+      // Validar los cambios antes de enviar
+      if (validate_data(name, cardNumber, expiryMonth, cvc) == true){
+        $('.submit-payment').attr("disabled", "disabled").text("Card Processing..."); 
+        // Mandar campos una vez validados
+        var cardToSave = {
+          "card": {
+            "number": cardNumber,
+            "holder_name": name,
+            "expiry_month": parseInt(expiryMonth, 10),
+            "expiry_year": parseInt('20'+expiryYear, 10),
+            "cvc": cvc,
+            "type": cardType
           }
-        },
-        success: function(html){
-          console.log('Tarjeta Agregada')
-        }
-      });
-    }else if(cardResponse.card.status === 'review'){
-      $('#messages').html('Card Under Review<br>'+
-        'status: ' + cardResponse.card.status + '<br>' +
-        "Card Token: " + cardResponse.card.token + "<br>" +
-        "transaction_reference: " + cardResponse.card.transaction_reference
-      );
-    }else{
-      $('#messages').html('Error<br>'+
-        'status: ' + cardResponse.card.status + '<br>' +
-        "message Token: " + cardResponse.card.message + "<br>"
-      );
+        };
+        // Antes de anadir la tarjeta necesitamos validar el email
+        console.log('Enviando Informacion', email, uid)
+        Paymentez.addCard(uid, email, cardToSave, successHandler, errorHandler)
+      }
+    })
+    var successHandler = function(cardResponse) {
+      console.log(cardResponse.card);
+      if(cardResponse.card.status === 'valid'){
+        $('#messages').html('Tarjeta añadida exitosamente.<br>'+
+          'status: ' + cardResponse.card.status + '<br>' +
+          "Card Token: " + cardResponse.card.token + "<br>" +
+          "transaction_reference: " + cardResponse.card.transaction_reference
+        );
+        $.ajax({
+          url: "https://hopeec-staging.herokuapp.com/api/v1/customers/add_card_mobile",
+          cache: false,
+          type: "POST",
+          data: {
+            payment: {
+              email: email,
+              id : uid,
+              holder_name: name,
+              card_type: cardResponse.card.type, 
+              number: cardResponse.card.number, 
+              token: cardResponse.card.token , 
+              status: cardResponse.card.valid , 
+              expiry_month: cardResponse.card.expiry_month, 
+              expiry_year: cardResponse.card.expiry_year
+            }
+          },
+          success: function(html){
+            console.log('Tarjeta Agregada')
+          }
+        });
+      }else if(cardResponse.card.status === 'review'){
+        $('#messages').html('Card Under Review<br>'+
+          'status: ' + cardResponse.card.status + '<br>' +
+          "Card Token: " + cardResponse.card.token + "<br>" +
+          "transaction_reference: " + cardResponse.card.transaction_reference
+        );
+      }else{
+        $('#messages').html('Error<br>'+
+          'status: ' + cardResponse.card.status + '<br>' +
+          "message Token: " + cardResponse.card.message + "<br>"
+        );
+      }
+      $('.submit-payment').removeAttr("disabled");
+      $('.submit-payment').text(submitInitialText);
+    };
+    var errorHandler = function(err) {    
+      $('#messages').html(err.error.type);    
+      $('.submit-payment').removeAttr("disabled");
+      $('.submit-payment').text(submitInitialText);
+    };
+  });
+
+  function validate_data(name, card_number, month_year, cvc) {
+    if (card_number == 0){
+      $('#messages').html('Por favor ingresa el numero de la tarjeta');
+      return false
     }
-    $('.submit-payment').removeAttr("disabled");
-    $('.submit-payment').text(submitInitialText);
-  };
-  var errorHandler = function(err) {    
-    $('#messages').html(err.error.type);    
-    $('.submit-payment').removeAttr("disabled");
-    $('.submit-payment').text(submitInitialText);
-  };
-});
-function validate_data(name, card_number, month_year, cvc) {
-  if (card_number == 0){
-    $('#messages').html('Por favor ingresa el numero de la tarjeta');
-    return false
+    return true
   }
-  return true
-}
-function get_card_type(type) {
-  if (type == 'Visa') {
-    type = 'vi'
-  }else if (type == 'Mastercard') {
-    type = 'mc'
-  }else if (type == 'American Express') {
-    type = 'ax'
-  }else if (type == 'Diners' || type == 'Diners Club' ) {
-    type = 'di'
-  }else if (type == 'Discover') {
-    type = 'dc'
-  }else if (type == 'Elo') {
-    type = 'el'
-  }else if (type == 'Credisensa') {
-    type = 'cs'
-  }else if (type == 'Solidario') {
-    type = 'so'
-  }else if (type == 'Exito') {
-    type = 'ex'
-  }else if (type == 'Alkosto') {
-    type = 'ak'
+  function get_card_type(type) {
+    if (type == 'Visa') {
+      type = 'vi'
+    }else if (type == 'Mastercard') {
+      type = 'mc'
+    }else if (type == 'American Express') {
+      type = 'ax'
+    }else if (type == 'Diners' || type == 'Diners Club' ) {
+      type = 'di'
+    }else if (type == 'Discover') {
+      type = 'dc'
+    }else if (type == 'Elo') {
+      type = 'el'
+    }else if (type == 'Credisensa') {
+      type = 'cs'
+    }else if (type == 'Solidario') {
+      type = 'so'
+    }else if (type == 'Exito') {
+      type = 'ex'
+    }else if (type == 'Alkosto') {
+      type = 'ak'
+    }
+    return type
   }
-  return type
-}
+
+
+
+
+
+
+
 </script>
+
+
