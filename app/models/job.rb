@@ -20,6 +20,7 @@ class Job < ApplicationRecord
 
   enum status: %i[pending accepted cancelled completed]
   enum frequency: %i[one_time weekly fortnightly monthly]
+  enum source: %i[web app]
 
   accepts_nested_attributes_for :job_details, allow_destroy: true
 

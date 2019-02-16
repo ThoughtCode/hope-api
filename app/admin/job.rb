@@ -1,5 +1,5 @@
 ActiveAdmin.register Job do
-  permit_params :property_id, :started_at, :status, :frequency, :agent_id, job_details_attributes: [:id, :service_id, :value, :_destroy ]
+  permit_params :property_id, :started_at, :status, :frequency, :agent_id, :source, job_details_attributes: [:id, :service_id, :value, :_destroy ]
 
 
   show do
@@ -55,6 +55,7 @@ ActiveAdmin.register Job do
     column :agent
     column :total
     column :status
+    column :source
     column :started_at do |j|
       j.started_at.localtime
     end

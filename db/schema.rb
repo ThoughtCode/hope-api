@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20181116033455) do
+ActiveRecord::Schema.define(version: 20190216151622) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -154,6 +154,7 @@ ActiveRecord::Schema.define(version: 20181116033455) do
     t.boolean "closed_by_agent"
     t.boolean "payment_started", default: false
     t.boolean "review_notification_send", default: false
+    t.integer "source", default: 0
   end
 
   create_table "managers", force: :cascade do |t|
