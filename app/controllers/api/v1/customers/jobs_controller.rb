@@ -45,7 +45,7 @@ module Api::V1::Customers
       job.job_details = job_details
       cc = CreditCard.find(params[:job][:credit_card_id])
       job.credit_card = cc
-      if job.save!
+      if job.save
         # Create Invoice (Mandar para cuando se cobre)
         invoice = Invoice.create(customer: current_user, job: job, invoice_detail_id: params[:job][:invoice_detail_id])
         set_response(200, 'Trabajo creado exitosamente', serialize_job(job))
