@@ -1,56 +1,63 @@
-
-  <style>
-    .panel {
-      margin: 0 auto;
-      padding: 20px;
-      display: block;
-      width: 80%;
-      border-radius: 6px;
-      background: white !important;
-      box-shadow: none !important;
-    }
-    .btn {
-      background: rgb(140,197,65); /* Old browsers */
-      background: -moz-linear-gradient(top, rgba(140,197,65,1) 0%, rgba(20,167,81,1) 100%); /* FF3.6-15 */
-      background: -webkit-linear-gradient(top, rgba(140,197,65,1) 0%,rgba(20,167,81,1) 100%); /* Chrome10-25,Safari5.1-6 */
-      background: linear-gradient(to bottom, rgba(140,197,65,1) 0%,rgba(20,167,81,1) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
-      filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#44afe7', endColorstr='#3198df',GradientType=0 );
-      color: #fff;
-      display: block;
-      width: 100%;
-      border: 1px solid rgba(46, 86, 153, 0.0980392);
-      border-bottom-color: rgba(46, 86, 153, 0.4);
-      border-top: 0;
-      border-radius: 4px;
-      font-size: 17px;
-      text-shadow: rgba(46, 86, 153, 0.298039) 0px -1px 0px;
-      line-height: 34px;
-      -webkit-font-smoothing: antialiased;
-      font-weight: bold;
+<style>
+  .panel {
+    margin: 0 auto;
+    padding: 20px;
+    display: block;
+    width: 80%;
+    border-radius: 6px;
+    background: white !important;
+    box-shadow: none !important;
+  }
+  .btn {
+    background: rgb(140,197,65); /* Old browsers */
+    background: -moz-linear-gradient(top, rgba(140,197,65,1) 0%, rgba(20,167,81,1) 100%); /* FF3.6-15 */
+    background: -webkit-linear-gradient(top, rgba(140,197,65,1) 0%,rgba(20,167,81,1) 100%); /* Chrome10-25,Safari5.1-6 */
+    background: linear-gradient(to bottom, rgba(140,197,65,1) 0%,rgba(20,167,81,1) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#44afe7', endColorstr='#3198df',GradientType=0 );
+    color: #fff;
+    display: block;
+    width: 100%;
+    border: 1px solid rgba(46, 86, 153, 0.0980392);
+    border-bottom-color: rgba(46, 86, 153, 0.4);
+    border-top: 0;
+    border-radius: 4px;
+    font-size: 17px;
+    text-shadow: rgba(46, 86, 153, 0.298039) 0px -1px 0px;
+    line-height: 34px;
+    -webkit-font-smoothing: antialiased;
+    font-weight: bold;
       display : block;
-      margin-top: 20px;
-    }
-    .btn:hover {
-      cursor: pointer;
-      background-color: rgb(140,197,65) !important; 
-    }
-  </style>
+    margin-top: 20px;
+  }
+  .btn:hover {
+    cursor: pointer;
+    background-color: rgb(140,197,65) !important;
+  }
 
-<body>
-  <div class="panel">
-    <div class="paymentez-form" id="my-card" data-capture-name="true">
-      <input class="card-number" name="card-number" placeholder="Número de Tarjeta">
-      <input class="name" id="the-card-name-id" placeholder="Nombre del Titular">
-      <input class="expiry-month" name="expiry-month" >
-      <input class="expiry-year" name="expiry-year">
-      <input class="cvc" name="cvc">
-    </div>
+  #compra_segura {
+    width: 85%;
+  }
+
+  #messages {
+    color: rgb(0,121,189);
+  }
+</style>
+
+<div class="panel">
+  <div class="paymentez-form" id="my-card" data-capture-name="true">
+    <input class="card-number" name="card-number" placeholder="Número de Tarjeta">
+    <input class="name" id="the-card-name-id" placeholder="Nombre del Titular">
+    <input class="expiry-month" name="expiry-month" >
+    <input class="expiry-year" name="expiry-year">
+    <input class="cvc" name="cvc">
+  </div>
     <input class="user_id" id='user_id' name="user_id" hidden>
     <input class="email" id='email' name="email" hidden>
     <button class="btn submit-payment">Añadir Tarjeta</button>
     <div id="messages"></div>
-  </div>
-</body>
+    <center><img id="compra_segura" src="/img/compra_segura.png" alt="Compra segura"></center>
+</div>
+
 <script>
 
   var getUrlParameter = function getUrlParameter(sParam) {
@@ -90,7 +97,7 @@
       cvc = $('.cvc').val();
       // Validar los cambios antes de enviar
       if (validate_data(name, cardNumber, expiryMonth, cvc) == true){
-        $('.submit-payment').attr("disabled", "disabled").text("Card Processing..."); 
+        $('.submit-payment').attr("disabled", "disabled").text("Procesando tarjeta...");
         // Mandar campos una vez validados
         var cardToSave = {
           "card": {
@@ -110,11 +117,7 @@
     var successHandler = function(cardResponse) {
       console.log(cardResponse.card);
       if(cardResponse.card.status === 'valid'){
-        $('#messages').html('Tarjeta añadida exitosamente.<br>'+
-          'status: ' + cardResponse.card.status + '<br>' +
-          "Card Token: " + cardResponse.card.token + "<br>" +
-          "transaction_reference: " + cardResponse.card.transaction_reference
-        );
+        $('#messages').html('Tu tarjeta se ha ingresado correctamente.<br>');
         $.ajax({
           url: "https://hopeec-staging.herokuapp.com/api/v1/customers/add_card_mobile",
           cache: false,
@@ -124,11 +127,11 @@
               email: email,
               id : uid,
               holder_name: name,
-              card_type: cardResponse.card.type, 
-              number: cardResponse.card.number, 
-              token: cardResponse.card.token , 
-              status: cardResponse.card.valid , 
-              expiry_month: cardResponse.card.expiry_month, 
+              card_type: cardResponse.card.type,
+              number: cardResponse.card.number,
+              token: cardResponse.card.token ,
+              status: cardResponse.card.valid ,
+              expiry_month: cardResponse.card.expiry_month,
               expiry_year: cardResponse.card.expiry_year
             }
           },
@@ -151,8 +154,8 @@
       $('.submit-payment').removeAttr("disabled");
       $('.submit-payment').text(submitInitialText);
     };
-    var errorHandler = function(err) {    
-      $('#messages').html(err.error.type);    
+    var errorHandler = function(err) {
+      $('#messages').html(err.error.type);
       $('.submit-payment').removeAttr("disabled");
       $('.submit-payment').text(submitInitialText);
     };
