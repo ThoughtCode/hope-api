@@ -37,6 +37,10 @@
   #compra_segura {
     width: 85%;
   }
+
+  #messages {
+    color: rgb(0,121,189);
+  }
 </style>
 
 <body>
@@ -114,11 +118,7 @@
     var successHandler = function(cardResponse) {
       console.log(cardResponse.card);
       if(cardResponse.card.status === 'valid'){
-        $('#messages').html('Tarjeta añadida exitosamente.<br>'+
-          'status: ' + cardResponse.card.status + '<br>' +
-          "Card Token: " + cardResponse.card.token + "<br>" +
-          "transaction_reference: " + cardResponse.card.transaction_reference
-        );
+        $('#messages').html('Tu tarjeta se ha ingresado correctamente.<br>');
         $.ajax({
           url: "https://hopeec-staging.herokuapp.com/api/v1/customers/add_card_mobile",
           cache: false,
