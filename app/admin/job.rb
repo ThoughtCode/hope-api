@@ -6,10 +6,10 @@ ActiveAdmin.register Job do
     attributes_table do
       row :property
       row :started_at do |j|
-        j.started_at.localtime
+        j.started_at
       end
       row :finished_at do |j|
-        j.finished_at.localtime
+        j.finished_at
       end
       row :finished_recurrency_at do |j|
         j.finished_recurrency_at.localtime if j.finished_recurrency_at
