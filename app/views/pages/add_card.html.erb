@@ -43,22 +43,21 @@
   }
 </style>
 
-<body>
-  <div class="panel">
-    <div class="paymentez-form" id="my-card" data-capture-name="true">
-      <input class="card-number" name="card-number" placeholder="Número de Tarjeta">
-      <input class="name" id="the-card-name-id" placeholder="Nombre del Titular">
-      <input class="expiry-month" name="expiry-month" >
-      <input class="expiry-year" name="expiry-year">
-      <input class="cvc" name="cvc">
-    </div>
+<div class="panel">
+  <div class="paymentez-form" id="my-card" data-capture-name="true">
+    <input class="card-number" name="card-number" placeholder="Número de Tarjeta">
+    <input class="name" id="the-card-name-id" placeholder="Nombre del Titular">
+    <input class="expiry-month" name="expiry-month" >
+    <input class="expiry-year" name="expiry-year">
+    <input class="cvc" name="cvc">
+  </div>
     <input class="user_id" id='user_id' name="user_id" hidden>
     <input class="email" id='email' name="email" hidden>
     <button class="btn submit-payment">Añadir Tarjeta</button>
     <div id="messages"></div>
     <center><img id="compra_segura" src="/img/compra_segura.png" alt="Compra segura"></center>
-  </div>
-</body>
+</div>
+
 <script>
 
   var getUrlParameter = function getUrlParameter(sParam) {

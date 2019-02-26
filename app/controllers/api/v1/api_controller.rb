@@ -34,7 +34,7 @@ module Api::V1
         find_by_token(token)
         unless @user
           set_response(401,
-                       'HTTP Token: Access denied.')
+                       'HTTP Token: Acceso denegado.')
         end
         @user
       end
@@ -64,13 +64,13 @@ module Api::V1
     def render_forbidden
       # For some reason on error the headers are not set
       # Setting it manually
-      set_response(403, 'forbidden')
+      set_response(403, 'Denegado')
     end
 
     def record_not_found(_exception)
       # For some reason on error the headers are not set
       # Setting it manually
-      set_response(404, 'record not found')
+      set_response(404, 'Registro no encontrado')
     end
 
     def active_model_errors(_exception)
