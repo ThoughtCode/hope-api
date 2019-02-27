@@ -147,7 +147,7 @@ body:
 
 ```json
 {
-  "message": "Detalles de facturacion creados exitosamente",
+  "message": "Detalles de facturacion actualizados exitosamente",
   "invoice_detail": {
       "data": {
           "id": "4",
