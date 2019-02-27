@@ -120,6 +120,56 @@ body:
   unprocessable entity
 ```
 
+## Update
+
+Method: `PUT`
+
+URI: `/api/v1/customers/invoice_details/:id`
+
+Header: `[HTTP_AUTHORIZATION]` = `Token token=XXXXXXXXXXXXXX`
+
+body:
+
+```json
+{
+  "invoice_detail": {
+    "email": "henry2992@hotmail.com",
+    "identification": "0604354050",
+    "identification_type": "cedula",
+    "social_reason": "Henry Remache",
+    "address": "Vos Andes y Mariano Echeverria",
+    "telephone": "0996779124"
+  }
+}
+```
+
+### Return example on success, 200
+
+```json
+{
+  "message": "Detalles de facturacion actualizados exitosamente",
+  "invoice_detail": {
+      "data": {
+          "id": "4",
+          "type": "invoice_detail",
+          "attributes": {
+              "email": "henry2992@hotmail.com",
+              "identification": "0604354050",
+              "identification_type": "cedula",
+              "social_reason": "Henry Remache",
+              "address": "Vos Andes y Mariano Echeverria",
+              "telephone": "0996779124"
+          }
+      }
+  }
+}
+```
+
+### Return example on failure, 422
+
+```json
+  unprocessable entity
+```
 
 
 ## Destroy
