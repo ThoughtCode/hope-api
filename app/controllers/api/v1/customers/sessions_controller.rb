@@ -21,7 +21,7 @@ module Api::V1::Customers
 
     def destroy
       if @user.update_attributes(access_token: nil)
-        set_response(200, 'Sign out successful')
+        set_response(200, 'Ha cerrado sesión')
       else
         # :nocov:
         set_response(422, 'Could not release the '\

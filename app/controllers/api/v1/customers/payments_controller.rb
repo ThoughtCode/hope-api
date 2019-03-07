@@ -50,7 +50,7 @@ module Api::V1
       payment.save
       payment.check_receipt_send
       set_response(
-        200, 'Payment Saved'
+        200, 'Pago guardado'
       )
     end
 

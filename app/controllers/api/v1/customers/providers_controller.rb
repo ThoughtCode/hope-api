@@ -10,7 +10,7 @@ module Api::V1::Customers
       customer = Customer.find_by_email(@data[:email])
       if customer
         customer.acquire_access_token!
-        set_response(200, 'Signed In successfully!',
+        set_response(200, 'Inicio de sesión exitoso',
                      serialize_customer(customer))
         customer.save
       else
@@ -18,7 +18,7 @@ module Api::V1::Customers
         customer.remote_avatar_url = @data[:avatar]['url']
         if customer.save
           customer.acquire_access_token!
-          set_response(200, 'User successfully created!',
+          set_response(200, 'Ahora es un usuario registrado!',
                        serialize_customer(customer))
           customer.save
         else

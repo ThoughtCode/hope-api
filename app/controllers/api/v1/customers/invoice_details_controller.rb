@@ -8,7 +8,7 @@ module Api::V1::Customers
       invoices = current_user.invoice_details.where(deleted: false)
       set_response(
         200,
-        'Detalles de facturacion listados exitosamente',
+        'Detalles de facturación listados exitosamente',
         serialize_invoices(invoices)
       )
     end
@@ -17,7 +17,7 @@ module Api::V1::Customers
       invoice_details = InvoiceDetail.new(invoice_details_params)
       invoice_details.customer = current_user
       if invoice_details.save
-        set_response(200, 'Detalles de facturacion creados exitosamente', serialize_invoices(invoice_details))
+        set_response(200, 'Detalles de facturación creados exitosamente', serialize_invoices(invoice_details))
       else
         set_response(422, invoice_details.errors.messages.values.join(', '))
       end
@@ -26,9 +26,17 @@ module Api::V1::Customers
     def destroy
       @invoice_details.deleted = true
       if @invoice_details.save
-        set_response(200, 'Los detalles de facturacion fueron eliminados exitosamente')
+        set_response(200, 'Los detalles de facturación fueron eliminados exitosamente')
       else
-        set_response(404, 'Error borrando detalles de facturacion')
+        set_response(404, 'Error borrando detalles de facturación')
+      end
+    end
+
+    def update
+      if @invoice_details.update(invoice_details_params)
+        set_response(200, 'Detalles de facturación actualizados exitosamente', serialize_invoices(@invoice_details))
+      else
+        set_response(422, @invoice_details.errors.messages.values.join(', '))
       end
     end
 
