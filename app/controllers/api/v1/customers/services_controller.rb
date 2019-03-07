@@ -6,7 +6,7 @@ module Api::V1::Customers
       services = service_type.services
       set_response(
         200,
-        'Services successfully listed.',
+        'Servicios listados.',
         serialize_service(services)
       )
     end
