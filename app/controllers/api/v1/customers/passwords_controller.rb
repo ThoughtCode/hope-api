@@ -10,7 +10,7 @@ module Api::V1::Customers
     def create
       if @customer
         @customer.send_reset_password_instructions
-        set_response(200, 'Reset password instructions have been sent to email')
+        set_response(200, 'Se ha enviado un email con las instucciones para cambiar la contraseña')
       else
         set_response(404, 'El correo no existe')
       end
@@ -20,7 +20,7 @@ module Api::V1::Customers
       user = Customer.reset_password_by_token(params)
       if user.errors.empty?
         CustomerMailer.send_reset_password_notification(user).deliver
-        set_response(200, 'Reset password successfully')
+        set_response(200, 'Cambio de contraseña exitoso')
       else
         set_response(422, user.errors.messages.values.join(', '))
       end
