@@ -49,7 +49,7 @@ module Api::V1::Customers
       if job.save
         # Create Invoice (Mandar para cuando se cobre)
         invoice = Invoice.create(customer: current_user, job: job, invoice_detail_id: params[:job][:invoice_detail_id])
-        set_response(200, 'Trabajo creado exitosamente', serialize_job(job))
+        set_response(200, 'Servicio programado con éxito, recibirás propuestas de nuestros agentes', serialize_job(job))
       else
         set_response(422, job.errors.messages.values.join(', '))
       end
