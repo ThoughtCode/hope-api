@@ -30,14 +30,14 @@ class Job < ApplicationRecord
     send_email_to_agent if agent
     agent = self.agent
     if !agent.nil?
-      Notification.create(text: 'Han cancelado un trabajo', agent: agent, job: self)
+      Notification.create(text: 'El trabajo al que aplicaste fue cancelado', agent: agent, job: self)
       if agent.mobile_push_token
         begin
           client = Exponent::Push::Client.new
           messages = [{
             to: "#{agent.mobile_push_token}",
             sound: "default",
-            body: "Han cancelado un trabajo"
+            body: "El trabajo al que aplicaste fue cancelado"
           }]
           client.publish messages
         rescue StandardError => e
@@ -133,7 +133,7 @@ class Job < ApplicationRecord
           end
         end
       # Enviar a clientes
-        Notification.create(text: 'Un trabajo a terminado por favor califícalo', customer: j.property.customer, job: j)
+        Notification.create(text: "#{j.agent.first_name} finalizó tú trabajo con éxito, por favor califícalo", customer: j.property.customer, job: j)
         CustomerMailer.send_review_reminder(j.hashed_id, j.property.customer, url).deliver
         j.update_columns(review_notification_send: true)
         if j.property.customer.mobile_push_token
@@ -142,7 +142,7 @@ class Job < ApplicationRecord
             messages = [{
               to: "#{j.property.customer.mobile_push_token}",
               sound: "default",
-              body: "Un trabajo a terminado por favor califícalo"
+              body: "#{j.agent.first_name} finalizó tú trabajo con éxito, por favor califícalo"
             }]
             client.publish messages
           rescue StandardError => e
@@ -233,14 +233,14 @@ class Job < ApplicationRecord
       agents.map do |agent|
         # TODO Move this to a background job
         AgentMailer.send_email_to_agent(agent, self.hashed_id, ENV['FRONTEND_URL']).deliver
-        Notification.create(text: 'Hay un nuevo trabajo disponible', agent: agent, job_id: self.id)
+        Notification.create(text: 'Existen trabajos disponibles, postula ahora', agent: agent, job_id: self.id)
         if agent.mobile_push_token
           begin
             client = Exponent::Push::Client.new
             messages = [{
               to: "#{agent.mobile_push_token}",
               sound: "default",
-              body: "Hay un nuevo trabajo disponible"
+              body: "Existen trabajos disponibles, postula ahora"
             }]
             client.publish messages
           rescue StandardError => e
