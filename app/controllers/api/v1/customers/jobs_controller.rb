@@ -6,7 +6,7 @@ module Api::V1::Customers
     def index
       jobs = current_user.jobs.all
       jobs = check_status(jobs)
-      jobs = jobs.order(:started_at).page(params[:current_page]).per(params[:limit])
+      jobs = jobs.order(started_at: :desc).page(params[:current_page]).per(params[:limit])
       set_response(
         200,
         'Trabajos listados exitosamente',
@@ -16,8 +16,8 @@ module Api::V1::Customers
     end
 
     def completed
-      jobs = current_user.jobs.where(status: ['completed', 'pending', 'accepted', 'cancelled']).where( 'started_at <= ?', DateTime.current - 5.hours)
-      jobs = jobs.order(:started_at).page(params[:current_page]).per(10)
+      jobs = current_user.jobs.where(status: ['completed', 'pending', 'accepted', 'cancelled']).where( 'started_at <= ?', DateTime.current)
+      jobs = jobs.order(started_at: :desc).page(params[:current_page]).per(10)
       set_response(
         200,
         'Trabajos listados exitosamente',
@@ -28,9 +28,9 @@ module Api::V1::Customers
 
     def current
       jobs = current_user.jobs.where(status: ['pending', 'accepted']).where(
-        'started_at > ?', DateTime.current - 5.hours
+        'started_at > ?', DateTime.current
       )
-      jobs = jobs.order(:started_at).page(params[:current_page]).per(10)
+      jobs = jobs.order(started_at: :desc).page(params[:current_page]).per(10)
       set_response(
         200,
         'Trabajos listados exitosamente',
@@ -49,7 +49,7 @@ module Api::V1::Customers
       if job.save
         # Create Invoice (Mandar para cuando se cobre)
         invoice = Invoice.create(customer: current_user, job: job, invoice_detail_id: params[:job][:invoice_detail_id])
-        set_response(200, 'Trabajo creado exitosamente', serialize_job(job))
+        set_response(200, 'Servicio programado con éxito, recibirás propuestas de nuestros agentes', serialize_job(job))
       else
         set_response(422, job.errors.messages.values.join(', '))
       end
@@ -155,11 +155,11 @@ module Api::V1::Customers
     def check_status(jobs)
       if params[:status] == 'nextjobs'
         jobs = jobs.where(
-          'started_at >= ? AND (status = ? OR status = ?)', DateTime.current - 5.hours, 0, 1
+          'started_at >= ? AND (status = ? OR status = ?)', DateTime.current, 0, 1
         )
       elsif params[:status] == 'history'
         jobs = jobs.where(
-          'started_at <= ? AND (status = ? OR status = ?)', DateTime.current - 5.hours, 3, 1
+          'started_at <= ? AND (status = ? OR status = ?)', DateTime.current, 3, 1
         )
       end
       jobs
