@@ -41,14 +41,14 @@ class Review < ApplicationRecord
     else
       agent = job.agent
       AgentMailer.send_email_review(job.hashed_id, agent, url).deliver
-      Notification.create(text: 'Te han calificado!', agent: agent, job: job)
+      Notification.create(text: "#{agent.first_name} tú servicio ha sido calificado", agent: agent, job: job)
       if agent.mobile_push_token
         begin
           client = Exponent::Push::Client.new
           messages = [{
             to: "#{agent.mobile_push_token}",
             sound: "default",
-            body: "Te han calificado!"
+            body: "#{agent.first_name} tú servicio ha sido calificado"
           }]
           client.publish messages
         rescue StandardError => e

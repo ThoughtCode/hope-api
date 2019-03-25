@@ -10,7 +10,7 @@ class SendEmailToCustomerProposal < ApplicationJob
         messages = [{
           to: "#{customer.mobile_push_token}",
           sound: "default",
-          body: "Han recibido tu propuesta"
+          body: "#{job.agent.first_name} quiere trabajar para ti "
         }]
         client.publish messages
       rescue StandardError => e
