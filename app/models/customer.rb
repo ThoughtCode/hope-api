@@ -21,6 +21,10 @@ class Customer < ApplicationRecord
   mount_uploader :avatar, AvatarUploader
   after_create :send_welcome_email
 
+  def full_name
+    "#{first_name} #{last_name}"
+  end
+
   def send_recover_password_email
     set_reset_password_pin!
     CustomerMailer.send_recover_password_app_email(self).deliver
