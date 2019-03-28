@@ -1,6 +1,85 @@
 ActiveAdmin.register Job do
   permit_params :property_id, :started_at, :status, :frequency, :agent_id, :source, job_details_attributes: [:id, :service_id, :value, :_destroy ]
 
+  csv do
+   column :id
+
+
+    column :duration
+    column :agent_id
+    column "Agente Nombre" do |j|
+      j.agent.first_name if j.agent
+    end
+    column "Agente Apellido" do |j|
+      j.agent.first_name if j.agent
+    end
+    column :hashed_id
+    column :started_at do |j|
+      j.started_at.localtime
+    end
+    column :finished_at do |j|
+      j.started_at.localtime
+    end
+    column :status, default: 0
+    column :frequency, default: 0
+    column :finished_recurrency_at
+    column :card_id
+    column :installments
+    column :total, precision: 8, scale: 2
+    column :vat, precision: 8, scale: 2
+    column :service_fee, precision: 8, scale: 2
+    column :subtotal, precision: 8, scale: 2
+    column :agent_earnings, precision: 8, scale: 2
+    column :source
+
+    column :installments do |j|
+      j.payment.installments if j.payment
+    end
+
+    column :authorization_code do |j|
+      j.payment.authorization_code if j.payment
+    end
+
+    column :payment_status do |j|
+      j.payment.status if j.payment
+    end
+
+    column "Payments ID" do |j|
+      j.payment_id
+    end
+
+    column "Card ID" do |j|
+      j.credit_card_id
+    end
+
+    column "Card Type" do |j|
+      j.credit_card.card_type if j.credit_card 
+    end
+
+    column "Card Number" do |j|
+      j.credit_card.number if j.credit_card
+    end
+
+    column "Card Number" do |j|
+      j.credit_card.number if j.credit_card
+    end
+
+    column "Cliente Nombre" do |j|
+      j.property.customer.full_name if j.property
+    end
+
+    column "Cliente Email" do |j|
+      j.property.customer.email if j.property
+    end
+
+    column "Cliente Direccion" do |j|
+      j.property.full_property_name if j.property
+    end
+
+    column "Tipo de Servicio" do |j|
+      j.job_details.first.service.name
+    end
+  end
 
   show do
     attributes_table do
