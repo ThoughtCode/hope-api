@@ -3,7 +3,7 @@ module Api::V1::Customers
     include Serializable
     def index
       service_type = ServiceType.find(params[:service_type_id])
-      services = service_type.services.order('id ASC')
+      services = service_type.services.order('id DESC')
       set_response(
         200,
         'Servicios listados.',
