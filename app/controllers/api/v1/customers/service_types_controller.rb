@@ -3,7 +3,7 @@ module Api::V1::Customers
     include Serializable
     before_action :set_service, only: %i[show]
     def index
-      services = ServiceType.all.order('id ASC')
+      services = ServiceType.all
       set_response(
         200,
         'Tipos de servicios listados',
