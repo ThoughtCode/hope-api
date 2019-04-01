@@ -77,18 +77,8 @@
   const email = getUrlParameter('email');
   const uid = getUrlParameter('id');
 
-  
-    // Paymentez.init('prod', 'NOC-EC-CLIENT', '4lHGnVGLzFdLJu43EyQtb3sMVkuKf6' );
-
-    // PEPE-EC-CLIENT
-    // Qcv9Cm5WSzhICQeUyOlUiKkBEEbUnO
-
-    // PEPE-EC-SERVER
-    // 614PoX97jCNl84T3vnloG74ncWQ4dB
-
-
   $(function() {
-    Paymentez.init('prod', 'PEPE-EC-CLIENT', 'Qcv9Cm5WSzhICQeUyOlUiKkBEEbUnO' );
+    Paymentez.init('prod', 'NOC-EC-CLIENT', '4lHGnVGLzFdLJu43EyQtb3sMVkuKf6' );
     var submitInitialText = $('.submit-payment').text();
     var cardNumber = '';
     var cardType = '';
