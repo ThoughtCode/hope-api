@@ -87,6 +87,12 @@ es:
             type_service:
               inclusion: "Debe seleccionar un tipo de servicio"
     models:
+      payment:
+        one: "Pago"
+        other: "Pagos"
+      holiday:
+        one: "Feriado"
+        other: "Feriados"
       penalty:
         one: "Penalidad"
         other: "Penalidades"
@@ -157,6 +163,31 @@ es:
         cell_phone: "Celular"
         birthday: "Cumpleaños"
         status: "Estado"
+        encrypted_password: 'Password encriptado'
+        reset_password_token: 'Token de Password reset'
+        reset_password_sent_at: 'Fecha de envio de password reset'
+        remember_created_at: 'Fecha de recordatorio'
+        sign_in_count: 'Número de ingresos'
+        current_sign_in_at: 'Ingreso actual'
+        last_sign_in_at: 'Último ingreso'
+        current_sign_in_ip: 'Ip de ingreso'
+        last_sign_in_ip: 'Ultima ip de ingreso'
+        created_at: 'Creado'
+        updated_at: 'Actualizado'
+      city:
+        name: "Nombre"
+      config:
+        description: 'Descripción'
+        value: 'Valor'
+      credit_card:
+        holder_name: 'Nombre'
+        card_type: 'Tipo'
+        number: 'Número'
+        expiry_month: 'Mes de Expiración'
+        expiry_year: 'Año de Expiración'
+        created_at: 'Creado'
+        updated_at: 'Actualizado'
+        status: 'Estado'
       customer:
         first_name: "Nombre"
         last_name: "Apellido"
@@ -164,21 +195,114 @@ es:
         cell_phone: "Celular"
         birthday: "Cumpleaños"
         status: "Estado"
+        encrypted_password: 'Password encriptado'
+        reset_password_token: 'Token de Password reset'
+        reset_password_sent_at: 'Fecha de envio de password reset'
+        remember_created_at: 'Fecha de recordatorio'
+        sign_in_count: 'Número de ingresos'
+        current_sign_in_at: 'Ingreso actual'
+        last_sign_in_at: 'Último ingreso'
+        current_sign_in_ip: 'Ip de ingreso'
+        last_sign_in_ip: 'Ultima ip de ingreso'
+        created_at: 'Creado'
+        updated_at: 'Actualizado'
+        provider: 'Proveedor'
+      holiday:
+        holiday_date: 'Fecha'
+        created_at: 'Creado'
+        updated_at: 'Actualizado'
+      invoice_detail:
+        email: 'email'
+        identification: 'identificación'
+        identification_type: 'Tipo de identificación'
+        social_reason: 'Razón Social'
+        address: Dirección
+        telephone: 'Teléfono'
+        created_at: 'Creado'
+        updated_at: 'Actualizado'
+        deleted: 'Borrado'
+      job_detail:
+        value: 'valor'
+        time: 'Tiempo'
+        price_total: 'Precio Total'
       job:
-        property_id: "Propiedad"
+        property: "Propiedad"
         duration: "Duración"
         agent_id: "Agente"
         total: "Total"
         hashed_id: "Id"
         started_at: "Comenzado"
         finished_at: "Finalizado"
+        status: 'Estado'
+        frequency: 'Frecuencia'
+        details: 'Detalles'
+        finished_recurrency_at: 'Fecha final de recurrencia'
+        card_id: 'Tarjeta'
+        installments: 'Diferido'
+        vat: 'Iva'
+        service_fee: 'Fee de servicio'
+        agent_earnings: 'Ganancias de agente'
+        closed_by_agent: 'Cerrado por agente'
+        source: 'Fuente'
         status: "Estado"
+        created_at: 'Creado'
+        updated_at: 'Actualizado'
+      neightborhood:
+        name: 'Nombre'
+        city: 'Ciudad'
+        created_at: 'Creado'
+        updated_at: 'Actualizado'
+      payment:
+        job: 'Trabajo'
+        credit_card: 'Tarjeta'
+        amount: 'Monto'
+        description: 'Descripción'
+        vat: 'Iva'
+        payment_date: 'Fecha de pago'
+        authorization_code: 'Código de autorización'
+        installments: 'Número de coutas'
+        message: 'Mensaje'
+        created_at: 'Creado'
+        updated_at: 'Actualizado'
+        customer: 'Cliente'
+        status: 'Estado'
+        transaction_identifier: 'Identificador de transación'
+        status_detail: 'Detalles del estado'
+        receipt_send: 'Recibo enviado'
+        is_receipt_cancel: 'Recibo cancelado'
+      penalty:
+        amount: 'Monto'
+        customer: 'Cliente'
+        paid: 'Pagado'
+      property:
+        name: 'Nombre'
+        neightborhood: 'Barrio'
+        p_street: 'Calle principal'
+        number: 'Número'
+        s_street: 'Calle secundaria'
+        additional_reference: 'Referencia'
+        phone: 'Telefono'
+        customer: 'Cliente'
       review:
-        hashed_id: "Id"
         job: "Trabajo"
         owner: "Dueño"
+        reviewee: 'Calificado a'
+        reviewee_type: 'Tipo de calificado'
+        owner_type: 'Tipo de calificador'
+        owner_id: 'Id del dueño'
         comment: "Comentario"
         qualification: "Calificación"
+      service_type:
+        name: 'nombre'
+        image: 'Imagen'
+      service:
+        service_type: 'Tipo de Servicio Padre'
+        type_service: 'Tipo de servicio'
+        name: 'nombre'
+        quantity: 'cantidad'
+        time: 'tiempo'
+        price: 'precio'
+        icon: 'icono'
   active_admin:
     dashboard: Inicio
     dashboard_welcome:
