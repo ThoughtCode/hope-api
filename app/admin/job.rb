@@ -2,23 +2,24 @@ ActiveAdmin.register Job do
   permit_params :property_id, :started_at, :status, :frequency, :agent_id, :source, job_details_attributes: [:id, :service_id, :value, :_destroy ]
 
   csv do
-   column :id
-
-
+    column :id
     column :duration
     column :agent_id
     column "Agente Nombre" do |j|
       j.agent.first_name if j.agent
     end
     column "Agente Apellido" do |j|
-      j.agent.first_name if j.agent
+      j.agent.last_name if j.agent
+    end
+    column "Agente Email" do |j|
+      j.agent.email if j.agent
     end
     column :hashed_id
     column :started_at do |j|
       j.started_at.localtime
     end
     column :finished_at do |j|
-      j.started_at.localtime
+      j.finished_at.localtime
     end
     column :status, default: 0
     column :frequency, default: 0
