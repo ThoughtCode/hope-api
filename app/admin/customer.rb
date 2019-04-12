@@ -30,6 +30,7 @@ ActiveAdmin.register Customer do
       row :cell_phone
       row :birthday
       row :avatar
+      row :mobile_push_token
     end
     panel "Propiedades" do
       properties = customer.properties
