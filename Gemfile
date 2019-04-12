@@ -46,6 +46,9 @@ gem 'fog'
 # Background Jobs
 gem 'sidekiq', '~> 5.1', '>= 5.1.3'
 
+# Send error logs
+gem 'sentry-raven'
+
 # Paginate
 gem 'kaminari', '~> 1.1', '>= 1.1.1'
 gem 'faraday', '~> 0.15.2'

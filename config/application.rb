@@ -35,14 +35,19 @@ module HopeApi
     config.middleware.insert_before 0, Rack::Cors do
       allow do
         origins '*'
-        resource '*', 
-          :headers => :any, 
-          :methods => [:get, :post, :options, :delete, :put], 
+        resource '*',
+          :headers => :any,
+          :methods => [:get, :post, :options, :delete, :put],
           expose: ['x-total-pages'],
           max_age: 0
       end
     end
 
     config.active_job.queue_adapter = :sidekiq
+
+    Raven.configure do |config|
+      config.dsn = 'https://fc4aaba9ab004d6186ebbfc6806f2c7e:efeebd07972042899eab0c1235693967@sentry.io/1429488'
+      config.environments = ['staging', 'production']
+    end
   end
 end
