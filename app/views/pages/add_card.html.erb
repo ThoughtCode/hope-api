@@ -78,7 +78,7 @@
   const uid = getUrlParameter('id');
 
   $(function() {
-    Paymentez.init('stg', 'NOC-EC-CLIENT', 'Owo41X6qbItrAcEy7Pz9DAL7wl8gAo');
+    Paymentez.init('prod', 'NOC-EC-CLIENT', '4lHGnVGLzFdLJu43EyQtb3sMVkuKf6' );
     var submitInitialText = $('.submit-payment').text();
     var cardNumber = '';
     var cardType = '';
@@ -119,7 +119,7 @@
       if(cardResponse.card.status === 'valid'){
         $('#messages').html('Tu tarjeta se ha ingresado correctamente.<br>');
         $.ajax({
-          url: "https://hopeec-staging.herokuapp.com/api/v1/customers/add_card_mobile",
+          url: "https://hopeec-production.herokuapp.com/api/v1/customers/add_card_mobile",
           cache: false,
           type: "POST",
           data: {

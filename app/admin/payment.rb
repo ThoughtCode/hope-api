@@ -29,7 +29,7 @@ ActiveAdmin.register Payment do
       row :status
       row :transaction_identifier
       row :refund do |p|
-        if p.status_detail == 'Paid'
+        if p.status == 'Approved'
           link_to('Reembolsar', refund_admin_payments_path(p.id))
         elsif p.status == 'Pending' 
           link_to 'Procesar Pago', process_payment_admin_customers_path(payment.id)

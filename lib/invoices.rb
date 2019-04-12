@@ -22,7 +22,7 @@ class Invoices
       },
       "moneda":"USD",
       "informacion_adicional":{
-        "NocNoc":"' + "#{payment.description}" +'"
+        "NocNoc":"' + "Prestación de plataforma tecnológica de intermediación entre usuarios y servicios" +'"
       },
       "totales":{
         "total_sin_impuestos":'+ "#{number_to_currency(job.subtotal)}" +',
@@ -50,7 +50,7 @@ class Invoices
         {
           "cantidad": 1,
           "precio_unitario": '+ "#{number_to_currency(job.subtotal)}" +',
-          "descripcion": "'+ "Trabajo de limpieza - NocNoc" +'",
+          "descripcion": "'+ "Prestación de plataforma tecnológica de intermediación entre usuarios y servicios" +'",
           "precio_total_sin_impuestos": '+ "#{number_to_currency(job.subtotal)} " +',
           "impuestos": [
             {
@@ -107,7 +107,7 @@ class Invoices
       },
       "moneda":"USD",
       "informacion_adicional":{
-        "NocNoc":"' + "#{payment.description}" +'"
+        "NocNoc":"' + "Prestación de plataforma tecnológica de intermediación entre usuarios y servicios" +'"
       },
       "totales":{
         "total_sin_impuestos":'+ "#{number_to_currency(payment.amount.to_f - payment.vat.to_f)}" +',
@@ -135,7 +135,7 @@ class Invoices
         {
           "cantidad": 1,
           "precio_unitario": '+ "#{number_to_currency(payment.amount.to_f - payment.vat.to_f)}" +',
-          "descripcion": "'+ "Multa de cancelación NocNoc" +'",
+          "descripcion": "'+ "Prestación de plataforma tecnológica de intermediación entre usuarios y servicios" +'",
           "precio_total_sin_impuestos": '+ "#{number_to_currency(payment.amount.to_f - payment.vat.to_f)} " +',
           "impuestos": [
             {
