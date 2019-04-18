@@ -41,6 +41,8 @@ class Job < ApplicationRecord
           }]
           client.publish messages
         rescue StandardError => e
+          agent.mobile_push_token = nil
+          agent.save
           Rails.logger.info("Rescued: #{e.inspect}")
         end
       end
@@ -130,6 +132,8 @@ class Job < ApplicationRecord
             }]
             client.publish messages
           rescue StandardError => e
+            j.agent.mobile_push_token = nil
+            j.agent.save
             Rails.logger.info("Rescued: #{e.inspect}")
           end
         end
@@ -148,6 +152,8 @@ class Job < ApplicationRecord
             }]
             client.publish messages
           rescue StandardError => e
+            j.property.customer.mobile_push_token = nil
+            j.property.customer.save
             Rails.logger.info("Rescued: #{e.inspect}")
           end
         end
@@ -247,6 +253,8 @@ class Job < ApplicationRecord
             }]
             client.publish messages
           rescue StandardError => e
+            agent.mobile_push_token = nil
+            agent.save
             Rails.logger.info("Rescued: #{e.inspect}")
           end
         end

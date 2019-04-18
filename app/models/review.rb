@@ -36,6 +36,8 @@ class Review < ApplicationRecord
           }]
           client.publish messages
         rescue StandardError => e
+          customer.mobile_push_token = nil
+          customer.save
           Rails.logger.info("Rescued: #{e.inspect}")
         end
       end
@@ -54,6 +56,8 @@ class Review < ApplicationRecord
           }]
           client.publish messages
         rescue StandardError => e
+          agent.mobile_push_token = nil
+          agent.save
           Rails.logger.info("Rescued: #{e.inspect}")
         end
       end

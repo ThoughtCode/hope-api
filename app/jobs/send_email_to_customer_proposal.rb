@@ -15,6 +15,8 @@ class SendEmailToCustomerProposal < ApplicationJob
         }]
         client.publish messages
       rescue StandardError => e
+        customer.mobile_push_token = nil
+        customer.save
         Rails.logger.info("Rescued: #{e.inspect}")
       end
     end
