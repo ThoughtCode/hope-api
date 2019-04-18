@@ -10,6 +10,7 @@ class SendEmailToCustomerProposal < ApplicationJob
         messages = [{
           to: "#{customer.mobile_push_token}",
           sound: "default",
+          ttl: 28800,
           body: "#{job.agent.first_name} quiere trabajar para ti "
         }]
         client.publish messages

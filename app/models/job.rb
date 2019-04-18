@@ -124,6 +124,7 @@ class Job < ApplicationRecord
             client = Exponent::Push::Client.new
             messages = [{
               to: "#{j.agent.mobile_push_token}",
+              ttl: 28800,
               sound: "default",
               body: "Un trabajo a terminado por favor califícalo"
             }]
@@ -142,6 +143,7 @@ class Job < ApplicationRecord
             messages = [{
               to: "#{j.property.customer.mobile_push_token}",
               sound: "default",
+              ttl: 28800,
               body: "#{j.agent.first_name} finalizó tú trabajo con éxito, por favor califícalo"
             }]
             client.publish messages
@@ -240,7 +242,8 @@ class Job < ApplicationRecord
             messages = [{
               to: "#{agent.mobile_push_token}",
               sound: "default",
-              body: "Existen trabajos disponibles, postula ahora"
+              body: "Existen trabajos disponibles, postula ahora",
+              ttl: 28800
             }]
             client.publish messages
           rescue StandardError => e

@@ -30,6 +30,7 @@ class Review < ApplicationRecord
           client = Exponent::Push::Client.new
           messages = [{
             to: "#{customer.mobile_push_token}",
+            ttl: 28800,
             sound: "default",
             body: "Te han calificado!"
           }]
@@ -47,6 +48,7 @@ class Review < ApplicationRecord
           client = Exponent::Push::Client.new
           messages = [{
             to: "#{agent.mobile_push_token}",
+            ttl: 28800,
             sound: "default",
             body: "#{agent.first_name} tú servicio ha sido calificado"
           }]

@@ -38,6 +38,7 @@ class Proposal < ApplicationRecord
         client = Exponent::Push::Client.new
         messages = [{
           to: "#{agent.mobile_push_token}",
+          ttl: 28800,
           sound: "default",
           body: "Te han aceptado una propuesta para un trabajo"
         }]
