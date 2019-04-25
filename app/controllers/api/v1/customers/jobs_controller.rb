@@ -50,7 +50,7 @@ module Api::V1::Customers
       Rails.logger.info('*************************')
       Rails.logger.info(job.errors)
       Rails.logger.info('*************************')
-      if job.save!
+      if job.save
         payment = Payment.create_with(credit_card_id: params[:job][:credit_card_id], amount: job.total, vat: job.vat, status: 'Pending', 
                                       installments: job.installments, customer: job.property.customer).find_or_create_by(job_id: job.id)
         payment.amount = job.total
@@ -62,6 +62,9 @@ module Api::V1::Customers
         Invoice.create(customer: current_user, job: job, invoice_detail_id: params[:job][:invoice_detail_id])
         set_response(200, 'Servicio programado con éxito, recibirás propuestas de nuestros agentes', serialize_job(job))
       else
+        Rails.logger.info('*************************')
+        Rails.logger.info(job.errors.messages.values.join(', '))
+        Rails.logger.info('*************************')
         set_response(422, job.errors.messages.values.join(', '))
       end
     end
