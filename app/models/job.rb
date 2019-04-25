@@ -9,7 +9,7 @@ class Job < ApplicationRecord
   has_many :agents, through: :proposals
   has_many :reviews, dependent: :destroy
   has_many :penalties
-  has_one :credit_card
+  # has_one :credit_card
   has_one :payment
   has_one :invoice
 
@@ -66,7 +66,6 @@ class Job < ApplicationRecord
 
   def payment_cancelation_fee(credit_card)
     penalty_amount = Config.fetch('cancelation_penalty_amount')
-    customer = property.customer
     vat = ((penalty_amount.to_f * 12) / 100).round(2)
     payment = Payment.create(credit_card_id: self.credit_card_id, amount: penalty_amount, vat: vat, status: 'Pending', 
       installments: 1, customer: self.property.customer, is_receipt_cancel: true, job: self)
@@ -86,7 +85,7 @@ class Job < ApplicationRecord
 
   def job_recurrency
     new_job = dup
-    new_job.credit_card = credit_card 
+    new_job.credit_card = credit_card
     new_job.status = 'accepted'
     job_details.each do |d|
       new_job.job_details << d.dup
@@ -199,17 +198,6 @@ class Job < ApplicationRecord
     finished_at = started_at + duration.hours
     update_columns(duration: duration, total: total, finished_at: finished_at, vat: vat, 
       subtotal: sub_total, service_fee: service_fee, agent_earnings: agent_earnings)
-    create_payment
-  end
-
-  def create_payment
-    payment = Payment.create_with(credit_card_id: self.credit_card_id, amount: self.total, vat: self.vat, status: 'Pending', 
-      installments: self.installments, customer: self.property.customer).find_or_create_by(job_id: self.id)
-    payment.amount = self.total
-    payment.vat = self.vat
-    payment.installments = self.installments
-    payment.description = "Trabajo de limpieza NocNoc Payment_id:#{payment.id}"
-    payment.save!
   end
 
   def should_release_payment

@@ -4,7 +4,7 @@ module Api::V1
     skip_before_action :disable_access_by_tk, only: [:received, :update, :add_card_mobile]
 
     def index
-      ccs = current_user.credit_cards
+      ccs = current_user.credit_cards.not_deleted
       set_response(200, 'Tarjetas Listadas', serialize_payment(ccs))
     end
 
@@ -30,7 +30,7 @@ module Api::V1
 
     def destroy
       cc =  CreditCard.find(params[:id])
-      if cc.destroy
+      if cc.update(deleted: true)
         set_response(200, 'Tarjeta borrada exitosamente', serialize_payment(cc))
       else
         set_response(422, cc.errors.messages.values.join(', '))

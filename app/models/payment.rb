@@ -6,12 +6,12 @@ class Payment < ApplicationRecord
   def send_payment_request
     connection = Faraday.new
     installments_type = 0
-    if job.installments == 0 
+    if job.installments == 0
       installments_type = 0
     end
-    if job.installments == 3 
+    if job.installments == 3
       installments_type = 3
-    end 
+    end
 
     customer = self.customer
     body = '{ "user": {
@@ -23,7 +23,7 @@ class Payment < ApplicationRecord
          "description": "' + "#{self.description} " +'",
          "dev_reference": "'+ self.id.to_s + '",
          "vat": '+"#{self.vat.to_s}"+',
-         "installments_type": '+ installments_type.to_s + ', 
+         "installments_type": '+ installments_type.to_s + ',
          "installments": '+"#{self.installments}"+'
      },
      "card": {
@@ -65,6 +65,6 @@ class Payment < ApplicationRecord
         CustomerMailer.send_receipt(self.job, self.customer, self).deliver
       end
       self.update_columns(receipt_send: true)
-    end 
+    end
   end
 end

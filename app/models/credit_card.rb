@@ -1,10 +1,19 @@
 class CreditCard < ApplicationRecord
   belongs_to :customer
-  belongs_to :job, optional: true
-  has_one :payment
+  # belongs_to :job, optional: true
+  has_many :payments
+  before_update :erase_from_paymentez, if: :will_save_change_to_deleted?
   before_destroy :erase_from_paymentez
 
+  scope :not_deleted, -> { where.not(deleted: true) }
+
   def erase_from_paymentez
+    if payments.where(status: 'Pending').any?
+      errors.add(:base, "Esta tarjeta tiene pagos pendientes")
+      pp 'Esta tarjeta tiene pagos pendientes'
+      throw(:abort)
+    end
+
     connection = Faraday.new
     body = '{"card": { "token": "' + self.token.to_s + '" }, "user": { "id": "' + self.customer_id.to_s + '" }}'
     response = connection.post do |req|
@@ -13,10 +22,11 @@ class CreditCard < ApplicationRecord
       req.url ENV['PAYMENTEZ_URL'] + '/v2/card/delete/'
       req.body = body
     end
-    
+
     Rails.logger.info(response.body)
     response = response.status
     unless response == 200
+      update_column(:deleted, false)
       errors.add(:base, "Error al borrar tarjeta")
       throw(:abort)
     end
