@@ -45,7 +45,11 @@ module Api::V1::Customers
       job.job_details = job_details
       # cc = CreditCard.find(params[:job][:credit_card_id])
       # job.credit_card = cc
-      Rails.logger.info(job)
+      Rails.logger.info('*************************')
+      Rails.logger.info(job_params)
+      Rails.logger.info('*************************')
+      Rails.logger.info(pp(job))
+      Rails.logger.info('*************************')
       if job.save
         payment = Payment.create_with(credit_card_id: params[:job][:credit_card_id], amount: job.total, vat: job.vat, status: 'Pending', 
                                       installments: job.installments, customer: job.property.customer).find_or_create_by(job_id: job.id)
