@@ -46,13 +46,12 @@ module Api::V1::Customers
       # cc = CreditCard.find(params[:job][:credit_card_id])
       # job.credit_card = cc
       Rails.logger.info(job)
-      byebug
       if job.save
         payment = Payment.create_with(credit_card_id: params[:job][:credit_card_id], amount: job.total, vat: job.vat, status: 'Pending', 
                                       installments: job.installments, customer: job.property.customer).find_or_create_by(job_id: job.id)
-        payment.amount = self.total
-        payment.vat = self.vat
-        payment.installments = self.installments
+        payment.amount = job.total
+        payment.vat = job.vat
+        payment.installments = job.installments
         payment.description = "Trabajo de limpieza NocNoc Payment_id:#{payment.id}"
         payment.save!
         # Create Invoice (Mandar para cuando se cobre)
