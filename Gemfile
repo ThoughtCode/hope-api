@@ -58,6 +58,7 @@ gem 'exception_notification', '~> 4.2', '>= 4.2.2'
 
 # Expo Server SDK Ruby
 gem 'exponent-server-sdk', '~> 0.0.5'
+gem "slack-notifier"
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to
@@ -65,6 +66,7 @@ group :development, :test do
   gem 'byebug', platforms: %i[mri mingw x64_mingw]
   gem 'factory_bot_rails'
   gem 'rspec-rails', '~> 3.7'
+  gem 'rb-readline', '~> 0.5.3'
 end
 
  group :test do

@@ -50,19 +50,19 @@ ActiveAdmin.register Job do
     end
 
     column "Card ID" do |j|
-      j.credit_card_id
+      j.payment.credit_card_id if j.payment
     end
 
     column "Card Type" do |j|
-      j.credit_card.card_type if j.credit_card 
+      j.payment.credit_card.card_type if j.payment.credit_card 
     end
 
     column "Card Number" do |j|
-      j.credit_card.number if j.credit_card
+      j.payment.credit_card.number if j.payment.credit_card
     end
 
     column "Card Number" do |j|
-      j.credit_card.number if j.credit_card
+      j.payment.credit_card.number if j.payment.credit_card
     end
 
     column "Cliente Nombre" do |j|

@@ -81,7 +81,16 @@ class Invoices
       req.body = body
     end
     Rails.logger.info(response.body)
-    response = response.status
+
+    begin
+      notifier = Slack::Notifier.new "https://hooks.slack.com/services/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" do
+        defaults channel: "#hooks",
+               username: "notifier"
+      end
+      notifier.ping(response.body)
+    rescue StandardError => e
+      Rails.logger.info("Error enviando slack")
+    end
   end
 
   def self.generate_for_penalty(invoice, payment, job)
