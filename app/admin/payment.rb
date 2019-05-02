@@ -1,4 +1,5 @@
 ActiveAdmin.register Payment do
+  actions :all, :except => :destroy
 
   index do
     selectable_column

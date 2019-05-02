@@ -1,4 +1,5 @@
 ActiveAdmin.register Customer do
+  actions :all, :except => :destroy
   permit_params :email, :password, :first_name, :last_name, :cell_phone,
                 :birthday, :national_id, :avatar
 

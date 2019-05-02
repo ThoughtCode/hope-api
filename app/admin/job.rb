@@ -1,4 +1,5 @@
 ActiveAdmin.register Job do
+  actions :all, :except => :destroy
   permit_params :property_id, :started_at, :status, :frequency, :agent_id, :source, job_details_attributes: [:id, :service_id, :value, :_destroy ]
 
   csv do

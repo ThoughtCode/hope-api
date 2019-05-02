@@ -1,4 +1,5 @@
 ActiveAdmin.register City do
+  actions :all, :except => :destroy
   permit_params :name, neightborhoods_attributes: [:name, :id, :_destroy ]
 
   show do
