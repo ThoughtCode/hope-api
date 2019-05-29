@@ -1,6 +1,7 @@
 module Api::V1::Customers
   class ServiceTypesController < CustomerUsersController
     include Serializable
+    skip_before_action :disable_access_by_tk, only: [:index, :show]
     before_action :set_service, only: %i[show]
     def index
       services = ServiceType.all.order('id ASC')
