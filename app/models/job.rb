@@ -67,7 +67,7 @@ class Job < ApplicationRecord
   def payment_cancelation_fee(credit_card)
     penalty_amount = Config.fetch('cancelation_penalty_amount')
     vat = ((penalty_amount.to_f * 12) / 100).round(2)
-    payment = Payment.create(credit_card_id: self.credit_card_id, amount: penalty_amount, vat: vat, status: 'Pending', 
+    payment = Payment.create(credit_card_id: payment.credit_card_id, amount: penalty_amount, vat: vat, status: 'Pending', 
       installments: 1, customer: self.property.customer, is_receipt_cancel: true, job: self)
     payment.description = "Multa de cancelación NocNoc Job Id:#{self.id}"
     payment.save
@@ -85,7 +85,8 @@ class Job < ApplicationRecord
 
   def job_recurrency
     new_job = dup
-    new_job.credit_card = credit_card
+    new_job.payment = Payment.create(credit_card_id: payment.credit_card_id, amount: total, status: 'Pending', 
+      customer: self.property.customer, job: self)
     new_job.status = 'accepted'
     job_details.each do |d|
       new_job.job_details << d.dup
