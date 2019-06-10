@@ -97,13 +97,13 @@ class Job < ApplicationRecord
     when 'monthly'
       new_job.started_at = started_at + 28.days
     end
-    byebug
     return nil if new_job.started_at > finished_recurrency_at
     if new_job.save
       new_job.payment = Payment.create(credit_card_id: payment.credit_card_id, amount: total, status: 'Pending', 
       customer: self.property.customer, job: self)
+      send_email_autocreated_job(new_job)
     end
-    # send_email_autocreated_job(new_job)
+    
   end
 
   def can_review?(user)
