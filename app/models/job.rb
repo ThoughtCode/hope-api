@@ -85,8 +85,6 @@ class Job < ApplicationRecord
 
   def job_recurrency
     new_job = dup
-    new_job.payment = Payment.create(credit_card_id: payment.credit_card_id, amount: total, status: 'Pending', 
-      customer: self.property.customer, job: self)
     new_job.status = 'accepted'
     job_details.each do |d|
       new_job.job_details << d.dup
@@ -99,9 +97,13 @@ class Job < ApplicationRecord
     when 'monthly'
       new_job.started_at = started_at + 28.days
     end
+    byebug
     return nil if new_job.started_at > finished_recurrency_at
-    new_job.save!
-    send_email_autocreated_job(new_job)
+    if new_job.save
+      new_job.payment = Payment.create(credit_card_id: payment.credit_card_id, amount: total, status: 'Pending', 
+      customer: self.property.customer, job: self)
+    end
+    # send_email_autocreated_job(new_job)
   end
 
   def can_review?(user)
