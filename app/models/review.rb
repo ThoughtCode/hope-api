@@ -67,7 +67,6 @@ class Review < ApplicationRecord
   def complete_job
     return nil if owner.class.name == 'Customer' || job.reviews.none?
     job.completed!
-    url = ENV['FRONTEND_URL']
-    SendEmailCompletedJob.perform_later(owner, job, url)
+    SendEmailCompletedJobWorker.perform_async(owner.id, job.id)
   end
 end

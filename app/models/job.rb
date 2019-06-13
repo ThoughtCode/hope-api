@@ -71,7 +71,7 @@ class Job < ApplicationRecord
       installments: 1, customer: self.property.customer, is_receipt_cancel: true, job: self)
     payment.description = "Multa de cancelación NocNoc Job Id:#{self.id}"
     payment.save
-    SendPaymentRequest.perform_later(payment, self)
+    SendPaymentRequestWorker.perform_async(payment.id, self.id)
   end
 
   def can_cancel_booking?

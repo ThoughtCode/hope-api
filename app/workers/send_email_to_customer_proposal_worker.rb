@@ -1,8 +1,10 @@
-class SendEmailToCustomerProposal < ApplicationJob
-  queue_as :default
+class SendEmailToCustomerProposalWorker
+  include Sidekiq::Worker
 
-  def perform(job, customer, url)
-    CustomerMailer.send_proposal_received(job, customer, url).deliver
+  def perform(job_id, customer_id)
+  	job = Job.find(job_id)
+  	customer = Customer.find(customer_id)
+    CustomerMailer.send_proposal_received(job, customer, ENV['FRONTEND_URL']).deliver
     Notification.create(text: 'Han recibido tu propuesta', customer: customer, job: job)
     if customer.mobile_push_token
       begin
