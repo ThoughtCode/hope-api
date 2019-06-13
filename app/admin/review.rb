@@ -20,6 +20,7 @@ ActiveAdmin.register Review do
 
   form do |f|
     f.inputs do
+      f.input :job, :label => 'Trabajo', as: :select, :collection => Job.all.pending.order(id: :desc).map{|j| ["#{j.id} #{j.property.name} #{j.property.customer.full_name}", j.id]}
       f.input :owner_id, label: 'Calificador ID'
       f.input :owner_type, label: 'Calificador Tipo'
       f.input :comment
