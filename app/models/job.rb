@@ -230,25 +230,7 @@ class Job < ApplicationRecord
     unless agent
       agents = Agent.filter_by_availability(self)
       agents.map do |agent|
-        # TODO Move this to a background job
-        AgentMailer.send_email_to_agent(agent, self.hashed_id, ENV['FRONTEND_URL']).deliver
-        Notification.create(text: 'Existen trabajos disponibles, postula ahora', agent: agent, job_id: self.id)
-        if agent.mobile_push_token
-          begin
-            client = Exponent::Push::Client.new
-            messages = [{
-              to: "#{agent.mobile_push_token}",
-              sound: "default",
-              body: "Existen trabajos disponibles, postula ahora",
-              ttl: 28800
-            }]
-            client.publish messages
-          rescue StandardError => e
-            agent.mobile_push_token = nil
-            agent.save
-            Rails.logger.info("Rescued: #{e.inspect}")
-          end
-        end
+        SendNotificationsOnJobCreatedWorker.perform_async(agent.id, self.hashed_id, self.id)
       end
     end
   end

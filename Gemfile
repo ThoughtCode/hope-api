@@ -44,7 +44,7 @@ gem 'carrierwave'
 gem 'fog'
 
 # Background Jobs
-gem 'sidekiq', '~> 5.1', '>= 5.1.3'
+gem 'sidekiq', '~> 5.2', '>= 5.2.7'
 
 # Send error logs
 gem 'sentry-raven'
