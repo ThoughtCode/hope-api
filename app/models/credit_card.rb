@@ -31,5 +31,27 @@ class CreditCard < ApplicationRecord
       throw(:abort)
     end
   end
+
+  def self.card_list
+    connection = Faraday.new
+    body = '{}'
+    (1..500).each do |index|
+      response = connection.get do |req|
+        req.headers['Content-Type'] = 'application/json'
+        req.headers['Auth-Token'] = (PaymentToken.authorize)
+        req.url ENV['PAYMENTEZ_URL'] + "/v2/card/list/?uid=#{index}"
+        req.body = body
+      end
+      Rails.logger.info(response.body)
+    end
+    Rails.logger.info("************ FINAL SEARCH *********")
+    response = connection.get do |req|
+      req.headers['Content-Type'] = 'application/json'
+      req.headers['Auth-Token'] = (PaymentToken.authorize)
+      req.url ENV['PAYMENTEZ_URL'] + "/v2/card/list/?uid=null"
+      req.body = body
+    end
+    Rails.logger.info(response.body)
+  end
 end
 
