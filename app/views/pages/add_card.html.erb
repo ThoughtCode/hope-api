@@ -54,10 +54,6 @@
   <button class="btn submit-payment">Añadir Tarjeta</button>
   <div id="messages"></div>
   <center><img id="compra_segura" src="/img/compra_segura.png" alt="Compra segura"></center>
-  <div>
-    <h5>Email: <span id='email'></span></h5>
-    <h5>Id: <span id='id'></span></h5>
-  </div>
 </div>
 
 <script>
@@ -77,9 +73,6 @@
     
     const email = getUrlParameter('email');
     const uid = getUrlParameter('id');
-
-    $('#id').html(uid);
-    $('#email').html(email);
 
     Paymentez.init('prod', 'NOC-EC-CLIENT', '4lHGnVGLzFdLJu43EyQtb3sMVkuKf6' );
     var submitInitialText = $('.submit-payment').text();
