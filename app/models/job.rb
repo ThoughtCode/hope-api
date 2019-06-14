@@ -112,7 +112,7 @@ class Job < ApplicationRecord
 
   def service_type_image
     image = job_details.select { |jd| jd.service.type_service == 'base' }.first
-    image.service.service_type.image
+    image&.service&.service_type&.image
   end
 
   def self.should_be_reviewed
