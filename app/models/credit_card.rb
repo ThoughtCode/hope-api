@@ -4,7 +4,6 @@ class CreditCard < ApplicationRecord
   has_many :payments
   before_update :erase_from_paymentez, if: :will_save_change_to_deleted?
   before_destroy :erase_from_paymentez
-
   scope :not_deleted, -> { where.not(deleted: true) }
 
   def erase_from_paymentez
