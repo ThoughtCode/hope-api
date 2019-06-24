@@ -59,6 +59,8 @@ class CreditCard < ApplicationRecord
       req.url ENV['PAYMENTEZ_URL'] + "/v2/card/list/?uid=undefined"
       req.body = body
     end
+
+    Rails.logger.info(response.body)
   end
 end
 
