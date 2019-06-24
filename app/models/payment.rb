@@ -51,7 +51,6 @@ class Payment < ApplicationRecord
   end
 
   def send_payment_request_as_null
-    Rails.logger.info("send_payment_request_as_null")
     connection = Faraday.new
     installments_type = 0
     if job.installments == 0
