@@ -43,7 +43,6 @@ class Payment < ApplicationRecord
 
     if response.body['error']
       Rails.logger.info("Hubo un error procesando pagos")
-      self.send_payment_request_as_null
     end
 
 
@@ -88,7 +87,6 @@ class Payment < ApplicationRecord
 
     if response.body['error']
       Rails.logger.info("Hubo un error procesando pagos como nulos")
-      self.send_payment_request_as_undefined
     end
 
 

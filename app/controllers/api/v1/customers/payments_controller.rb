@@ -38,6 +38,7 @@ module Api::V1
     end
 
     def received
+      Rails.logger.info("RECIBIENDO INFORMACION DE PAYMENTEZ")
       Rails.logger.info(request.raw_post)
       payment = Payment.find(params[:transaction]['dev_reference'])
       payment.payment_date = params[:transaction][:paid_date]
