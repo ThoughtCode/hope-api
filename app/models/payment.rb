@@ -37,10 +37,17 @@ class Payment < ApplicationRecord
       req.body = body
     end
     Rails.logger.info(response.body)
+
+
+    if response['error']
+      Rails.logger.info("existio error!!!!!")
+    end
+
+
     response = response.status
   end
 
-    def send_payment_request_as_null
+  def send_payment_request_as_null
     connection = Faraday.new
     installments_type = 0
     if job.installments == 0
