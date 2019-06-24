@@ -39,7 +39,7 @@ class Payment < ApplicationRecord
     Rails.logger.info(response.body)
 
 
-    if response['error']
+    if response.body['error']
       Rails.logger.info("existio error!!!!!")
     end
 
