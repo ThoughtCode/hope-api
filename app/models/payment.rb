@@ -38,11 +38,11 @@ class Payment < ApplicationRecord
     end
     Rails.logger.info(response.body)
 
-    Rails.logger.info(response.body['error'])
+    Rails.logger.info(response.body['type'])
 
 
     if response.body['error']
-      Rails.logger.info("existio error!!!!!")
+      send_payment_request_as_null
     end
 
 
