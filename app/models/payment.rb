@@ -38,8 +38,10 @@ class Payment < ApplicationRecord
     end
     Rails.logger.info(response.body)
 
+    Rails.logger.info(response.body['error'])
 
-    if response.body['error']["type"] == "OperationNotAllowedException:uid does not match"
+
+    if response.body['error']
       Rails.logger.info("existio error!!!!!")
     end
 
