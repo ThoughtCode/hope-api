@@ -62,5 +62,21 @@ class CreditCard < ApplicationRecord
 
     Rails.logger.info(response.body)
   end
+
+
+  def self.find_if_payment_pending_has_null
+    connection = Faraday.new
+
+    Payment.where(status:'Pending').each do |p| 
+      response = connection.get do |req|
+        req.headers['Content-Type'] = 'application/json'
+        req.headers['Auth-Token'] = (PaymentToken.authorize)
+        req.url ENV['PAYMENTEZ_URL'] + "/v2/card/list/?uid=#{p.customer.id}"
+        req.body = body
+      end
+      Rails.logger.info("Payment ID: #{p.id} -----> #{response.body}")
+    end
+  end
+
 end
 
