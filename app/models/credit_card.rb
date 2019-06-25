@@ -31,6 +31,17 @@ class CreditCard < ApplicationRecord
     end
   end
 
+  def erase_from_paymentez_if_null(string)
+    connection = Faraday.new
+    body = '{"card": { "token": "' + self.token.to_s + '" }, "user": { "id": "' + string + '" }}'
+    response = connection.post do |req|
+      req.headers['Content-Type'] = 'application/json'
+      req.headers['Auth-Token'] = (PaymentToken.authorize)
+      req.url ENV['PAYMENTEZ_URL'] + '/v2/card/delete/'
+      req.body = body
+    end
+  end
+
   def self.card_list
     connection = Faraday.new
     body = '{}'
