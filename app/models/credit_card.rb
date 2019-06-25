@@ -72,7 +72,6 @@ class CreditCard < ApplicationRecord
         req.headers['Content-Type'] = 'application/json'
         req.headers['Auth-Token'] = (PaymentToken.authorize)
         req.url ENV['PAYMENTEZ_URL'] + "/v2/card/list/?uid=#{p.customer.id}"
-        req.body = body
       end
       Rails.logger.info("Payment ID: #{p.id} -----> #{response.body}")
     end
