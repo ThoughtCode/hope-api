@@ -72,6 +72,16 @@ class CreditCard < ApplicationRecord
     end
 
     Rails.logger.info(response.body)
+
+    Rails.logger.info("************ FINAL SEARCH *********")
+    response = connection.get do |req|
+      req.headers['Content-Type'] = 'application/json'
+      req.headers['Auth-Token'] = (PaymentToken.authorize)
+      req.url ENV['PAYMENTEZ_URL'] + "/v2/card/list/?uid="
+      req.body = body
+    end
+
+    Rails.logger.info(response.body)
   end
 
 
