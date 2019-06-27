@@ -20,7 +20,7 @@ ActiveAdmin.register Review do
 
   form do |f|
     f.inputs do
-      f.input :job, :label => 'Trabajo', as: :select, :collection => Job.all.accepted.order(id: :desc).map{|j| ["#{j.id} #{j.property.name} #{j.property.customer.full_name}", j.id]}
+      f.input :job, :label => 'Trabajo', as: :select, :collection => Job.all.order(id: :desc).map{|j| ["#{j.id} #{j.property.name} #{j.property.customer.full_name}", j.id]}
       f.input :owner_id, label: 'Calificador ID'
       f.input :owner_type, label: 'Calificador Tipo'
       f.input :comment
@@ -28,6 +28,19 @@ ActiveAdmin.register Review do
       f.input :reviewee_id, label: 'Calificado ID'
       f.input :reviewee_type, label: 'Calificado Tipo'
       f.actions
+    end
+  end
+
+
+  controller do
+    def update
+      review = Review.find(params[:id])
+      review_params = params[:review]
+      review.update_columns(job_id: review_params[:job_id], owner_id: review_params[:owner_id], owner_type: review_params[:owner_type],
+        comment: review_params[:comment], qualification: review_params[:qualification], reviewee_id: review_params[:reviewee_id],
+        reviewee_type: review_params[:reviewee_type]
+      )
+      redirect_to admin_reviews_path
     end
   end
 end
