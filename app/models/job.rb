@@ -100,7 +100,9 @@ class Job < ApplicationRecord
     return nil if new_job.started_at > finished_recurrency_at
     if new_job.save
       new_job.payment = Payment.create(credit_card_id: payment.credit_card_id, amount: total, status: 'Pending', 
-      customer: self.property.customer, job: self)
+      customer: self.property.customer, job: self, description: "Trabajo de limpieza NocNoc Payment_id:#{self.payment.id}",
+      vat: vat, installments: installments)
+      Invoice.create(customer: job.property.customer, job: self, invoice_detail_id: self.invoice.invoice_detail_id)
       send_email_autocreated_job(new_job)
     end
     
