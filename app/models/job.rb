@@ -103,7 +103,7 @@ class Job < ApplicationRecord
       customer: self.property.customer, job: self, vat: vat, installments: installments)
       new_job.payment.description = "Trabajo de limpieza NocNoc Payment_id:#{new_job.payment.id}"
       new_job.payment.save!
-      Invoice.create!(customer: self.property.customer, job: self, invoice_detail_id: self.invoice.invoice_detail_id)
+      Invoice.create!(customer: self.property.customer, job: new_job, invoice_detail_id: self.invoice.invoice_detail_id)
       send_email_autocreated_job(new_job)
     end
     
