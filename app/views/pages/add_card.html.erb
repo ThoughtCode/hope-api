@@ -76,7 +76,25 @@
   $(function() {
     
     const email = getUrlParameter('email');
-    const uid = getUrlParameter('id');
+    var uid = getUrlParameter('id');
+
+    if ( uid == 'null' || uid == 'undefined' ){
+      $.ajax({
+        url: "http://localhost:3000/api/v1/customers/get_user_id",
+        cache: false,
+        type: "GET",
+        async: false,
+        data: {
+          payment: {
+            email: email,
+          }
+        },
+        success: function(response){
+          console.log(response)
+          uid = response
+        }
+      })
+    }
 
     $('#id').html(uid);
     $('#email').html(email);
