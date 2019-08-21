@@ -2,7 +2,7 @@ module Api::V1::Customers
   class CustomersController < CustomerUsersController
     include Serializable
     before_action :set_customer, only: %i[update current_user change_password add_mobile_token]
-    skip_before_action :disable_access_by_tk, only: [:read_notifications]
+    skip_before_action :disable_access_by_tk, only: [:read_notifications, :get_user_id]
 
     def update
       if @customer.update(customer_params)
@@ -85,6 +85,16 @@ module Api::V1::Customers
         else
           set_response(422, @customer.errors.messages.values.join(', '))
         end
+      end
+    end
+
+    def get_user_id
+      Rails.logger.info(params)
+      user = Customer.find_by(email: params[:payment][:email])
+      if user
+        render json: user.id
+      else
+        render json: nil
       end
     end
 

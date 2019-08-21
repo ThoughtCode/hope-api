@@ -71,6 +71,7 @@
         delete '/delete_card/:id', to: 'payments#destroy'
         get 'read_notifications/:id', to: 'customers#read_notifications'
         get 'credit_cards', to: 'payments#index'
+        get 'get_user_id', to: 'customers#get_user_id'
 
         resources :invoice_details
         resources :properties, except: [:new, :edit]
