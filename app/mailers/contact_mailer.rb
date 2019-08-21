@@ -1,4 +1,6 @@
 class ContactMailer < ApplicationMailer
+  default from: 'neuralboot19@gmail.com'
+
   def contact_mail(params)
     @name = params[:name]
     @cellphone = params[:celular]
