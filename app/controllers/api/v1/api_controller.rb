@@ -17,7 +17,7 @@ module Api::V1
 
     def contact
       ContactMailer.contact_mail(contact_params).deliver
-      set_response(200, 'Tu correo ha sido enviado')
+      set_response(200, 'Nos contactaremos contigo lo antes posible')
     end
 
     private
