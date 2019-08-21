@@ -1,4 +1,5 @@
 ActiveAdmin.register Customer do
+  actions :all, :except => :destroy
   permit_params :email, :password, :first_name, :last_name, :cell_phone,
                 :birthday, :national_id, :avatar
 
@@ -30,6 +31,7 @@ ActiveAdmin.register Customer do
       row :cell_phone
       row :birthday
       row :avatar
+      row :mobile_push_token
     end
     panel "Propiedades" do
       properties = customer.properties

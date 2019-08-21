@@ -1,4 +1,5 @@
 ActiveAdmin.register Job do
+  actions :all, :except => :destroy
   permit_params :property_id, :started_at, :status, :frequency, :agent_id, :source, job_details_attributes: [:id, :service_id, :value, :_destroy ]
 
   csv do
@@ -50,19 +51,19 @@ ActiveAdmin.register Job do
     end
 
     column "Card ID" do |j|
-      j.credit_card_id
+      j.payment.credit_card_id if j.payment
     end
 
     column "Card Type" do |j|
-      j.credit_card.card_type if j.credit_card 
+      j.payment.credit_card.card_type if j.payment.credit_card 
     end
 
     column "Card Number" do |j|
-      j.credit_card.number if j.credit_card
+      j.payment.credit_card.number if j.payment.credit_card
     end
 
     column "Card Number" do |j|
-      j.credit_card.number if j.credit_card
+      j.payment.credit_card.number if j.payment.credit_card
     end
 
     column "Cliente Nombre" do |j|
@@ -86,10 +87,10 @@ ActiveAdmin.register Job do
     attributes_table do
       row :property
       row :started_at do |j|
-        j.started_at
+        j.started_at.localtime
       end
       row :finished_at do |j|
-        j.finished_at
+        j.finished_at.localtime
       end
       row :finished_recurrency_at do |j|
         j.finished_recurrency_at.localtime if j.finished_recurrency_at

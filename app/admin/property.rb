@@ -1,4 +1,5 @@
 ActiveAdmin.register Property do
+  actions :all, :except => :destroy
   permit_params :customer_id, :name, :neightborhood_id, :p_street, :number, :s_street,
                 :additional_reference, :phone
 

@@ -68,7 +68,13 @@ module Api::V1::Customers
     end
 
     def add_mobile_token
+      Rails.logger.info('*************************************')
+      Rails.logger.info(params[:customer][:mobile_push_token])
+      Rails.logger.info('*************************************')
       if params[:customer][:mobile_push_token]
+        Rails.logger.info('*************************************')
+        Rails.logger.info('Entra al if')
+        Rails.logger.info('*************************************')
         @customer.mobile_push_token = params[:customer][:mobile_push_token]
         if @customer.save
           set_response(

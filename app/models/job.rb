@@ -9,7 +9,7 @@ class Job < ApplicationRecord
   has_many :agents, through: :proposals
   has_many :reviews, dependent: :destroy
   has_many :penalties
-  has_one :credit_card
+  # has_one :credit_card
   has_one :payment
   has_one :invoice
 
@@ -41,6 +41,8 @@ class Job < ApplicationRecord
           }]
           client.publish messages
         rescue StandardError => e
+          agent.mobile_push_token = nil
+          agent.save
           Rails.logger.info("Rescued: #{e.inspect}")
         end
       end
@@ -64,13 +66,12 @@ class Job < ApplicationRecord
 
   def payment_cancelation_fee(credit_card)
     penalty_amount = Config.fetch('cancelation_penalty_amount')
-    customer = property.customer
     vat = ((penalty_amount.to_f * 12) / 100).round(2)
-    payment = Payment.create(credit_card_id: self.credit_card_id, amount: penalty_amount, vat: vat, status: 'Pending', 
+    payment = Payment.create(credit_card_id: payment.credit_card_id, amount: penalty_amount, vat: vat, status: 'Pending', 
       installments: 1, customer: self.property.customer, is_receipt_cancel: true, job: self)
     payment.description = "Multa de cancelación NocNoc Job Id:#{self.id}"
     payment.save
-    SendPaymentRequest.perform_later(payment, self)
+    SendPaymentRequestWorker.perform_async(payment.id, self.id)
   end
 
   def can_cancel_booking?
@@ -84,7 +85,6 @@ class Job < ApplicationRecord
 
   def job_recurrency
     new_job = dup
-    new_job.credit_card = credit_card 
     new_job.status = 'accepted'
     job_details.each do |d|
       new_job.job_details << d.dup
@@ -98,8 +98,15 @@ class Job < ApplicationRecord
       new_job.started_at = started_at + 28.days
     end
     return nil if new_job.started_at > finished_recurrency_at
-    new_job.save!
-    send_email_autocreated_job(new_job)
+    if new_job.save
+      new_job.payment = Payment.create(credit_card_id: payment.credit_card_id, amount: total, status: 'Pending', 
+      customer: self.property.customer, job: self, vat: vat, installments: installments)
+      new_job.payment.description = "Trabajo de limpieza NocNoc Payment_id:#{new_job.payment.id}"
+      new_job.payment.save!
+      Invoice.create!(customer: self.property.customer, job: new_job, invoice_detail_id: self.invoice.invoice_detail_id)
+      send_email_autocreated_job(new_job)
+    end
+    
   end
 
   def can_review?(user)
@@ -108,7 +115,7 @@ class Job < ApplicationRecord
 
   def service_type_image
     image = job_details.select { |jd| jd.service.type_service == 'base' }.first
-    image.service.service_type.image
+    image&.service&.service_type&.image
   end
 
   def self.should_be_reviewed
@@ -124,11 +131,14 @@ class Job < ApplicationRecord
             client = Exponent::Push::Client.new
             messages = [{
               to: "#{j.agent.mobile_push_token}",
+              ttl: 28800,
               sound: "default",
               body: "Un trabajo a terminado por favor califícalo"
             }]
             client.publish messages
           rescue StandardError => e
+            j.agent.mobile_push_token = nil
+            j.agent.save
             Rails.logger.info("Rescued: #{e.inspect}")
           end
         end
@@ -142,10 +152,13 @@ class Job < ApplicationRecord
             messages = [{
               to: "#{j.property.customer.mobile_push_token}",
               sound: "default",
+              ttl: 28800,
               body: "#{j.agent.first_name} finalizó tú trabajo con éxito, por favor califícalo"
             }]
             client.publish messages
           rescue StandardError => e
+            j.property.customer.mobile_push_token = nil
+            j.property.customer.save
             Rails.logger.info("Rescued: #{e.inspect}")
           end
         end
@@ -191,17 +204,6 @@ class Job < ApplicationRecord
     finished_at = started_at + duration.hours
     update_columns(duration: duration, total: total, finished_at: finished_at, vat: vat, 
       subtotal: sub_total, service_fee: service_fee, agent_earnings: agent_earnings)
-    create_payment
-  end
-
-  def create_payment
-    payment = Payment.create_with(credit_card_id: self.credit_card_id, amount: self.total, vat: self.vat, status: 'Pending', 
-      installments: self.installments, customer: self.property.customer).find_or_create_by(job_id: self.id)
-    payment.amount = self.total
-    payment.vat = self.vat
-    payment.installments = self.installments
-    payment.description = "Trabajo de limpieza NocNoc Payment_id:#{payment.id}"
-    payment.save!
   end
 
   def should_release_payment
@@ -231,22 +233,7 @@ class Job < ApplicationRecord
     unless agent
       agents = Agent.filter_by_availability(self)
       agents.map do |agent|
-        # TODO Move this to a background job
-        AgentMailer.send_email_to_agent(agent, self.hashed_id, ENV['FRONTEND_URL']).deliver
-        Notification.create(text: 'Existen trabajos disponibles, postula ahora', agent: agent, job_id: self.id)
-        if agent.mobile_push_token
-          begin
-            client = Exponent::Push::Client.new
-            messages = [{
-              to: "#{agent.mobile_push_token}",
-              sound: "default",
-              body: "Existen trabajos disponibles, postula ahora"
-            }]
-            client.publish messages
-          rescue StandardError => e
-            Rails.logger.info("Rescued: #{e.inspect}")
-          end
-        end
+        SendNotificationsOnJobCreatedWorker.perform_async(agent.id, self.hashed_id, self.id)
       end
     end
   end

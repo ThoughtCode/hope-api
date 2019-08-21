@@ -16,9 +16,8 @@ class Proposal < ApplicationRecord
   }
 
   def send_email_notify_to_customer
-    url = ENV['FRONTEND_URL']
     customer = job.property.customer
-    SendEmailToCustomerProposal.perform_later(job, customer, url)
+    SendEmailToCustomerProposalWorker.perform_async(job.id, customer.id)
   end
 
   def set_proposal_to_job
@@ -38,6 +37,7 @@ class Proposal < ApplicationRecord
         client = Exponent::Push::Client.new
         messages = [{
           to: "#{agent.mobile_push_token}",
+          ttl: 28800,
           sound: "default",
           body: "Te han aceptado una propuesta para un trabajo"
         }]

@@ -6,12 +6,12 @@ class Payment < ApplicationRecord
   def send_payment_request
     connection = Faraday.new
     installments_type = 0
-    if job.installments == 0 
+    if job.installments == 0
       installments_type = 0
     end
-    if job.installments == 3 
+    if job.installments == 3
       installments_type = 3
-    end 
+    end
 
     customer = self.customer
     body = '{ "user": {
@@ -23,7 +23,101 @@ class Payment < ApplicationRecord
          "description": "' + "#{self.description} " +'",
          "dev_reference": "'+ self.id.to_s + '",
          "vat": '+"#{self.vat.to_s}"+',
-         "installments_type": '+ installments_type.to_s + ', 
+         "installments_type": '+ installments_type.to_s + ',
+         "installments": '+"#{self.installments}"+'
+     },
+     "card": {
+         "token": "' + "#{self.credit_card.token }"+ '"
+    }}'
+    Rails.logger.info(body)
+    response = connection.post do |req|
+      req.headers['Content-Type'] = 'application/json'
+      req.headers['Auth-Token'] = (PaymentToken.authorize)
+      req.url ENV['PAYMENTEZ_URL'] + '/v2/transaction/debit/'
+      req.body = body
+    end
+    Rails.logger.info(response.body)
+
+    Rails.logger.info(response.body['error'])
+
+
+    if response.body['error']
+      Rails.logger.info("Hubo un error procesando pagos")
+      send_payment_request_as_null
+    end
+
+
+    response = response.status
+  end
+
+  def send_payment_request_as_null
+    Rails.logger.info("send_payment_request_as_null")
+    connection = Faraday.new
+    installments_type = 0
+    if job.installments == 0
+      installments_type = 0
+    end
+    if job.installments == 3
+      installments_type = 3
+    end
+
+    customer = self.customer
+    body = '{ "user": {
+         "id":"'+ 'null' + '",
+         "email": "'+ "#{customer.email}" +'"
+     },
+     "order": {
+         "amount": '+ self.amount.to_s + ',
+         "description": "' + "#{self.description} " +'",
+         "dev_reference": "'+ self.id.to_s + '",
+         "vat": '+"#{self.vat.to_s}"+',
+         "installments_type": '+ installments_type.to_s + ',
+         "installments": '+"#{self.installments}"+'
+     },
+     "card": {
+         "token": "' + "#{self.credit_card.token }"+ '"
+    }}'
+    Rails.logger.info(body)
+    response = connection.post do |req|
+      req.headers['Content-Type'] = 'application/json'
+      req.headers['Auth-Token'] = (PaymentToken.authorize)
+      req.url ENV['PAYMENTEZ_URL'] + '/v2/transaction/debit/'
+      req.body = body
+    end
+    Rails.logger.info(response.body)
+
+    if response.body['error']
+      Rails.logger.info("Hubo un error procesando pagos como nulos")
+      send_payment_request_as_undefined
+    end
+
+
+    response = response.status
+  end
+
+
+  def send_payment_request_as_undefined
+    Rails.logger.info("send_payment_request_as_undefined")
+    connection = Faraday.new
+    installments_type = 0
+    if job.installments == 0
+      installments_type = 0
+    end
+    if job.installments == 3
+      installments_type = 3
+    end
+
+    customer = self.customer
+    body = '{ "user": {
+         "id":"'+ 'undefined' + '",
+         "email": "'+ "#{customer.email}" +'"
+     },
+     "order": {
+         "amount": '+ self.amount.to_s + ',
+         "description": "' + "#{self.description} " +'",
+         "dev_reference": "'+ self.id.to_s + '",
+         "vat": '+"#{self.vat.to_s}"+',
+         "installments_type": '+ installments_type.to_s + ',
          "installments": '+"#{self.installments}"+'
      },
      "card": {
@@ -65,6 +159,6 @@ class Payment < ApplicationRecord
         CustomerMailer.send_receipt(self.job, self.customer, self).deliver
       end
       self.update_columns(receipt_send: true)
-    end 
+    end
   end
 end

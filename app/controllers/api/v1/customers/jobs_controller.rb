@@ -43,14 +43,28 @@ module Api::V1::Customers
       job = Job.new(job_params)
       job_details = job.job_details.select {|j| j.value != 0}
       job.job_details = job_details
-      cc = CreditCard.find(params[:job][:credit_card_id])
-      job.credit_card = cc
-      Rails.logger.info(job)
+      # cc = CreditCard.find(params[:job][:credit_card_id])
+      # job.credit_card = cc
+      Rails.logger.info('*************************')
+      Rails.logger.info(job_params)
+      Rails.logger.info('*************************')
+      Rails.logger.info(job.errors)
+      Rails.logger.info('*************************')
       if job.save
+        payment = Payment.create_with(credit_card_id: params[:job][:credit_card_id], amount: job.total, vat: job.vat, status: 'Pending', 
+                                      installments: job.installments, customer: job.property.customer).find_or_create_by(job_id: job.id)
+        payment.amount = job.total
+        payment.vat = job.vat
+        payment.installments = job.installments
+        payment.description = "Trabajo de limpieza NocNoc Payment_id:#{payment.id}"
+        payment.save!
         # Create Invoice (Mandar para cuando se cobre)
-        invoice = Invoice.create(customer: current_user, job: job, invoice_detail_id: params[:job][:invoice_detail_id])
+        Invoice.create(customer: current_user, job: job, invoice_detail_id: params[:job][:invoice_detail_id])
         set_response(200, 'Servicio programado con éxito, recibirás propuestas de nuestros agentes', serialize_job(job))
       else
+        Rails.logger.info('*************************')
+        Rails.logger.info(job.errors.messages.values.join(', '))
+        Rails.logger.info('*************************')
         set_response(422, job.errors.messages.values.join(', '))
       end
     end

@@ -30,11 +30,14 @@ class Review < ApplicationRecord
           client = Exponent::Push::Client.new
           messages = [{
             to: "#{customer.mobile_push_token}",
+            ttl: 28800,
             sound: "default",
             body: "Te han calificado!"
           }]
           client.publish messages
         rescue StandardError => e
+          customer.mobile_push_token = nil
+          customer.save
           Rails.logger.info("Rescued: #{e.inspect}")
         end
       end
@@ -47,11 +50,14 @@ class Review < ApplicationRecord
           client = Exponent::Push::Client.new
           messages = [{
             to: "#{agent.mobile_push_token}",
+            ttl: 28800,
             sound: "default",
             body: "#{agent.first_name} tú servicio ha sido calificado"
           }]
           client.publish messages
         rescue StandardError => e
+          agent.mobile_push_token = nil
+          agent.save
           Rails.logger.info("Rescued: #{e.inspect}")
         end
       end
@@ -61,7 +67,6 @@ class Review < ApplicationRecord
   def complete_job
     return nil if owner.class.name == 'Customer' || job.reviews.none?
     job.completed!
-    url = ENV['FRONTEND_URL']
-    SendEmailCompletedJob.perform_later(owner, job, url)
+    SendEmailCompletedJobWorker.perform_async(owner.id, job.id)
   end
 end
