@@ -19,5 +19,9 @@ class Api::V1::AgentSerializer
     Api::V1::ReviewSerializer.new(a.my_qualifications)
   end
 
+  attribute :class_name do |a|
+    a.class.name
+  end
+
   attribute :status
 end
