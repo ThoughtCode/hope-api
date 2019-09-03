@@ -16,4 +16,8 @@ class Api::V1::CustomerSerializer
   attribute :rewiews do |c|
     Api::V1::ReviewSerializer.new(c.my_qualifications)
   end
+
+  attribute :class_name do |c|
+    c.class.name
+  end
 end
