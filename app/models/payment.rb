@@ -29,25 +29,20 @@ class Payment < ApplicationRecord
      "card": {
          "token": "' + "#{self.credit_card.token }"+ '"
     }}'
-    Rails.logger.info(body)
     response = connection.post do |req|
       req.headers['Content-Type'] = 'application/json'
       req.headers['Auth-Token'] = (PaymentToken.authorize)
       req.url ENV['PAYMENTEZ_URL'] + '/v2/transaction/debit/'
       req.body = body
     end
-    Rails.logger.info(response.body)
-
     Rails.logger.info(response.body['error'])
-
-
     if response.body['error']
       send_payment_request_as_null
     end
 
     if response.status = 200
-      Rails.logger.info(response.body)
       resp = JSON.parse(response.body)
+      Rails.logger.info(resp)
       self.status = resp['transaction']['status']
       self.payment_date = resp['transaction']['payment_date']
       self.amount = resp['transaction']['amount'].to_s
