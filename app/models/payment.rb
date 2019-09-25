@@ -40,19 +40,21 @@ class Payment < ApplicationRecord
       send_payment_request_as_null
     end
 
+    Rails.logger.info(response.body)
+
     if response.status = 200
       resp = JSON.parse(response.body)
       Rails.logger.info(resp)
-      self.status = resp['transaction']['status']
-      self.payment_date = resp['transaction']['payment_date']
-      self.amount = resp['transaction']['amount'].to_s
-      self.authorization_code = resp['transaction']['authorization_code']
-      self.installments = resp['transaction']['installments'].to_s
-      self.message = resp['transaction']['message']
-      self.carrier_code = resp['transaction']['carrier_code']
-      self.transaction_identifier = resp['transaction']['id']
-      self.status_detail = resp['transaction']['status_detail'].to_s
-      self.save
+      # self.status = resp['transaction']['status']
+      # self.payment_date = resp['transaction']['payment_date']
+      # self.amount = resp['transaction']['amount'].to_s
+      # self.authorization_code = resp['transaction']['authorization_code']
+      # self.installments = resp['transaction']['installments'].to_s
+      # self.message = resp['transaction']['message']
+      # self.carrier_code = resp['transaction']['carrier_code']
+      # self.transaction_identifier = resp['transaction']['id']
+      # self.status_detail = resp['transaction']['status_detail'].to_s
+      # self.save
     end
     response.status
   end
