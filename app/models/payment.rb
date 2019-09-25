@@ -29,29 +29,34 @@ class Payment < ApplicationRecord
      "card": {
          "token": "' + "#{self.credit_card.token }"+ '"
     }}'
-    Rails.logger.info(body)
     response = connection.post do |req|
       req.headers['Content-Type'] = 'application/json'
       req.headers['Auth-Token'] = (PaymentToken.authorize)
       req.url ENV['PAYMENTEZ_URL'] + '/v2/transaction/debit/'
       req.body = body
     end
-    Rails.logger.info(response.body)
-
-    Rails.logger.info(response.body['error'])
-
 
     if response.body['error']
-      Rails.logger.info("Hubo un error procesando pagos")
       send_payment_request_as_null
     end
 
-
-    response = response.status
+    if response.status = 200
+      resp = JSON.parse(response.body)
+      self.status = resp['transaction']['status']
+      self.payment_date = resp['transaction']['payment_date']
+      self.amount = resp['transaction']['amount'].to_s
+      self.authorization_code = resp['transaction']['authorization_code']
+      self.installments = resp['transaction']['installments'].to_s
+      self.message = resp['transaction']['message']
+      self.carrier_code = resp['transaction']['carrier_code']
+      self.transaction_identifier = resp['transaction']['id']
+      self.status_detail = resp['transaction']['status_detail'].to_s
+      self.save
+    end
+    response.status
   end
 
   def send_payment_request_as_null
-    Rails.logger.info("send_payment_request_as_null")
     connection = Faraday.new
     installments_type = 0
     if job.installments == 0
@@ -77,27 +82,33 @@ class Payment < ApplicationRecord
      "card": {
          "token": "' + "#{self.credit_card.token }"+ '"
     }}'
-    Rails.logger.info(body)
     response = connection.post do |req|
       req.headers['Content-Type'] = 'application/json'
       req.headers['Auth-Token'] = (PaymentToken.authorize)
       req.url ENV['PAYMENTEZ_URL'] + '/v2/transaction/debit/'
       req.body = body
     end
-    Rails.logger.info(response.body)
-
     if response.body['error']
-      Rails.logger.info("Hubo un error procesando pagos como nulos")
       send_payment_request_as_undefined
     end
-
-
-    response = response.status
+    if response.status = 200
+      resp = JSON.parse(response.body)
+      self.status = resp['transaction']['status']
+      self.payment_date = resp['transaction']['payment_date']
+      self.amount = resp['transaction']['amount'].to_s
+      self.authorization_code = resp['transaction']['authorization_code']
+      self.installments = resp['transaction']['installments'].to_s
+      self.message = resp['transaction']['message']
+      self.carrier_code = resp['transaction']['carrier_code']
+      self.transaction_identifier = resp['transaction']['id']
+      self.status_detail = resp['transaction']['status_detail'].to_s
+      self.save
+    end
+    response.status
   end
 
 
   def send_payment_request_as_undefined
-    Rails.logger.info("send_payment_request_as_undefined")
     connection = Faraday.new
     installments_type = 0
     if job.installments == 0
@@ -123,15 +134,26 @@ class Payment < ApplicationRecord
      "card": {
          "token": "' + "#{self.credit_card.token }"+ '"
     }}'
-    Rails.logger.info(body)
     response = connection.post do |req|
       req.headers['Content-Type'] = 'application/json'
       req.headers['Auth-Token'] = (PaymentToken.authorize)
       req.url ENV['PAYMENTEZ_URL'] + '/v2/transaction/debit/'
       req.body = body
     end
-    Rails.logger.info(response.body)
-    response = response.status
+    if response.status = 200
+      resp = JSON.parse(response.body)
+      self.status = resp['transaction']['status']
+      self.payment_date = resp['transaction']['payment_date']
+      self.amount = resp['transaction']['amount'].to_s
+      self.authorization_code = resp['transaction']['authorization_code']
+      self.installments = resp['transaction']['installments'].to_s
+      self.message = resp['transaction']['message']
+      self.carrier_code = resp['transaction']['carrier_code']
+      self.transaction_identifier = resp['transaction']['id']
+      self.status_detail = resp['transaction']['status_detail'].to_s
+      self.save
+    end
+    response.status
   end
 
   def refund
@@ -146,9 +168,20 @@ class Payment < ApplicationRecord
       req.url ENV['PAYMENTEZ_URL'] + '/v2/transaction/refund/'
       req.body = body
     end
-    # byebug
-    Rails.logger.info(response.body)
-    response = response.status
+    if response.status = 200
+      resp = JSON.parse(response.body)
+      self.status = resp['transaction']['status']
+      self.payment_date = resp['transaction']['payment_date']
+      self.amount = resp['transaction']['amount'].to_s
+      self.authorization_code = resp['transaction']['authorization_code']
+      self.installments = resp['transaction']['installments'].to_s
+      self.message = resp['transaction']['message']
+      self.carrier_code = resp['transaction']['carrier_code']
+      self.transaction_identifier = resp['transaction']['id']
+      self.status_detail = resp['transaction']['status_detail'].to_s
+      self.save
+    end
+    response.status
   end
 
   def check_receipt_send
