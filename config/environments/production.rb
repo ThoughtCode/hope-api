@@ -100,8 +100,8 @@ Rails.application.configure do
 
   config.middleware.use ExceptionNotification::Rack,
     slack: {
-      webhook_url: "https://hooks.slack.com/services/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",
-      channel: "#exceptions",
+      webhook_url: "https://hooks.slack.com/services/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",
+      channel: "#error",
       username: "Error notifier" # ENV based username to distinguish Production Exceptions in channel
     }
 
