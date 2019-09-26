@@ -83,7 +83,7 @@ class Invoices
     Rails.logger.info(response.body)
 
     begin
-      notifier = Slack::Notifier.new "https://hooks.slack.com/services/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" do
+      notifier = Slack::Notifier.new "https://hooks.slack.com/services/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" do
         defaults channel: "#hooks",
                username: "notifier"
       end
