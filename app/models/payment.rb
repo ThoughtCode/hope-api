@@ -43,9 +43,9 @@ class Payment < ApplicationRecord
     respon = JSON.parse(response.body)
     Rails.logger.info(respon)
 
-    if response.status = 200
-      resp = JSON.parse(response.body)
-      Rails.logger.info(resp)
+    # if response.status = 200
+      # resp = JSON.parse(response.body)
+      # Rails.logger.info(resp)
       # self.status = resp['transaction']['status']
       # self.payment_date = resp['transaction']['payment_date']
       # self.amount = resp['transaction']['amount'].to_s
@@ -56,7 +56,7 @@ class Payment < ApplicationRecord
       # self.transaction_identifier = resp['transaction']['id']
       # self.status_detail = resp['transaction']['status_detail'].to_s
       # self.save
-    end
+    # end
     response.status
   end
 
