@@ -40,7 +40,8 @@ class Payment < ApplicationRecord
       send_payment_request_as_null
     end
 
-    Rails.logger.info(response.body)
+    respon = JSON.parse(response.body)
+    Rails.logger.info(respon)
 
     if response.status = 200
       resp = JSON.parse(response.body)
