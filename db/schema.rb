@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190705032232) do
+ActiveRecord::Schema.define(version: 20191010195129) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -221,6 +221,16 @@ ActiveRecord::Schema.define(version: 20190705032232) do
     t.boolean "paid", default: false
   end
 
+  create_table "promotions", force: :cascade do |t|
+    t.string "name"
+    t.string "code_promotion"
+    t.datetime "created_at", null: false
+    t.datetime "finingdate_at"
+    t.datetime "updated_at", null: false
+    t.bigint "service_id"
+    t.index ["service_id"], name: "index_promotions_on_service_id"
+  end
+
   create_table "properties", force: :cascade do |t|
     t.string "name"
     t.integer "neightborhood_id"
@@ -270,5 +280,6 @@ ActiveRecord::Schema.define(version: 20190705032232) do
     t.string "icon"
   end
 
+  add_foreign_key "promotions", "services"
   add_foreign_key "reviews", "jobs"
 end

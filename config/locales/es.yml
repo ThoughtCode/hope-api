@@ -102,6 +102,9 @@ es:
       property:
         one: "Propiedad"
         other: "Propiedades"
+      promotion:
+        one: "Promoción"
+        other: "Promociones"
       city:
         one: "Ciudad"
         other: "Ciudades"
@@ -142,6 +145,12 @@ es:
         cell_phone: "Celular"
         customer: "Cliente"
         hashed_id: "Hashed_id"
+      promotion:
+        name: "Nombre"
+        code_promotion: "Codigo Promoción"
+        created_at: "Fecha Inicio"
+        finingdate_at: "Fecha Fin"
+        updated_at: "Fecha de Actualización"
       service:
         name: "Nombre"
         service_type: "Servicio Padre"
