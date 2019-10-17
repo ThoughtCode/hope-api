@@ -72,6 +72,7 @@
         get 'read_notifications/:id', to: 'customers#read_notifications'
         get 'credit_cards', to: 'payments#index'
         get 'get_user_id', to: 'customers#get_user_id'
+        post 'validate_promo_code', to: 'promotions#show'
 
         resources :invoice_details
         resources :properties, except: [:new, :edit]
