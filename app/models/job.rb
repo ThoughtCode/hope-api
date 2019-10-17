@@ -2,6 +2,7 @@ class Job < ApplicationRecord
   include Hashable
   belongs_to :agent, optional: true
   belongs_to :property
+  belongs_to :promotion
   has_many :job_details, dependent: :destroy
   has_many :services, through: :job_details
   has_many :notifications, dependent: :destroy

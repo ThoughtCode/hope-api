@@ -147,10 +147,14 @@ es:
         hashed_id: "Hashed_id"
       promotion:
         name: "Nombre"
-        code_promotion: "Codigo Promoción"
-        created_at: "Fecha Inicio"
-        finingdate_at: "Fecha Fin"
+        promo_code: "Codigo Promoción"
+        started_at: "Fecha Inicio"
+        finished_at: "Fecha Fin"
+        services_id: "Servicio"
+        created_at: "Fecha de creación"
         updated_at: "Fecha de Actualización"
+        discount: "Descuento"
+        status: "Estado"
       service:
         name: "Nombre"
         service_type: "Servicio Padre"

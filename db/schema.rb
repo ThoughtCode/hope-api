@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20191010195129) do
+ActiveRecord::Schema.define(version: 20191015153002) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -157,6 +157,8 @@ ActiveRecord::Schema.define(version: 20191010195129) do
     t.boolean "review_notification_send", default: false
     t.integer "source", default: 0
     t.integer "invoice_id"
+    t.bigint "promotion_id"
+    t.index ["promotion_id"], name: "index_jobs_on_promotion_id"
   end
 
   create_table "managers", force: :cascade do |t|
@@ -222,12 +224,15 @@ ActiveRecord::Schema.define(version: 20191010195129) do
   end
 
   create_table "promotions", force: :cascade do |t|
-    t.string "name"
-    t.string "code_promotion"
-    t.datetime "created_at", null: false
-    t.datetime "finingdate_at"
-    t.datetime "updated_at", null: false
+    t.string "name", null: false
+    t.string "promo_code", null: false
+    t.datetime "started_at", null: false
+    t.datetime "finished_at", null: false
     t.bigint "service_id"
+    t.decimal "discount", precision: 5, scale: 2, default: "0.0"
+    t.integer "status", default: 0
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.index ["service_id"], name: "index_promotions_on_service_id"
   end
 
@@ -280,6 +285,5 @@ ActiveRecord::Schema.define(version: 20191010195129) do
     t.string "icon"
   end
 
-  add_foreign_key "promotions", "services"
   add_foreign_key "reviews", "jobs"
 end

@@ -1,6 +1,6 @@
 ActiveAdmin.register Job do
   actions :all, :except => :destroy
-  permit_params :property_id, :started_at, :status, :frequency, :agent_id, :source, job_details_attributes: [:id, :service_id, :value, :_destroy ]
+  permit_params :promotion_id, :property_id, :started_at, :status, :frequency, :agent_id, :source, job_details_attributes: [:id, :service_id, :value, :_destroy ]
 
   csv do
     column :id
@@ -108,6 +108,7 @@ ActiveAdmin.register Job do
       row :agent_earnings
       row :agent
       row :payment
+      row :promotion_id
     end
     panel "Detalles" do
       job_details = Job.find(params['id']).job_details
@@ -141,6 +142,7 @@ ActiveAdmin.register Job do
       j.started_at.localtime
     end
     column :frequency
+    column :promotion_id
     actions
   end
 
