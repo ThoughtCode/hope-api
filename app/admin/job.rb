@@ -1,6 +1,6 @@
 ActiveAdmin.register Job do
   actions :all, :except => :destroy
-  permit_params :promotion_id, :property_id, :started_at, :status, :frequency, :agent_id, :source, job_details_attributes: [:id, :service_id, :value, :_destroy ]
+  permit_params :discount, :promotion_id, :property_id, :started_at, :status, :frequency, :agent_id, :source, job_details_attributes: [:id, :service_id, :value, :_destroy ]
 
   csv do
     column :id
@@ -135,6 +135,12 @@ ActiveAdmin.register Job do
     column :property
     column :duration
     column :agent
+    column :subtotal do |j|
+      j.total + calculate_job_discount(j)
+    end
+    column :discount do |j|
+      calculate_job_discount(j)
+    end
     column :total
     column :status
     column :source
@@ -142,7 +148,9 @@ ActiveAdmin.register Job do
       j.started_at.localtime
     end
     column :frequency
-    column :promotion_id
+    column 'Promoción' do |j|
+      j.promotion&.name
+    end
     actions
   end
 

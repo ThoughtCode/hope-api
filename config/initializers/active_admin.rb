@@ -302,3 +302,7 @@ def authenticate_admin!
     redirect_to new_manager_session_path
   end
 end
+
+module ActiveAdmin::ViewHelpers
+  include JobHelper
+end
