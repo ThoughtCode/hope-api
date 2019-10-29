@@ -22,7 +22,7 @@ gem 'uglifier', '>= 1.3.0'
 gem 'fast_jsonapi', '~> 1.1', '>= 1.1.1'
 
 # login System
-gem 'devise', '~> 4.4', '>= 4.4.3'
+gem 'devise', '~> 4.7'
 
 # Admin System
 gem 'activeadmin', '>= 1.1', '<= 1.3'
