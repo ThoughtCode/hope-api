@@ -197,13 +197,13 @@ class Job < ApplicationRecord
     overcharge = is_holiday?(started_at) ?  (1 + (Config.fetch('extra_service_fee_holiday').to_f/100)) : 1
     duration = job_details.pluck(:time).compact.sum
     discount = 0
+    services_prices = services.pluck(:price).compact.sum
+    detail_prices = job_details.pluck(:price_total).compact.sum
+    total = ((detail_prices + services_prices) * overcharge).round(2)
     if promotion
-      service = services.find(promotion.service_id)
-      total_service = service.time * service.price
-      discount = total_service * promotion.discount / 100
+      discount = total * promotion.discount / 100
+      total = total - discount
     end
-    total = (job_details.pluck(:price_total).compact.sum * overcharge).round(2)
-    total = total - discount
     service_fee = total * (Config.fetch('noc_noc_service_fee').to_f / 100)
     vat = (total * 0.12).round(2)
     sub_total = total
