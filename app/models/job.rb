@@ -198,10 +198,10 @@ class Job < ApplicationRecord
     duration = job_details.pluck(:time).compact.sum
     discount = 0
     if promotion
-      service = services.find(promotion.service_id)
-      total_service = service.time * service.price
-      discount = total_service * promotion.discount / 100
+      s_t = services.map{|s| s.time * s.price}.inject(:+)
+      discount = s_t * promotion.discount / 100
     end
+    byebug
     total = (job_details.pluck(:price_total).compact.sum * overcharge).round(2)
     total = total - discount
     service_fee = total * (Config.fetch('noc_noc_service_fee').to_f / 100)
@@ -210,6 +210,7 @@ class Job < ApplicationRecord
     agent_earnings = sub_total - service_fee
     total = total + vat
     finished_at = started_at + duration.hours
+    byebug
     update_columns(duration: duration, total: total, finished_at: finished_at, vat: vat, 
       subtotal: sub_total, service_fee: service_fee, agent_earnings: agent_earnings)
   end
