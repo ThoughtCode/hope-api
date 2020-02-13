@@ -8,8 +8,8 @@ module JobHelper
     return 0 unless promotion
 
     if promotion
-      s_t = job.services.map{|s| s.time * s.price}.inject(:+)
-      discount = s_t * promotion.discount / 100
+      total_service_price = job.services.map{|s| s.time * s.price}.inject(:+)
+      discount = total_service_price * promotion.discount / 100
     end
 
     discount.round(2)
