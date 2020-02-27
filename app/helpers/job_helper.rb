@@ -9,6 +9,7 @@ module JobHelper
 
     if promotion
       total_service_price = job.services.map{|s| s.time * s.price}.inject(:+)
+      total_service_price = (job.job_details.pluck(:price_total).compact.sum).round(2)
       discount = total_service_price * promotion.discount / 100
     end
 

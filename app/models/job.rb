@@ -198,7 +198,7 @@ class Job < ApplicationRecord
     duration = job_details.pluck(:time).compact.sum
     discount = 0
     if promotion
-      total_service_price = services.map{|s| s.time * s.price}.inject(:+)
+      total_service_price = (job_details.pluck(:price_total).compact.sum * overcharge).round(2)
       discount = total_service_price * promotion.discount / 100
     end
     total = (job_details.pluck(:price_total).compact.sum * overcharge).round(2)
