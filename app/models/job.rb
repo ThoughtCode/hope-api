@@ -205,7 +205,11 @@ class Job < ApplicationRecord
     total = total - discount
     service_fee = total * (Config.fetch('noc_noc_service_fee').to_f / 100)
     vat = (total * 0.12).round(2)
-    sub_total = total
+    if promotion
+      sub_total = total_service_price
+    else
+      sub_total = total
+    end
     agent_earnings = sub_total - service_fee
     total = total + vat
     finished_at = started_at + duration.hours
