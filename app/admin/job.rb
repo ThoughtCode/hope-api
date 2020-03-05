@@ -31,6 +31,9 @@ ActiveAdmin.register Job do
     column :vat, precision: 8, scale: 2
     column :service_fee, precision: 8, scale: 2
     column :subtotal, precision: 8, scale: 2
+    column :discount do |j|
+      calculate_job_discount(j)
+    end
     column :agent_earnings, precision: 8, scale: 2
     column :source
 
@@ -55,15 +58,15 @@ ActiveAdmin.register Job do
     end
 
     column "Card Type" do |j|
-      j.payment.credit_card.card_type if j.payment.credit_card 
+      j.payment&.credit_card&.card_type if j.payment&.credit_card
     end
 
     column "Card Number" do |j|
-      j.payment.credit_card.number if j.payment.credit_card
+      j.payment&.credit_card&.number if j.payment&.credit_card
     end
 
     column "Card Number" do |j|
-      j.payment.credit_card.number if j.payment.credit_card
+      j.payment&.credit_card&.number if j.payment&.credit_card
     end
 
     column "Cliente Nombre" do |j|
@@ -79,7 +82,7 @@ ActiveAdmin.register Job do
     end
 
     column "Tipo de Servicio" do |j|
-      j.job_details.first.service.name
+      j.job_details.first&.service&.name
     end
   end
 
