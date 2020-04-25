@@ -1,5 +1,5 @@
 Koala.configure do |config|
-  config.app_id = Rails.application.secrets.facebook_api_id
-  config.app_secret = Rails.application.secrets.facebook_secret
-  config.api_version = "v3.0"
+  config.app_id = ENV.fetch('FACEBOOK_API_ID')
+  config.app_secret = ENV.fetch('FACEBOOK_SECRET')
+  config.api_version = "v6.0"
 end

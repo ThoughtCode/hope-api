@@ -4,8 +4,8 @@ RSpec.describe Api::V1::Customers::ProvidersController, type: :controller do
   before(:each) do
     @request.env['devise.mapping'] = Devise.mappings[:customer]
     @test_users = Koala::Facebook::TestUsers.new(
-      app_id: Rails.application.secrets.facebook_api_id,
-      secret: Rails.application.secrets.facebook_secret
+      app_id: ENV.fetch('FACEBOOK_API_ID')
+      secret: ENV.fetch('FACEBOOK_SECRET')
     )
   end
 
