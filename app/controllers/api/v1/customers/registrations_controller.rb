@@ -21,7 +21,7 @@ module Api::V1
 
     def customer_params
       params.require(:customer)
-            .permit(:first_name, :last_name, :email, :password,
+            .permit(:first_name, :last_name, :email, :password, :cell_phone,
                     :password_confirmation)
     end
   end
