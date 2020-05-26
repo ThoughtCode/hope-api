@@ -36,7 +36,7 @@ class Invoices
         ],
         "importe_total":'+"#{number_to_currency(job.total)}"+',
         "propina":0.0,
-        "descuento":0.0
+        "descuento":'+ "#{number_to_currency((job.subtotal / job.promotion.discount) + job.subtotal)} "+'
       },
       "comprador":{
         "email":"'+ "#{invoice.invoice_detail.email}"+'",
@@ -61,7 +61,7 @@ class Invoices
               "codigo_porcentaje":"2"
             }
           ],
-          "descuento": 0.0
+          "descuento": '+ "#{number_to_currency((job.subtotal / job.promotion.discount) + job.subtotal)} "+'
         }
       ],
       "pagos": [
@@ -130,7 +130,7 @@ class Invoices
         ],
         "importe_total":'+"#{number_to_currency(payment.amount.to_f)}"+',
         "propina":0.0,
-        "descuento":0.0
+        "descuento":'+ "#{number_to_currency((job.subtotal / job.promotion.discount) + job.subtotal)} "+'
       },
       "comprador":{
         "email":"'+ "#{invoice.invoice_detail.email}"+'",
@@ -155,7 +155,7 @@ class Invoices
               "codigo_porcentaje":"2"
             }
           ],
-          "descuento": 0.0
+          "descuento": '+ "#{number_to_currency((job.subtotal / job.promotion.discount) + job.subtotal)} "+'
         }
       ],
       "pagos": [
