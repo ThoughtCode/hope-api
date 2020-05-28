@@ -50,7 +50,7 @@ gem 'sidekiq', '~> 5.2', '>= 5.2.7'
 gem 'sentry-raven'
 
 # Paginate
-gem 'kaminari', '~> 1.1', '>= 1.1.1'
+gem 'kaminari', '~> 1.2'
 gem 'faraday', '~> 0.15.2'
 
 # Slack notifications
