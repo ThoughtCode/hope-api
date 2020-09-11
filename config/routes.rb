@@ -1,7 +1,7 @@
   Rails.application.routes.draw do
     
-    require 'sidekiq/web' unless Rails.env.production?
-    mount Sidekiq::Web => '/sidekiq' unless Rails.env.production?
+    require 'sidekiq/web'
+    mount Sidekiq::Web => '/sidekiq'
 
     devise_for :managers, ActiveAdmin::Devise.config
     devise_for :customers
