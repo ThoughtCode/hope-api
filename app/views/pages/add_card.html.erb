@@ -139,6 +139,7 @@
       console.log(cardResponse.card);
       if(cardResponse.card.status === 'valid'){
         $('#messages').html('Tu tarjeta se ha ingresado correctamente.<br>');
+        alert('Tu tarjeta se ha ingresado correctamente');
         $.ajax({
           url: "https://hopeec-production.herokuapp.com/api/v1/customers/add_card_mobile",
           cache: false,

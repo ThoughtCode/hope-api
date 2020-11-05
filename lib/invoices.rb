@@ -1,5 +1,8 @@
 class Invoices
   def self.generate_for_job(invoice, payment, job)
+    Rails.logger.info('*******************JOB**************************************************************************************************************************')
+    Rails.logger.info(job)
+    Rails.logger.info('*******************JOB**************************************************************************************************************************')
     id_type = set_id_type(invoice.invoice_detail.identification_type)
     ambiente = ENV['DATIL_ENVIROMENT']
     body = '{
@@ -36,7 +39,7 @@ class Invoices
         ],
         "importe_total":'+"#{number_to_currency(job.total)}"+',
         "propina":0.0,
-        "descuento":'+ "#{number_to_currency((job.subtotal / job.promotion.discount) + job.subtotal)} "+'
+        "descuento":'+ "#{number_to_discount(job.subtotal, job.promotion&.discount, job.subtotal)} "+'
       },
       "comprador":{
         "email":"'+ "#{invoice.invoice_detail.email}"+'",
@@ -61,7 +64,7 @@ class Invoices
               "codigo_porcentaje":"2"
             }
           ],
-          "descuento": '+ "#{number_to_currency((job.subtotal / job.promotion.discount) + job.subtotal)} "+'
+          "descuento": '+ "#{number_to_discount(job.subtotal, job.promotion&.discount, job.subtotal)} "+'
         }
       ],
       "pagos": [
@@ -94,6 +97,9 @@ class Invoices
   end
 
   def self.generate_for_penalty(invoice, payment, job)
+    Rails.logger.info('*******************JOB**************************************************************************************************************************')
+    Rails.logger.info(job)
+    Rails.logger.info('*******************JOB**************************************************************************************************************************')
     id_type = set_id_type(invoice.invoice_detail.identification_type)
     ambiente = ENV['DATIL_ENVIROMENT']
     body = '{
@@ -130,7 +136,7 @@ class Invoices
         ],
         "importe_total":'+"#{number_to_currency(payment.amount.to_f)}"+',
         "propina":0.0,
-        "descuento":'+ "#{number_to_currency((job.subtotal / job.promotion.discount) + job.subtotal)} "+'
+        "descuento":'+ "#{number_to_discount(job.subtotal, job.promotion&.discount, job.subtotal)} "+'
       },
       "comprador":{
         "email":"'+ "#{invoice.invoice_detail.email}"+'",
@@ -155,7 +161,7 @@ class Invoices
               "codigo_porcentaje":"2"
             }
           ],
-          "descuento": '+ "#{number_to_currency((job.subtotal / job.promotion.discount) + job.subtotal)} "+'
+          "descuento": '+ "#{number_to_discount(job.subtotal, job.promotion&.discount, job.subtotal)} "+'
         }
       ],
       "pagos": [
@@ -181,6 +187,16 @@ end
 
 def number_to_currency(number)
   ActiveSupport::NumberHelper.number_to_currency(number, precision: 2).tr('$', '')
+end
+
+def number_to_discount(value_1, value_2, value_3)
+  if value_2 == nil
+    return '0.0'
+  else
+    result = (value_1 / value_2) + value_3
+    re = result - value_1
+    return re.to_f
+  end
 end
 
 def set_id_type(id)
