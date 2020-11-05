@@ -76,7 +76,7 @@ class Invoices
     response = connection.post do |req|
       req.headers['Content-Type'] = 'application/json'
       req.headers['X-Key'] = ENV['DATIL_API_KEY']
-      req.headers['X-Password'] = 'HopeServ24'
+      req.headers['X-Password'] = 'Hopeserv394'
       req.url ENV['DATIL_URL'] + '/invoices/issue'
       req.body = body
     end
@@ -170,7 +170,7 @@ class Invoices
     response = connection.post do |req|
       req.headers['Content-Type'] = 'application/json'
       req.headers['X-Key'] = ENV['DATIL_API_KEY']
-      req.headers['X-Password'] = 'HopeServ24'
+      req.headers['X-Password'] = 'Hopeserv394'
       req.url ENV['DATIL_URL'] + '/invoices/issue'
       req.body = body
     end
